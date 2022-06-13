@@ -13,6 +13,8 @@ import {
 
 import { useRouter } from 'next/router'
 
+import logoBg from '../assets/bg1.jpg';
+
 export default function Hero() {
 
     const Link = ({ children, href }) => {
@@ -42,11 +44,11 @@ export default function Hero() {
           rel="stylesheet"
         />
       </Head>
-    <Flex maxW='100%' bg='#000b22' pt={20} pb={7}>
-      <Container maxW={['100%', null, null, null, '75%']} 
+    <Flex maxW='100%' bg='#000b22' pt={20} pb={7} backgroundImage={logoBg.src} 
       backgroundPosition='bottom' 
       backgroundRepeat='no-repeat' 
-      backgroundSize='cover'
+      backgroundSize='auto'>
+      <Container maxW={['100%', null, null, null, '75%']} 
       >
         <Stack
           as={Box}

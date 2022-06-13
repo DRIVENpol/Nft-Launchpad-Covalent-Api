@@ -51,7 +51,7 @@ const Navbar = () => {
             color='black'
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box><Link href='/'><Text>Logo</Text></Link></Box>
+            <Box ml={10}><Link href='/'><Text>Logo</Text></Link></Box>
             <HStack
               as={'nav'}
               spacing={4}
