@@ -1,5 +1,5 @@
 {
-  "name": "nft-launchpad-2",
+  "name": "driven-security-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,17 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.2.1",
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
-    "framer-motion": "^6.3.11",
-    "next": "12.1.6",
-    "next-themes": "^0.2.0",
-    "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "@chakra-ui/icons": "^1.1.7",
+    "@chakra-ui/react": "^1.8.8",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "babel-preset-es2015": "^6.24.1",
+    "framer-motion": "^6.2.10",
+    "next": "12.1.5",
+    "react": "18.0.0",
+    "react-dom": "18.0.0"
   },
   "devDependencies": {
-    "eslint": "8.17.0",
-    "eslint-config-next": "12.1.6"
+    "eslint": "8.13.0",
+    "eslint-config-next": "12.1.5"
   }
 }
