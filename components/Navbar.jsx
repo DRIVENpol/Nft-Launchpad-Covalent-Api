@@ -82,7 +82,7 @@ const Navbar = () => {
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
               display={{ base: 'none', md: 'flex' }} px={6}>
               <Link href='/CreateNft'>
-              + Create NFT Collection
+              + Create Collection
               </Link>
             </Button>
           </Flex>
