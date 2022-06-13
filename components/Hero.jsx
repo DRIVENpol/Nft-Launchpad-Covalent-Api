@@ -76,10 +76,10 @@ export default function Hero() {
               size='lg'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
               color='white'
-              maxW={['75%', null, '100%', '100%', '100%']}
+              maxW={'100%'}
               fontSize={['12px', null, null, null, '100%']}
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
-              display={{ base: 'none', md: 'flex' }} px={6}>
+              px={6}>
               <Link href='/CreateNft'>
              Get Started!
               </Link>
