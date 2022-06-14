@@ -51,7 +51,7 @@ const Navbar = () => {
             color='black'
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box ml={10}><Link href='/'><Text>Logo</Text></Link></Box>
+            <Box ml={10}><Link href='/'><Text fontSize='2xl'><b>NFT Minty</b></Text></Link></Box>
             <HStack
               as={'nav'}
               spacing={4}
@@ -80,7 +80,7 @@ const Navbar = () => {
               ml="30px"
               fontSize={['12px', null, null, null, '100%']}
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
-              display={{ base: 'none', md: 'flex' }} px={6}>
+              display={{ base: 'none', md: 'flex' }} px={6} borderRadius={20}>
               <Link href='/CreateNft'>
               + Create Collection
               </Link>
