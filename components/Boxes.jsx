@@ -101,17 +101,17 @@ const Boxes = () => {
           NFT Minty Picks for 13-20 June! DYOR!
         </Text></Center><br/>
     <Center>
-    <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(5, 1fr)']} gap={6} w='75%'>
+    <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(4, 1fr)']} gap={6} w='75%'>
    {projects && projects.map(project => (
        <div key={project.name} >
-       <GridItem w='100%' h='10' align='center' mb={['400', '420', '400', '400', '380', '380']}>
+       <GridItem w='100%' h='10' align='center' mb={['420', '420', '420', '400', '380', '400']}>
        <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' bgGradient='linear(to-r, #141E30, #243B55)' color={'white'}>
         <Stack direction='row' alignItems='baseline'>
             <Image src={project.link} alt={project.link} />
 
    </Stack>
     
-    <Stack direction='column' mx={2} mb='5%' mt='5%' alignItems="center" my={4}>  
+    <Stack direction='column' mx={4} mb='5%' mt='5%' alignItems="center" my={4}>  
         <Text fontSize={'29px'}><b>{project.name}</b></Text>
         <Text fontSize={'14px'}>{project.type}</Text>
         <Stack direction='row' mb='5%' mt='5%'> 
