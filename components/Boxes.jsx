@@ -101,7 +101,7 @@ const Boxes = () => {
           NFT Minty Picks for 13-20 June! DYOR!
         </Text></Center><br/>
     <Center>
-    <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(5, 1fr)']} gap={6} w='75%' mb='6px'>
+    <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(5, 1fr)']} gap={6} w='75%'>
    {projects && projects.map(project => (
        <div key={project.name} >
        <GridItem w='100%' h='10' align='center' mb={['300', '420', '400', '400', '380', '380']}>
