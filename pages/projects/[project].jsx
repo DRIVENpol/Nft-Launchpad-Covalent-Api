@@ -8,7 +8,7 @@ const Project = () => {
     
   return (
    <>
-
+    
      <Grid
   templateRows='repeat(2, 1fr)'
   templateColumns='repeat(5, 1fr)'
@@ -53,7 +53,7 @@ const Project = () => {
     borderWidth='1px' 
     borderRadius='lg' 
     p={4}>
-
+        <Text><b>{router.query.project}</b></Text>
         <Text>{router.query.description}</Text>
 
     </GridItem>
