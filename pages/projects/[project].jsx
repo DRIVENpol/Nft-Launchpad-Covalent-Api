@@ -23,6 +23,7 @@ const Project = () => {
     <GridItem colSpan={['5', '5', '4', '4', '4']} 
     bgGradient='linear(to-r, #141E30, #243B55)' 
     bgPosition={'center'}
+    bgSize='100%'
     borderRadius='lg'
     bgImg={router.query.banner}
     bgRepeat="no-repeat"
