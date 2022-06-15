@@ -23,15 +23,10 @@ const Project = () => {
     <GridItem colSpan={['5', '5', '4', '4', '4']} 
     bgGradient='linear(to-r, #141E30, #243B55)' 
     bgPosition={'center'}
-    bgSize='100%'
-    borderRadius='lg' 
+    borderRadius='lg'
     bgImg={router.query.banner}
     bgRepeat="no-repeat"
-    p={4}>
-
-    {/* <Image src={router.query.banner} alt={router.query.banner}  width='100%' /> */}
-
-    </GridItem>
+    p={4} />
 
     <GridItem rowSpan={['1', '2', '2', '2', '2']} 
     colSpan={['5', '5', '1', '1', '1']} 
@@ -41,7 +36,7 @@ const Project = () => {
     p={4}
     >
 
-        <Text>Transactions</Text>
+        <Text><b>Transactions</b></Text>
 
     </GridItem>
 
