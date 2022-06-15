@@ -124,7 +124,7 @@ const Boxes = () => {
               fontSize={['12px', null, null, null, '100%']}
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
                  px={6} borderRadius={20}>
-              <Link href='/CreateNft'>
+              <Link href={'/projects/' + project.name} key={project.type}>
               Mint Now
               </Link>
             </Button>

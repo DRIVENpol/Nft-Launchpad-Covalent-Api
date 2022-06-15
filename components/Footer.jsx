@@ -9,7 +9,7 @@ import Website from '../assets/icons/click.png'
 const Footer = () => {
   return (
  <>
-     <Container maxW='100%' bgGradient='linear(to-r, #141E30, #243B55)' align='center' py={4}>
+     <Container maxW='100%' bgGradient='linear(to-r, #141E30, #243B55)' align='center' py={5} bottom={0}>
      <Grid templateColumns={['repeat(1, 1fr)', null, null, null, 'repeat(3, 1fr)']} gap={6} color='white' alignItems={'center'} justifyContent={'space-between'}>
 
         <GridItem w='100%'><Text fontSize='2xl'><b>NFT Minty</b></Text></GridItem>
