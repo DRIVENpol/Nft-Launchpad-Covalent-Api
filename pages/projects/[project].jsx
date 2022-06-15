@@ -1,8 +1,11 @@
 import React from 'react'
-
-import { Grid, GridItem, Box, Text } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+import { Grid, GridItem, Image, Text } from '@chakra-ui/react'
 
 const Project = () => {
+    const router = useRouter();
+    console.log(router.query);
+    
   return (
    <>
 
@@ -19,11 +22,14 @@ const Project = () => {
 >
     <GridItem colSpan={['5', '5', '4', '4', '4']} 
     bgGradient='linear(to-r, #141E30, #243B55)' 
-    borderWidth='1px' 
+    bgPosition={'center'}
+    bgSize='100%'
     borderRadius='lg' 
+    bgImg={router.query.banner}
+    bgRepeat="no-repeat"
     p={4}>
 
-        <Text>Banner</Text>
+    {/* <Image src={router.query.banner} alt={router.query.banner}  width='100%' /> */}
 
     </GridItem>
 
@@ -48,7 +54,7 @@ const Project = () => {
     borderRadius='lg' 
     p={4}>
 
-        <Text>Details</Text>
+        <Text>{router.query.description}</Text>
 
     </GridItem>
 

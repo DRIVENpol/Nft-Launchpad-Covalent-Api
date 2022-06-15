@@ -1,96 +1,16 @@
 import React from 'react'
 
-import { Text, Center, Grid, GridItem, Box, Container, Icon } from '@chakra-ui/react'
-import { Stack, Button, Link, HStack, Image } from '@chakra-ui/react'
+import { Text, Center, Grid, GridItem, Box, Container } from '@chakra-ui/react'
+import { Stack, Button, HStack, Image } from '@chakra-ui/react'
 import Twitter from '../assets/icons/twitter.png'
 import Discord from '../assets/icons/discord.png'
 import Website from '../assets/icons/click.png'
 
-const projects = [
-    {
-        name: 'Project Name',
-        type: 'Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.',
-        link: 'https://bit.ly/2Z4KKcF',
-        website: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        discord: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        twitter: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf'
-      },
-      {
-        name: 'Project Name',
-        type: 'Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.',
-        link: 'https://bit.ly/2Z4KKcF',
-        facebook: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        discord: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        twitter: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf'
-      },
-      {
-        name: 'Project Name',
-        type: 'Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.',
-        link: 'https://bit.ly/2Z4KKcF',
-        facebook: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        discord: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        twitter: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf'
-      },
-      {
-        name: 'Project Name',
-        type: 'Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.',
-        link: 'https://bit.ly/2Z4KKcF',
-        facebook: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        discord: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        twitter: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf'
-      },
-      {
-        name: 'Project Name',
-        type: 'Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.',
-        link: 'https://bit.ly/2Z4KKcF',
-        facebook: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        discord: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        twitter: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf'
-      },
-      {
-        name: 'Project Name',
-        type: 'Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.',
-        link: 'https://bit.ly/2Z4KKcF',
-        facebook: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        discord: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        twitter: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf'
-      },
-      {
-        name: 'Project Name',
-        type: 'Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.',
-        link: 'https://bit.ly/2Z4KKcF',
-        facebook: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        discord: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        twitter: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf'
-      },
-      {
-        name: 'Project Name',
-        type: 'Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.',
-        link: 'https://bit.ly/2Z4KKcF',
-        facebook: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        discord: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        twitter: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf'
-      },
-      {
-        name: 'Project Name',
-        type: 'Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.',
-        link: 'https://bit.ly/2Z4KKcF',
-        facebook: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        discord: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        twitter: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf'
-      },
-      {
-        name: 'Project Name',
-        type: 'Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.',
-        link: 'https://bit.ly/2Z4KKcF',
-        facebook: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        discord: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf',
-        twitter: 'https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf'
-      },
+import Link from 'next/link'
 
-]
 
-const Boxes = () => {
+
+const Boxes = (props) => {
   return (
     <>
 <Container maxW={'100%'} bg='white' color={'black'} mt='-20px' pt='5%' pb='2%'>
@@ -102,14 +22,13 @@ const Boxes = () => {
         </Text></Center><br/>
     <Center>
     <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(4, 1fr)']} gap={6} w='75%'>
-   {projects && projects.map(project => (
+   {props.obj && props.obj.map(project => (
        <div key={project.name} >
        <GridItem w='100%' h='10' align='center' mb={['420', '420', '420', '400', '380', '400']}>
        <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' bgGradient='linear(to-r, #141E30, #243B55)' color={'white'}>
-        <Stack direction='row' alignItems='baseline'>
-            <Image src={project.link} alt={project.link} />
-
-   </Stack>
+      <Image src={project.link} maxH={200} 
+        maxW='100%' minH={200}
+      />
     
     <Stack direction='column' mx={4} mb='5%' mt='5%' alignItems="center" my={4}>  
         <Text fontSize={'29px'}><b>{project.name}</b></Text>
@@ -124,7 +43,9 @@ const Boxes = () => {
               fontSize={['12px', null, null, null, '100%']}
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
                  px={6} borderRadius={20}>
-              <Link href={'/projects/' + project.name} key={project.type}>
+              <Link href={{pathname: '/projects/' + project.name, 
+              query: {'banner': project.link,
+              'description': project.type}}} key={project.type}>
               Mint Now
               </Link>
             </Button>
