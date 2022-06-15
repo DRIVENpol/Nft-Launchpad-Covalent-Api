@@ -72,7 +72,7 @@ const Project = () => {
                borderRadius={40}
                >
               <Link href='/CreateNft'>
-             <b>Mint Now!</b>
+             <b>Connect Your Wallet</b>
               </Link>
             </Button>
 </Center>
