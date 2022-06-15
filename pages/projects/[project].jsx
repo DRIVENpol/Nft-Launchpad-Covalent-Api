@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { Grid, GridItem, Image, Text } from '@chakra-ui/react'
+import { Button, Grid, GridItem, Link, Text, Center } from '@chakra-ui/react'
 
 const Project = () => {
     const router = useRouter();
@@ -61,8 +61,21 @@ const Project = () => {
     borderRadius='lg' 
     p={4}>
 
-        <Text>Mint</Text>
-
+<Center my='17%'><Button
+              variant={'solid'}
+              size='lg'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              fontSize={['12px', null, null, null, '100%']}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={40}
+               >
+              <Link href='/CreateNft'>
+             <b>Mint Now!</b>
+              </Link>
+            </Button>
+</Center>
     </GridItem>
 
 
