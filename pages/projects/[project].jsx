@@ -31,14 +31,14 @@ const Project = () => {
     borderRadius='lg'
     bgImg={router.query.banner}
     bgRepeat="no-repeat"
-    p={4} />
+    p={6} />
 
     <GridItem rowSpan={['1', '2', '2', '2', '2']} 
     colSpan={['5', '5', '1', '1', '1']} 
     bgGradient='linear(to-r, #141E30, #243B55)'
     borderWidth='1px' 
     borderRadius='lg' 
-    p={4}
+    p={6}
     >
 
         <Text><b>Transactions</b></Text>
@@ -52,22 +52,22 @@ const Project = () => {
     bgGradient='linear(to-r, #141E30, #243B55)' 
     borderWidth='1px' 
     borderRadius='lg' 
-    p={4}>
+    p={6}>
     
         <HStack mb={5}>
                 <Text mr={3} fontSize={'2xl'}><b>{router.query.project}</b></Text>
                <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
                <HStack>
-                <a href='#' target='_blank'><Image src={Twitter.src} alt='Twitter' w={4}/></a>
+                <a href='#' target='_blank'><Image src={Twitter.src} alt='Twitter' w={3}/></a>
                 <Text>|</Text>
-                <a href='#' target='_blank'><Image src={Discord.src} alt='Discord' w={4}/></a>
+                <a href='#' target='_blank'><Image src={Discord.src} alt='Discord' w={3}/></a>
                 <Text>|</Text>
-                <a href='#' target='_blank'><Image src={Website.src} alt='Website' w={4}/></a>
+                <a href='#' target='_blank'><Image src={Website.src} alt='Website' w={3}/></a>
                 </HStack>
                 </Box> 
             </HStack>
 
-        <Text noOfLines={['5', '5', '5', '7', '9']}>{router.query.description}</Text>
+        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15}>{router.query.description}</Text>
 
     </GridItem>
 
@@ -76,7 +76,7 @@ const Project = () => {
     bgGradient='linear(to-r, #141E30, #243B55)' 
     borderWidth='1px' 
     borderRadius='lg' 
-    p={4}>
+    p={6}>
 
 <Center my='17%'><Button
               variant={'solid'}
