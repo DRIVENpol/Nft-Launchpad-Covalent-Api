@@ -1,6 +1,8 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { Button, Grid, GridItem, Link, Text, Center, HStack, Image, Box } from '@chakra-ui/react'
+import { Button, Grid, GridItem, Link, Text, 
+    Center, HStack, VStack, Image, Box, Badge,
+TableContainer, Table, TableCaption, Thead, Tr, Th, Tbody, Td, Tfoot } from '@chakra-ui/react'
 
 import Twitter from '../../assets/icons/twitter.png'
 import Discord from '../../assets/icons/discord.png'
@@ -17,7 +19,6 @@ const Project = () => {
   templateRows='repeat(2, 1fr)'
   templateColumns='repeat(5, 1fr)'
   gap={2} 
-  h='calc(80vh)' 
   maxW={'100%'} 
   mt={20} 
   mb={4} 
@@ -27,7 +28,7 @@ const Project = () => {
     <GridItem colSpan={['5', '5', '4', '4', '4']} 
     bgGradient='linear(to-r, #141E30, #243B55)' 
     bgPosition={'center'}
-    bgSize='100%'
+    bgSize={['200%', '200%', '100%', '100%', '100%']}
     borderRadius='lg'
     bgImg={router.query.banner}
     bgRepeat="no-repeat"
@@ -41,7 +42,71 @@ const Project = () => {
     p={6}
     >
 
-        <Text><b>Transactions</b></Text>
+    <Text><b>Transactions</b></Text>
+        <Text>Last 10 Transactions</Text>
+        <TableContainer>
+  <Table variant='simple' size='sm' mt={4}>
+    <Thead textAlign={'left'}>
+      <Tr>
+        <Th>Event</Th>
+        <Th>Quantity</Th>
+        <Th>Tx. Hash</Th>
+      </Tr>
+    </Thead>
+    <Tbody>
+    <Tr>
+        <Td>Mint</Td>
+        <Td>6</Td>
+        <Td>See on Etherscan</Td>
+      </Tr>
+      <Tr>
+        <Td>Mint</Td>
+        <Td>2</Td>
+        <Td>See on Etherscan</Td>
+      </Tr>
+      <Tr>
+        <Td>Mint</Td>
+        <Td>1</Td>
+        <Td>See on Etherscan</Td>
+      </Tr>
+      <Tr>
+        <Td>Mint</Td>
+        <Td>6</Td>
+        <Td>See on Etherscan</Td>
+      </Tr>
+      <Tr>
+        <Td>Mint</Td>
+        <Td>2</Td>
+        <Td>See on Etherscan</Td>
+      </Tr>
+      <Tr>
+        <Td>Mint</Td>
+        <Td>1</Td>
+        <Td>See on Etherscan</Td>
+      </Tr>
+      <Tr>
+        <Td>Mint</Td>
+        <Td>6</Td>
+        <Td>See on Etherscan</Td>
+      </Tr>
+      <Tr>
+        <Td>Mint</Td>
+        <Td>2</Td>
+        <Td>See on Etherscan</Td>
+      </Tr>
+      <Tr>
+        <Td>Mint</Td>
+        <Td>1</Td>
+        <Td>See on Etherscan</Td>
+      </Tr>
+      <Tr>
+        <Td>Mint</Td>
+        <Td>6</Td>
+        <Td>See on Etherscan</Td>
+      </Tr>
+    </Tbody>
+  </Table>
+</TableContainer>
 
     </GridItem>
 
