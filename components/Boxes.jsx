@@ -32,8 +32,11 @@ const Boxes = (props) => {
     
     <Stack direction='column' mx={4} mb='5%' mt='5%' alignItems="center" my={4}>  
         <Text fontSize={'29px'}><b>{project.name}</b></Text>
-        <Text fontSize={'14px'}>{project.type}</Text>
-        <Stack direction='row' mb='5%' mt='5%'> 
+        <Text fontSize={'14px'} noOfLines={2}>{project.type}</Text>
+        <Stack direction='row' mb='5%' mt='5%'>
+        <Link href={{pathname: '/projects/' + project.name, 
+              query: {'banner': project.link,
+              'description': project.type}}} key={project.type}>
         <Button
               variant={'solid'}
               size='sm' my={4}
@@ -43,12 +46,9 @@ const Boxes = (props) => {
               fontSize={['12px', null, null, null, '100%']}
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
                  px={6} borderRadius={20}>
-              <Link href={{pathname: '/projects/' + project.name, 
-              query: {'banner': project.link,
-              'description': project.type}}} key={project.type}>
               Mint Now
-              </Link>
             </Button>
+            </Link>
             </Stack>
             <HStack>
             <a href={project.twitter} target='_blank'><Image src={Twitter.src} alt='Twitter' w={5}/></a>

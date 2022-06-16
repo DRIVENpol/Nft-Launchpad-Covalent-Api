@@ -9,7 +9,6 @@ import Website from '../../assets/icons/click.png'
 
 const Project = () => {
     const router = useRouter();
-    console.log(router.query);
     
   return (
    <>
@@ -68,7 +67,7 @@ const Project = () => {
                 </Box> 
             </HStack>
 
-        <Text>{router.query.description}</Text>
+        <Text noOfLines={9}>{router.query.description}</Text>
 
     </GridItem>
 
