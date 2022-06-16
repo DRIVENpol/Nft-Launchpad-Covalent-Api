@@ -1,6 +1,11 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { Button, Grid, GridItem, Link, Text, Center } from '@chakra-ui/react'
+import { Button, Grid, GridItem, Link, Text, Center, HStack, Image, Box } from '@chakra-ui/react'
+
+import Twitter from '../../assets/icons/twitter.png'
+import Discord from '../../assets/icons/discord.png'
+import Website from '../../assets/icons/click.png'
+
 
 const Project = () => {
     const router = useRouter();
@@ -49,7 +54,20 @@ const Project = () => {
     borderWidth='1px' 
     borderRadius='lg' 
     p={4}>
-        <Text><b>{router.query.project}</b></Text>
+    
+        <HStack mb={5}>
+                <Text mr={3} fontSize={'2xl'}><b>{router.query.project}</b></Text>
+               <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
+               <HStack>
+                <a href='#' target='_blank'><Image src={Twitter.src} alt='Twitter' w={4}/></a>
+                <Text>|</Text>
+                <a href='#' target='_blank'><Image src={Discord.src} alt='Discord' w={4}/></a>
+                <Text>|</Text>
+                <a href='#' target='_blank'><Image src={Website.src} alt='Website' w={4}/></a>
+                </HStack>
+                </Box> 
+            </HStack>
+
         <Text>{router.query.description}</Text>
 
     </GridItem>
