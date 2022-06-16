@@ -25,7 +25,7 @@ const MyNfts = () => {
   }, [])
 
   return (
-    <Text my={200}>{balance/10**18} ETH</Text>) 
+    <Text my={200} mx={100}>{balance/10**18} ETH</Text>) 
 }
 
 export default MyNfts
