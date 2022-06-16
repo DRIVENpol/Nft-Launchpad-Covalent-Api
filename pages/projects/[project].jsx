@@ -67,7 +67,7 @@ const Project = () => {
                 </Box> 
             </HStack>
 
-        <Text noOfLines={9}>{router.query.description}</Text>
+        <Text noOfLines={['5', '5', '5', '7', '9']}>{router.query.description}</Text>
 
     </GridItem>
 
