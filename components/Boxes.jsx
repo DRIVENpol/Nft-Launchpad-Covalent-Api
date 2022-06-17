@@ -34,10 +34,7 @@ const Boxes = (props) => {
         <Text fontSize={'29px'}><b>{project.name}</b></Text>
         <Text fontSize={'14px'} noOfLines={3}>{project.type}</Text>
         <Stack direction='row' mb='5%' mt='5%'>
-        <Link href={{pathname: '/projects/' + project.name, 
-              query: {'banner': project.link,
-              'description': project.type,
-              'address': project.address}}}
+        <Link href={'/projects/' + project.name}
               key={project.type}>
         <Button
               variant={'solid'}

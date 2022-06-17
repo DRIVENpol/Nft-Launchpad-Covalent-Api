@@ -8,32 +8,68 @@ import Twitter from '../../assets/icons/twitter.png'
 import Discord from '../../assets/icons/discord.png'
 import Website from '../../assets/icons/click.png'
 
+// Fetching data from the JSON file
+import fsPromises from 'fs/promises';
+import path from 'path'
 
-const Project = () => {
+export const getStaticProps = async (context) => {
+  const name = context.params.project;
+
+   return {
+    props: {project: {
+      name: name
+    }}
+     }
+   }
+
+export async function getStaticPaths() {
+  const filePath = path.join(process.cwd(), 'data.json');
+  const jsonData = await fsPromises.readFile(filePath);
+  const objectData = await JSON.parse(jsonData);
+  const _data = objectData.projects;
+
+   const paths = _data.map(d => {
+     return {
+       params: {project: d.name.toString()}
+     }
+   })
+
+   return {
+       paths,
+       fallback: false
+       
+     }
+
+   }
+
+
+
+const Project = ({project}) => {
 const router = useRouter();
+console.log(project)
 
-const [transfers, setTransfers] = useState(0);
+// const [transfers, setTransfers] = useState(0);
 
-const key = 'ckey_148ca1425bb2412cb4c98bf085f';
-const baseURL = 'https://api.covalenthq.com/v1'
-const chainId = '137'
-const count = 0;
-const address = router.query.address;
+// const key = 'ckey_148ca1425bb2412cb4c98bf085f';
+// const baseURL = 'https://api.covalenthq.com/v1'
+// const chainId = '137'
+// const count = 0;
+// const address = router.query.address;
 
 
-async function useAPI() {
-    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=28672470&ending-block=29672470&key=${key}&page-number=1`);
-    const response = await fetch(url);
-    const result = await response.json();
-    const data = result.data;
-    setTransfers(data.items);
-    console.log(data.items);
+// async function useAPI() {
+//     const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=28672470&ending-block=29672470&key=${key}&page-number=1`);
+//     const response = await fetch(url);
+//     const result = await response.json();
+//     const data = result.data.items;
+//     setTransfers(data);
+//     console.log(data.items);
     
-}
+// }
 
-useEffect(() => {
-    useAPI();
-  }, [])
+// useEffect(() => {
+//     useAPI();
+//   }, [])
     
   return (
    <>
@@ -53,7 +89,7 @@ useEffect(() => {
     bgPosition={'center'}
     bgSize={['300%', '200%', '200%', '200%', '100%']}
     borderRadius='lg'
-    bgImg={router.query.banner}
+    bgImg={project.banner}
     bgRepeat="no-repeat"
     p={6} />
 
@@ -76,21 +112,21 @@ useEffect(() => {
       </Tr>
     </Thead>
     <Tbody>
-    {transfers && transfers.map((transfer) => {
+    {/* {transfers && transfers.map((transfer) => {
          let _data = transfer.decoded.name;
          let _tx = transfer.tx_hash;
          count++;
          if(count<=15) {
            return (
-             <>
+             <> */}
     <Tr>
-        <Td>{_data}</Td>
-        <Td><Link href={`https://www.polygonscan.com/tx/${_tx}`} target='_blank'>See on explorer</Link></Td>
+        <Td>data</Td>
+        <Td><Link href={`https://www.polygonscan.com/tx/`} target='_blank'>See on explorer</Link></Td>
       </Tr>
-      </>
+      {/* </>
              )
          }
-       })}
+       })} */}
     </Tbody>
   </Table>
 </TableContainer>
@@ -107,7 +143,7 @@ useEffect(() => {
     p={6}>
     
         <HStack mb={5}>
-                <Text mr={3} fontSize={'2xl'}><b>{router.query.project}</b></Text>
+                <Text mr={3} fontSize={'2xl'}><b>{project.name}</b></Text>
                <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
                <HStack>
                 <a href='#' target='_blank'><Image src={Twitter.src} alt='Twitter' w={3}/></a>
@@ -119,7 +155,7 @@ useEffect(() => {
                 </Box> 
             </HStack>
 
-        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15}>{router.query.description}</Text>
+        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15}>{project.description}</Text>
 
     </GridItem>
 
@@ -154,3 +190,5 @@ useEffect(() => {
 }
 
 export default Project
+
+

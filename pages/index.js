@@ -81,16 +81,6 @@ export default function Home(props) {
   )
 }
 
-// export async function getServerSideProps() {
-//   const res = await fetch("Files");
-//   const data = await res.json();
-
-//   return{
-//     props: {
-//       projects: data,
-//     },
-//   }
-// }
 
 // Fetching data from the JSON file
 import fsPromises from 'fs/promises';
