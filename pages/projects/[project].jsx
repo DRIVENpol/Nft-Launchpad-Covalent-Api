@@ -12,28 +12,28 @@ import Website from '../../assets/icons/click.png'
 const Project = () => {
 const router = useRouter();
 
-// const [transfers, setTransfers] = useState(0);
+const [transfers, setTransfers] = useState(0);
 
-// const key = 'ckey_148ca1425bb2412cb4c98bf085f';
-// const baseURL = 'https://api.covalenthq.com/v1'
-// const chainId = '137'
-// const count = 0;
-// const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3";
+const key = 'ckey_148ca1425bb2412cb4c98bf085f';
+const baseURL = 'https://api.covalenthq.com/v1'
+const chainId = '137'
+const count = 0;
+const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3";
 
 
-// async function useAPI() {
-//     const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=28672470&ending-block=29672470&key=${key}`);
-//     const response = await fetch(url);
-//     const result = await response.json();
-//     const data = result.data;
-//     setTransfers(data.items);
-//     console.log(data.items);
+async function useAPI() {
+    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=28672470&ending-block=29672470&key=${key}`);
+    const response = await fetch(url);
+    const result = await response.json();
+    const data = result.data;
+    setTransfers(data.items);
+    console.log(data.items);
     
-// }
+}
 
-// useEffect(() => {
-//     useAPI();
-//   }, [])
+useEffect(() => {
+    useAPI();
+  }, [])
     
   return (
    <>
@@ -76,21 +76,21 @@ const router = useRouter();
       </Tr>
     </Thead>
     <Tbody>
-    {/* {transfers && transfers.map((transfer) => {
+    {transfers && transfers.map((transfer) => {
          let _data = transfer.decoded.name;
          let _tx = transfer.tx_hash;
          count++;
          if(_data === 'Transfer' && count<=15) {
            return (
-             <> */}
+             <>
     <Tr>
         <Td>Data</Td>
         <Td><Link href={`https://www.polygonscan.com/tx/`} target='_blank'>See on explorer</Link></Td>
       </Tr>
-      {/* </>
+      </>
              )
          }
-       })} */}
+       })}
     </Tbody>
   </Table>
 </TableContainer>
