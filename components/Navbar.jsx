@@ -40,7 +40,7 @@ const Navbar = () => {
 
   return (
     <>
-      <Box bgGradient='linear(to-r, #141E30, #243B55)' px={4} position="fixed" width='100%' top={0}>
+      <Box bgGradient='linear(to-r, #141E30, #243B55)' px={4} position="fixed" width='100%' top={0} zIndex={1}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'} color='white'>
           <IconButton
             size={'sm'}
