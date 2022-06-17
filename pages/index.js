@@ -71,12 +71,12 @@ import Boxes from "../components/Boxes"
 // ]
 
 export default function Home(props) {
-  const projects = props.projects;
+
 
   return (
     <>
      <Hero />
-     <Boxes obj={projects} />
+     <Boxes obj={props.projects} />
     </>
   )
 }
@@ -96,7 +96,7 @@ export default function Home(props) {
 import fsPromises from 'fs/promises';
 import path from 'path'
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const filePath = path.join(process.cwd(), 'data.json');
   const jsonData = await fsPromises.readFile(filePath);
   const objectData = JSON.parse(jsonData);
