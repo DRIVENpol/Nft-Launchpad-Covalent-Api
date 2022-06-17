@@ -22,7 +22,7 @@ const address = router.query.address;
 
 
 async function useAPI() {
-    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=28672470&ending-block=29672470&key=${key}`);
+    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=28672470&ending-block=29672470&key=${key}&page-number=1`);
     const response = await fetch(url);
     const result = await response.json();
     const data = result.data;
@@ -80,7 +80,7 @@ useEffect(() => {
          let _data = transfer.decoded.name;
          let _tx = transfer.tx_hash;
          count++;
-         if(_data === 'Transfer' && count<=15) {
+         if(count<=15) {
            return (
              <>
     <Tr>
