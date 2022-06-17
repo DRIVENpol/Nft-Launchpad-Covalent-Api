@@ -84,8 +84,8 @@ useEffect(() => {
            return (
              <>
     <Tr>
-        <Td>Data</Td>
-        <Td><Link href={`https://www.polygonscan.com/tx/`} target='_blank'>See on explorer</Link></Td>
+        <Td>{_data}</Td>
+        <Td><Link href={`https://www.polygonscan.com/tx/${_tx}`} target='_blank'>See on explorer</Link></Td>
       </Tr>
       </>
              )
