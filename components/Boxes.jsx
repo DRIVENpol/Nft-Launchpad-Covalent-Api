@@ -36,7 +36,8 @@ const Boxes = (props) => {
         <Stack direction='row' mb='5%' mt='5%'>
         <Link as={`/projects/${project.name}`} href={{pathname: '/projects/' + project.name, 
               query: {'banner': project.link,
-              'description': project.type}}}
+              'description': project.type,
+              'address': project.address}}}
               key={project.type}>
         <Button
               variant={'solid'}

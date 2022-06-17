@@ -3,29 +3,44 @@ import { Text, Center, Grid, GridItem, Box, Container } from '@chakra-ui/react'
 
 const MyNfts = () => {
 
-  const [balance, setBalance] = useState(0);
+  const [transfers, setTransfers] = useState(0);
 
-  const APIKEY = 'ckey_148ca1425bb2412cb4c98bf085f';
+  const key = 'ckey_148ca1425bb2412cb4c98bf085f';
   const baseURL = 'https://api.covalenthq.com/v1'
-  const blockchainChainId = '1'
-  const demoAddress = '0xae6ae4daa32d9b1Af31460573a8E075fDbb11ea8'
+  const chainId = '137'
+  const address = '0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3'
   
-  async function getWalletBalance() {
-      const url = new URL(`${baseURL}/${blockchainChainId}/address/${demoAddress}/balances_v2/?key=${APIKEY}`);
+  async function useAPI() {
+      const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=28672470&ending-block=29672470&key=${key}`);
       const response = await fetch(url);
       const result = await response.json();
       const data = result.data;
-
-      // Show ETH Balance of Address
-      setBalance(data.items[data.items.length - 1].balance);
+      setTransfers(data.items);
+      console.log(data.items);
+      
   }
 
+
   useEffect(() => {
-    getWalletBalance();
+    useAPI();
   }, [])
 
+  
   return (
-    <Text my={200} mx={100}> Just Playing! Wooho: {balance/10**18} ETH</Text>) 
+    <> 
+       {transfers && transfers.map((transfer) => {
+         let _data = transfer.decoded.name;
+         let _tx = transfer.tx_hash;
+         if(_data === 'Transfer') {
+           return (
+             <>
+             <Text>{_data} // {_tx}</Text>
+             </>
+             )
+         }
+       })}
+    </>
+  )
 }
 
 export default MyNfts

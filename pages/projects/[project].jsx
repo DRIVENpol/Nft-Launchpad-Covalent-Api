@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Button, Grid, GridItem, Link, Text, 
     Center, HStack, VStack, Image, Box, Badge,
@@ -10,7 +10,29 @@ import Website from '../../assets/icons/click.png'
 
 
 const Project = () => {
-    const router = useRouter();
+const router = useRouter();
+
+const [transfers, setTransfers] = useState(0);
+
+const key = 'ckey_148ca1425bb2412cb4c98bf085f';
+const baseURL = 'https://api.covalenthq.com/v1'
+const chainId = '137'
+const count = 0;
+
+async function useAPI() {
+    let _address = router.query.address;
+    const url = new URL(`${baseURL}/${chainId}/events/address/${_address}/?starting-block=28672470&ending-block=29672470&key=${key}`);
+    const response = await fetch(url);
+    const result = await response.json();
+    const data = result.data;
+    setTransfers(data.items);
+    console.log(data.items);
+    
+}
+
+useEffect(() => {
+    useAPI();
+  }, [])
     
   return (
    <>
@@ -38,72 +60,35 @@ const Project = () => {
     colSpan={['5', '5', '1', '1', '1']} 
     bgGradient='linear(to-r, #141E30, #243B55)'
     borderWidth='1px' 
-    borderRadius='lg' 
+    borderRadius='lg'
     p={6}
     >
 
     <Text><b>Transactions</b></Text>
-        <Text>Last 10 Transactions</Text>
+        <Text>Last 15 Transactions</Text>
         <TableContainer>
   <Table variant='simple' size='sm' mt={4}>
     <Thead textAlign={'left'}>
       <Tr>
         <Th>Event</Th>
-        <Th>Quantity</Th>
         <Th>Tx. Hash</Th>
       </Tr>
     </Thead>
     <Tbody>
+    {transfers && transfers.map((transfer) => {
+         let _data = transfer.decoded.name;
+         let _tx = transfer.tx_hash;
+         count++;
+         if(_data === 'Transfer' && count<=15) {
+           return (
+             <>
     <Tr>
-        <Td>Mint</Td>
-        <Td>6</Td>
-        <Td>See on Etherscan</Td>
-      </Tr>
-      <Tr>
-        <Td>Mint</Td>
-        <Td>2</Td>
-        <Td>See on Etherscan</Td>
-      </Tr>
-      <Tr>
-        <Td>Mint</Td>
-        <Td>1</Td>
-        <Td>See on Etherscan</Td>
-      </Tr>
-      <Tr>
-        <Td>Mint</Td>
-        <Td>6</Td>
-        <Td>See on Etherscan</Td>
-      </Tr>
-      <Tr>
-        <Td>Mint</Td>
-        <Td>2</Td>
-        <Td>See on Etherscan</Td>
-      </Tr>
-      <Tr>
-        <Td>Mint</Td>
-        <Td>1</Td>
-        <Td>See on Etherscan</Td>
-      </Tr>
-      <Tr>
-        <Td>Mint</Td>
-        <Td>6</Td>
-        <Td>See on Etherscan</Td>
-      </Tr>
-      <Tr>
-        <Td>Mint</Td>
-        <Td>2</Td>
-        <Td>See on Etherscan</Td>
-      </Tr>
-      <Tr>
-        <Td>Mint</Td>
-        <Td>1</Td>
-        <Td>See on Etherscan</Td>
-      </Tr>
-      <Tr>
-        <Td>Mint</Td>
-        <Td>6</Td>
-        <Td>See on Etherscan</Td>
-      </Tr>
+        <Td>{_data}</Td>
+        <Td><Link href={`https://www.polygonscan.com/tx/${_tx}`} target='_blank'>See on explorer</Link></Td>
+      </Tr></>
+             )
+         }
+       })}
     </Tbody>
   </Table>
 </TableContainer>
