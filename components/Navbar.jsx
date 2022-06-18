@@ -64,10 +64,6 @@ const Navbar = () => {
                         <Button _hover={{background: "#243B55", color: "white"}} bgColor='transparent'>
                             <Link href="/Collections">Explore</Link>
                         </Button>
-
-                        <Button _hover={{background: "#243B55", color: "white"}} bgColor='transparent'>
-                            <Link href="/MyNfts">My NFTs</Link>
-                        </Button>
             </HStack>
           </HStack>
           <Flex alignItems={'center'} mr={20}>
@@ -92,7 +88,6 @@ const Navbar = () => {
             <Stack as={'nav'} spacing={4}>
             <Button colorScheme='blackAlpha'><Link href="/">Home</Link></Button>
             <Button colorScheme='blackAlpha'><Link href="/Collections">Explore</Link></Button>
-            <Button colorScheme='blackAlpha'><Link href="/MyNfts">My NFTs</Link></Button>
             <Button bgGradient='linear(to-l, #7928CA, #FF0080)' color={'white'} _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}>
             <Link href="/CreateNft">+ Create NFT Collection</Link></Button>
             </Stack>
