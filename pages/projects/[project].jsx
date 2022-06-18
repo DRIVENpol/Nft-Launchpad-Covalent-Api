@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Button, Grid, GridItem, Link, Text, 
-    Center, HStack, Image, Box, Badge,
+    Container, HStack, Image, Box, Badge,
 TableContainer, Table, Flex, Thead, Tr, Th, Tbody, Td, Tfoot,
 NumberInput,
         NumberInputField,
@@ -227,22 +227,17 @@ const [provider, setProvider] = useState();
 
     
   return (
-   <>
-    <Flex>
+   <><Container maxW={'100%'} align='center' mb={4}>
      <Grid
   templateRows='repeat(2, 1fr)'
   templateColumns='repeat(5, 1fr)'
-  gap={2} 
-  maxW={'100%'} 
-  mt={20} 
-  mb={4} 
-  mx={2} 
+  gap={4} 
   color='white'
 >
-    <GridItem colSpan={['5', '5', '4', '4', '4']} 
+    <GridItem colSpan={['5', '5', '4', '4', '4']} height={['400', '400', '275', '300', '335']}
     bgGradient='linear(to-r, #141E30, #243B55)' 
     bgPosition={'center'}
-    bgSize={['300%', '200%', '200%', '200%', '100%']}
+    bgSize={['400%', '200%', '200%', '200%', '100%']}
     borderRadius='lg'
     bgImg={props.image}
     bgRepeat="no-repeat"
@@ -317,9 +312,8 @@ const [provider, setProvider] = useState();
     bgGradient='linear(to-r, #141E30, #243B55)' 
     borderWidth='1px' 
     borderRadius='lg' 
-    p={6}>
+    p={6} align={'center'}>
 
-<Center my='17%'>
 {!account ? (<><Button
               onClick={connectWallet}
               variant={'solid'}
@@ -332,21 +326,34 @@ const [provider, setProvider] = useState();
                borderRadius={40}
                >
              <b>Connect Your Wallet & Mint</b>
-            </Button></>): ( <><NumberInput step={1} defaultValue={0} min={0}
-            focusBorderColor = "white"
-           textColor={'white'} size='lg' maxWidth={'50%'}>
-        <NumberInputField />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-  </NumberInput></>)}
-
-</Center>
+            </Button></>): (<>
+            <Text mb={2}> Mint Your {props.name} NFT</Text>
+            <NumberInput step={1} defaultValue={0} min={0}
+                focusBorderColor = "white"
+                textColor={'white'} size='lg' maxWidth={'50%'}>
+             <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            <Button
+              onClick={connectWallet}
+              variant={'solid'}
+              size='lg'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              mt={4}
+              fontSize={['12px', null, null, null, '100%']}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10}
+               >
+             <b>Mint Now!</b>
+            </Button></>)}
     </GridItem>
-
-
-</Grid></Flex>
+</Grid>
+</Container>
    </>
   )
 }
