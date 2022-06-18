@@ -14,7 +14,7 @@ export default ({obj}) => {
   return (
     <>
      <Hero />
-<Container maxW={'100%'} bg='white' color={'black'} mt='-20px' pt='5%' pb='2%'>
+<Container maxW={'100%'} bgColor='#e0e0eb' color={'black'} mt='-20px' pt='5%' pb='2%'>
 <Center>
     <Text fontSize='3xl' ><b>Featured Projects</b></Text>
     </Center>

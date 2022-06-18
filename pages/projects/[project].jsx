@@ -227,7 +227,7 @@ const [provider, setProvider] = useState();
 
     
   return (
-   <><Container maxW={'100%'} align='center' my={4}>
+   <><Container maxW={'100%'} align='center' py={4} bgColor='#e0e0eb'>
      <Grid
   templateRows='repeat(2, 1fr)'
   templateColumns='repeat(5, 1fr)'
