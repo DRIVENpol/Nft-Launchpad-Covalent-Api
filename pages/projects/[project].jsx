@@ -51,29 +51,6 @@ export async function getStaticPaths() {
 
 export default (props) => {
 const router = useRouter();
-
-// const [transfers, setTransfers] = useState(0);
-
-// const key = 'ckey_148ca1425bb2412cb4c98bf085f';
-// const baseURL = 'https://api.covalenthq.com/v1'
-// const chainId = '137'
-// const count = 0;
-// const address = router.query.address;
-
-
-// async function useAPI() {
-//     const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=28672470&ending-block=29672470&key=${key}&page-number=1`);
-//     const response = await fetch(url);
-//     const result = await response.json();
-//     const data = result.data.items;
-//     setTransfers(data);
-//     console.log(data.items);
-    
-// }
-
-// useEffect(() => {
-//     useAPI();
-//   }, [])
     
   return (
    <>

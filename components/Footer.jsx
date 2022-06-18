@@ -6,6 +6,7 @@ import Website from '../assets/icons/click.png'
 
 
 
+
 const Footer = () => {
   return (
  <>
@@ -22,6 +23,7 @@ const Footer = () => {
                 <a href='#' target='_blank'><Image src={Twitter.src} alt='Twitter' w={5}/></a>
                 <a href='#' target='_blank'><Image src={Discord.src} alt='Discord' w={5}/></a>
                 <a href='#' target='_blank'><Image src={Website.src} alt='Website' w={5}/></a>
+
             </HStack></Center>
         </GridItem>
 
