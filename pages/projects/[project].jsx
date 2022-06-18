@@ -14,10 +14,13 @@ import path from 'path'
 
 export const getStaticProps = async (context) => {
   const name = context.params.project;
-
+  const filePath = path.join(process.cwd(), 'data.json');
+  const jsonData = await fsPromises.readFile(filePath);
+  const objectData = await JSON.parse(jsonData);
+  const _data = objectData;
    return {
     props: {project: {
-      name: name
+      name: name,
     }}
      }
    }
@@ -26,9 +29,9 @@ export async function getStaticPaths() {
   const filePath = path.join(process.cwd(), 'data.json');
   const jsonData = await fsPromises.readFile(filePath);
   const objectData = await JSON.parse(jsonData);
-  const _data = objectData.projects;
+  const _data = objectData;
 
-   const paths = _data.map(d => {
+   const paths = _data.projects.map(d => {
      return {
        params: {project: d.name.toString()}
      }
