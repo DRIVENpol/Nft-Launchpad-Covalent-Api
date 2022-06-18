@@ -328,7 +328,7 @@ const [provider, setProvider] = useState();
                >
              <b>Connect Your Wallet & Mint</b>
             </Button>): (<Button
-              onClick={connectWallet}
+              onClick={disconnect}
               variant={'solid'}
               size='lg'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
