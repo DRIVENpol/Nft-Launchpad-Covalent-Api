@@ -7,7 +7,7 @@ NumberInput,
         NumberInputField,
         NumberInputStepper,
         NumberIncrementStepper,
-        NumberDecrementStepper, Input } from '@chakra-ui/react'
+        NumberDecrementStepper, Input, VStack } from '@chakra-ui/react'
 
 import Twitter from '../../assets/icons/twitter.png'
 import Discord from '../../assets/icons/discord.png'
@@ -227,7 +227,7 @@ const [provider, setProvider] = useState();
 
     
   return (
-   <><Container maxW={'100%'} align='center' mb={4}>
+   <><Container maxW={'100%'} align='center' my={4}>
      <Grid
   templateRows='repeat(2, 1fr)'
   templateColumns='repeat(5, 1fr)'
@@ -252,7 +252,7 @@ const [provider, setProvider] = useState();
     >
 
     <Text><b>Transactions</b></Text>
-        <Text>Last 15 Transactions</Text>
+        <Text>Last Recorded Transactions</Text>
         <TableContainer>
   <Table variant='simple' size='sm' mt={4}>
     <Thead textAlign={'left'}>
@@ -326,7 +326,7 @@ const [provider, setProvider] = useState();
                borderRadius={40}
                >
              <b>Connect Your Wallet & Mint</b>
-            </Button></>): (<>
+            </Button></>): (<><VStack justify={'center'} py={'10%'}>
             <Text mb={2}> Mint Your {props.name} NFT</Text>
             <NumberInput step={1} defaultValue={0} min={0}
                 focusBorderColor = "white"
@@ -344,13 +344,13 @@ const [provider, setProvider] = useState();
               bgGradient='linear(to-l, #7928CA, #FF0080)'
               color='white'
               maxW={'100%'}
-              mt={4}
+              mt={6}
               fontSize={['12px', null, null, null, '100%']}
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
                borderRadius={10}
                >
              <b>Mint Now!</b>
-            </Button></>)}
+            </Button></VStack></>)}
     </GridItem>
 </Grid>
 </Container>
