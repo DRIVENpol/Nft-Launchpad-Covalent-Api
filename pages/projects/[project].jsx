@@ -326,9 +326,9 @@ const [provider, setProvider] = useState();
                borderRadius={40}
                >
              <b>Connect Your Wallet & Mint</b>
-            </Button></>): (<><VStack justify={'center'} py={'10%'}>
-            <Text mb={2}> Mint Your {props.name} NFT</Text>
-            <NumberInput step={1} defaultValue={0} min={0}
+            </Button></>): (<><VStack gap={3} justify={'center'} py={'7.5%'}>
+            <Text fontSize={'2xl'}><b>Mint Your {props.name} NFT</b></Text>
+            <NumberInput step={1} defaultValue={0} min={0} 
                 focusBorderColor = "white"
                 textColor={'white'} size='lg' maxWidth={'50%'}>
              <NumberInputField />
