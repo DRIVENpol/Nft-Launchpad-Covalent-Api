@@ -8,30 +8,20 @@ import Twitter from '../../assets/icons/twitter.png'
 import Discord from '../../assets/icons/discord.png'
 import Website from '../../assets/icons/click.png'
 
-// Fetching data from the JSON file
-import fsPromises from 'fs/promises';
-import path from 'path'
+import { projects } from '../../data'
 
-export const getStaticProps = async (context) => {
-  const name = context.params.project;
-  const filePath = path.join(process.cwd(), 'data.json');
-  const jsonData = await fsPromises.readFile(filePath);
-  const objectData = await JSON.parse(jsonData);
-  const _data = objectData;
-   return {
-    props: {project: {
-      name: name,
-    }}
-     }
-   }
+// Fetching data from the JSON file
+export const getStaticProps = async ({ params }) => {
+  const obj = projects.filter((p) => p.name.toString() === params.project)
+  return {
+    props: {name: obj[0].name,
+    description: obj[0].type,
+    image: obj[0].link}
+  }
+}
 
 export async function getStaticPaths() {
-  const filePath = path.join(process.cwd(), 'data.json');
-  const jsonData = await fsPromises.readFile(filePath);
-  const objectData = await JSON.parse(jsonData);
-  const _data = objectData;
-
-   const paths = _data.projects.map(d => {
+   const paths = projects.map((d) => {
      return {
        params: {project: d.name.toString()}
      }
@@ -47,9 +37,8 @@ export async function getStaticPaths() {
 
 
 
-const Project = ({project}) => {
+export default (props) => {
 const router = useRouter();
-console.log(project)
 
 // const [transfers, setTransfers] = useState(0);
 
@@ -92,7 +81,7 @@ console.log(project)
     bgPosition={'center'}
     bgSize={['300%', '200%', '200%', '200%', '100%']}
     borderRadius='lg'
-    bgImg={project.banner}
+    bgImg={props.image}
     bgRepeat="no-repeat"
     p={6} />
 
@@ -146,7 +135,7 @@ console.log(project)
     p={6}>
     
         <HStack mb={5}>
-                <Text mr={3} fontSize={'2xl'}><b>{project.name}</b></Text>
+                <Text mr={3} fontSize={'2xl'}><b>{props.name}</b></Text>
                <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
                <HStack>
                 <a href='#' target='_blank'><Image src={Twitter.src} alt='Twitter' w={3}/></a>
@@ -158,7 +147,7 @@ console.log(project)
                 </Box> 
             </HStack>
 
-        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15}>{project.description}</Text>
+        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15}>{props.description}</Text>
 
     </GridItem>
 
@@ -192,6 +181,5 @@ console.log(project)
   )
 }
 
-export default Project
 
 

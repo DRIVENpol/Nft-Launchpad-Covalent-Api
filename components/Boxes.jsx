@@ -8,9 +8,17 @@ import Website from '../assets/icons/click.png'
 
 import Link from 'next/link'
 
+import { projects } from '../data'
 
+// Fetching data from the JSON file
+export async function getStaticProps() {
+  return {
+    props: {obj: projects}
+  }
+}
 
 const Boxes = (props) => {
+console.log(props.obj)
   return (
     <>
 <Container maxW={'100%'} bg='white' color={'black'} mt='-20px' pt='5%' pb='2%'>
