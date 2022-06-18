@@ -315,7 +315,7 @@ const [provider, setProvider] = useState();
     p={6}>
 
 <Center my='17%'>
-{account ? (<Button
+{!account ? (<Button
               onClick={connectWallet}
               variant={'solid'}
               size='lg'
@@ -340,19 +340,6 @@ const [provider, setProvider] = useState();
                >
              <b>Disconnect</b>
             </Button>)}
-<Button
-              onClick={connectWallet}
-              variant={'solid'}
-              size='lg'
-              bgGradient='linear(to-l, #7928CA, #FF0080)'
-              color='white'
-              maxW={'100%'}
-              fontSize={['12px', null, null, null, '100%']}
-              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
-               borderRadius={40}
-               >
-             <b>Connect Your Wallet & Mint</b>
-            </Button>
 
 </Center>
     </GridItem>
