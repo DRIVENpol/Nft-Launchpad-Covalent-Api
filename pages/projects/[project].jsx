@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Button, Grid, GridItem, Link, Text, 
-    Center, HStack, VStack, Image, Box, Badge,
-TableContainer, Table, TableCaption, Thead, Tr, Th, Tbody, Td, Tfoot } from '@chakra-ui/react'
+    Center, HStack, Image, Box, Badge,
+TableContainer, Table, Flex, Thead, Tr, Th, Tbody, Td, Tfoot,
+NumberInput,
+        NumberInputField,
+        NumberInputStepper,
+        NumberIncrementStepper,
+        NumberDecrementStepper, Input } from '@chakra-ui/react'
 
 import Twitter from '../../assets/icons/twitter.png'
 import Discord from '../../assets/icons/discord.png'
@@ -223,7 +228,7 @@ const [provider, setProvider] = useState();
     
   return (
    <>
-    
+    <Flex>
      <Grid
   templateRows='repeat(2, 1fr)'
   templateColumns='repeat(5, 1fr)'
@@ -315,7 +320,7 @@ const [provider, setProvider] = useState();
     p={6}>
 
 <Center my='17%'>
-{!account ? (<Button
+{!account ? (<><Button
               onClick={connectWallet}
               variant={'solid'}
               size='lg'
@@ -327,25 +332,21 @@ const [provider, setProvider] = useState();
                borderRadius={40}
                >
              <b>Connect Your Wallet & Mint</b>
-            </Button>): (<Button
-              onClick={disconnect}
-              variant={'solid'}
-              size='lg'
-              bgGradient='linear(to-l, #7928CA, #FF0080)'
-              color='white'
-              maxW={'100%'}
-              fontSize={['12px', null, null, null, '100%']}
-              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
-               borderRadius={40}
-               >
-             <b>Disconnect</b>
-            </Button>)}
+            </Button></>): ( <><NumberInput step={1} defaultValue={0} min={0}
+            focusBorderColor = "white"
+           textColor={'white'} size='lg' maxWidth={'50%'}>
+        <NumberInputField />
+        <NumberInputStepper>
+          <NumberIncrementStepper />
+          <NumberDecrementStepper />
+        </NumberInputStepper>
+  </NumberInput></>)}
 
 </Center>
     </GridItem>
 
 
-</Grid>
+</Grid></Flex>
    </>
   )
 }

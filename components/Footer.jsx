@@ -1,4 +1,4 @@
-import { Container, Grid, GridItem, useColorModeValue, Link, Image, Text, Button, HStack, Center } from '@chakra-ui/react'
+import { Container, Grid, GridItem, Flex, Image, Text, Button, HStack, Center } from '@chakra-ui/react'
 import React from 'react'
 import Twitter from '../assets/icons/twitter.png'
 import Discord from '../assets/icons/discord.png'
@@ -9,7 +9,7 @@ import Website from '../assets/icons/click.png'
 
 const Footer = () => {
   return (
- <>
+ <><Flex>
      <Container maxW='100%' bgGradient='linear(to-r, #141E30, #243B55)' align='center' py={5} bottom={0}>
      <Grid templateColumns={['repeat(1, 1fr)', null, null, null, 'repeat(3, 1fr)']} gap={6} color='white' alignItems={'center'} justifyContent={'space-between'}>
 
@@ -28,7 +28,7 @@ const Footer = () => {
         </GridItem>
 
     </Grid>
-     </Container>
+     </Container></Flex>
  </>
   )
 }
