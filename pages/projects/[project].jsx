@@ -21,23 +21,25 @@ import { providerOptions } from "../../components/Utils/providerOptions";
 
 // Fetching data from the JSON file
 export const getStaticProps = async ({ params }) => {
+  const obj = projects.filter((p) => p.name.toString() === params.project)
     const key = 'ckey_148ca1425bb2412cb4c98bf085f';
     const baseURL = 'https://api.covalenthq.com/v1'
     const chainId = '137'
-    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3";
+    const address = obj[0].address;
 
     const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=28672470&ending-block=29672470&key=${key}&page-number=1`);
     const response = await fetch(url);
     const result = await response.json();
     const data = result.data.items;
 
-    const obj = projects.filter((p) => p.name.toString() === params.project)
+  
     const trs = data.filter((t) => t.decoded.name.toString() === "Transfer");
+    const _trs = trs.filter((e,k) => k < 15);
     return {
         props: {name: obj[0].name,
         description: obj[0].type,
         image: obj[0].link,
-        transactions: trs},
+        transactions: _trs},
           }
 }
 
@@ -56,9 +58,8 @@ export async function getStaticPaths() {
 
 
 const Project = function (props) {
-const router = useRouter();
 
-const [provider, setProvider] = useState();
+  const [provider, setProvider] = useState();
   const [library, setLibrary] = useState();
   const [account, setAccount] = useState();
   const [signature, setSignature] = useState("");

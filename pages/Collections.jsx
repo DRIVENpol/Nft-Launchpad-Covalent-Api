@@ -51,7 +51,7 @@ const Collections = function ({obj}) {
     
                   <Stack direction='column' mx={4} mb='5%' mt='5%' alignItems="center" my={4}>  
                       <Text fontSize={'29px'}><b>{project.name}</b></Text>
-                      <Text fontSize={'14px'} noOfLines={3}>{project.type}</Text>
+                      <Text fontSize={'14px'} noOfLines={2}>{project.type}</Text>
                         <Stack direction='row' mb='5%' mt='5%'>
                           <Link href={'/projects/' + project.name} key={project.type} passHref>
                             <Button

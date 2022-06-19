@@ -64,17 +64,17 @@ const Navbar = () => {
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
               
-              <Button _hover={{background: "#243B55", color: "white"}} bgColor='transparent'>
-                        <Link href="/">Home</Link>
-                        </Button>
+              <Link href="/"><Button _hover={{background: "#243B55", color: "white"}} bgColor='transparent'>
+                       Home
+                        </Button></Link>
 
-                        <Button _hover={{background: "#243B55", color: "white"}} bgColor='transparent'>
-                            <Link href="/Collections">Explore</Link>
-                        </Button>
+                        <Link href="/Collections"><Button _hover={{background: "#243B55", color: "white"}} bgColor='transparent'>
+                          Explore
+                        </Button></Link>
             </HStack>
           </HStack>
           <Flex alignItems={'center'} mr={20}>
-            <Button
+          <Link href="/CreateNft"><Button
               variant={'solid'}
               size='sm'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
@@ -84,8 +84,8 @@ const Navbar = () => {
               fontSize={['12px', null, null, null, '100%']}
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
               display={{ base: 'none', md: 'flex' }} px={6} borderRadius={20}>
-             <Link href="/CreateNft">+ Create Collection</Link>
-            </Button>
+             + Create Collection
+            </Button></Link>
           </Flex>
         </Flex>
         {isOpen ? (
@@ -93,9 +93,9 @@ const Navbar = () => {
             <Stack as={'nav'} spacing={4}>
             <Button colorScheme='blackAlpha'><Link href="/">Home</Link></Button>
             <Button colorScheme='blackAlpha'><Link href="/Collections">Explore</Link></Button>
-            <Button bgGradient='linear(to-l, #7928CA, #FF0080)' color={'white'} _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}>
-            <Link href="/CreateNft">+ Create Collection</Link>
-            </Button>
+            <Link href="/CreateNft"><Button bgGradient='linear(to-l, #7928CA, #FF0080)' color={'white'} _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}>
+           + Create Collection
+            </Button></Link>
             </Stack>
           </Box>
         ) : null}
