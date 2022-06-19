@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+
 import { Button, Grid, GridItem, Link, Text, 
     Container, HStack, Image, Box, Badge,
-TableContainer, Table, Flex, Thead, Tr, Th, Tbody, Td, Tfoot,
-NumberInput,
-        NumberInputField,
-        NumberInputStepper,
-        NumberIncrementStepper,
-        NumberDecrementStepper, Input, VStack } from '@chakra-ui/react'
+TableContainer, Table, Thead, Tr, Th, Tbody, Td,
+NumberInput, NumberInputField, NumberInputStepper,
+NumberIncrementStepper,NumberDecrementStepper,
+ VStack } from '@chakra-ui/react'
 
 import Twitter from '../../assets/icons/twitter.png'
 import Discord from '../../assets/icons/discord.png'
@@ -52,14 +51,11 @@ export async function getStaticPaths() {
    return {
        paths,
        fallback: false
-       
      }
-
    }
 
 
-
-export default (props) => {
+const Project = function (props) {
 const router = useRouter();
 
 const [provider, setProvider] = useState();
@@ -357,4 +353,4 @@ const [provider, setProvider] = useState();
   )
 }
 
-
+export default Project

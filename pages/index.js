@@ -1,16 +1,17 @@
-import Hero from "../components/Hero"
-// import Boxes from "../components/Boxes"
+import React from "react"
 
-import { Text, Center, Grid, GridItem, Box, Container } from '@chakra-ui/react'
-import { Stack, Button, HStack, Image } from '@chakra-ui/react'
+import Link from 'next/link'
+
+import { Text, Center, Grid, GridItem, Box, Container, Stack, Button, HStack, Image } from '@chakra-ui/react'
+
 import Twitter from '../assets/icons/twitter.png'
 import Discord from '../assets/icons/discord.png'
 import Website from '../assets/icons/click.png'
 
-import Link from 'next/link'
+import Hero from "../components/Hero"
+import { projects } from '../data'
 
-export default ({obj}) => {
-
+const Home = function ({obj}) {
   return (
     <>
      <Hero />
@@ -28,7 +29,7 @@ export default ({obj}) => {
        <GridItem w='100%' h='10' align='center' mb={['420', '420', '420', '400', '380', '400']}>
        <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' bgGradient='linear(to-r, #141E30, #243B55)' color={'white'}>
       <Image src={project.link} maxH={200} 
-        maxW='100%' minH={200}
+        maxW='100%' minH={200} alt={project.link}
       />
     
     <Stack direction='column' mx={4} mb='5%' mt='5%' alignItems="center" my={4}>  
@@ -36,7 +37,7 @@ export default ({obj}) => {
         <Text fontSize={'14px'} noOfLines={2}>{project.type}</Text>
         <Stack direction='row' mb='5%' mt='5%'>
         <Link href={'/projects/' + project.name}
-              key={project.type}>
+              key={project.type} rel="noreferrer" passHref>
         <Button
               variant={'solid'}
               size='sm' my={4}
@@ -51,35 +52,26 @@ export default ({obj}) => {
             </Link>
             </Stack>
             <HStack>
-            <a href={project.twitter} target='_blank'><Image src={Twitter.src} alt='Twitter' w={5}/></a>
-            <a href={project.discord} target='_blank'><Image src={Discord.src} alt='Discord' w={5}/></a>
-            <a href={project.website} target='_blank'><Image src={Website.src} alt='Website' w={5}/></a>
+            <a href={project.twitter} target='_blank' rel="noreferrer"><Image src={Twitter.src} alt='Twitter' w={5}/></a>
+            <a href={project.discord} target='_blank' rel="noreferrer"><Image src={Discord.src} alt='Discord' w={5}/></a>
+            <a href={project.website} target='_blank' rel="noreferrer"><Image src={Website.src} alt='Website' w={5}/></a>
            </HStack>
-
             </Stack>
-            
-
     </Box>
     </GridItem>
        </div>
    ))}
-
-
 <br />
-
     </Grid>
    </Center><br /><br /></Container>
-
     </>
   )
 }
 
-
-import { projects } from '../data'
-
-// Fetching data from the JSON file
 export async function getStaticProps() {
   return {
     props: {obj: projects}
   }
 }
+
+export default Home
