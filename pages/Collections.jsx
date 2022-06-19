@@ -25,10 +25,12 @@ const Collections = function ({obj}) {
      <Hero />
       <Container maxW={'100%'} bg='white' color={'black'} mt='-20px' pt='5%' pb='2%'>
         <Center>
-        <Text fontSize={'xl'} mb={3}>Search by name or address</Text></Center>
+        <Text fontSize={'ml'} mb={3} color='grey'>Search by name or address</Text></Center>
         <Center><Input onChange={(event) => {
           setSearch(event.target.value)
-        }}maxWidth='50%' placeholder='Search...' mb={10} /></Center>
+        }}maxWidth={['80%', '80%', '70%', '60%', '50%' ]} placeholder='Search...' mb={10} 
+        borderRadius='40' borderColor={'#FF0080'} borderWidth='2px' />
+        </Center>
         <Center>
         <Text fontSize='3xl' ><b>All Active Collections</b></Text>
         </Center>
