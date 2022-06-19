@@ -93,7 +93,7 @@ const Navbar = () => {
             <Stack as={'nav'} spacing={4}>
             <Button colorScheme='blackAlpha'><Link href="/">Home</Link></Button>
             <Button colorScheme='blackAlpha'><Link href="/Collections">Explore</Link></Button>
-            <Link href="/CreateNft"><Button bgGradient='linear(to-l, #7928CA, #FF0080)' color={'white'} _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}>
+            <Link href="/CreateNft"><Button width={'100%'} bgGradient='linear(to-l, #7928CA, #FF0080)' color={'white'} _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}>
            + Create Collection
             </Button></Link>
             </Stack>
