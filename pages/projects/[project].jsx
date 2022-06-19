@@ -303,7 +303,7 @@ const [provider, setProvider] = useState();
                 </Box> 
             </HStack>
 
-        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15}>{props.description}</Text>
+        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15} textAlign='left'>{props.description}</Text>
 
     </GridItem>
 
