@@ -59,6 +59,8 @@ export async function getStaticPaths() {
 
 const Project = function (props) {
 
+  const [ownerAddress, setOwnerAddress] = useState('0x4E8892C244CF98b3e59b709b4c81553ef8FeF5cF');
+
   const [provider, setProvider] = useState();
   const [library, setLibrary] = useState();
   const [account, setAccount] = useState();
@@ -240,7 +242,7 @@ const Project = function (props) {
     bgRepeat="no-repeat"
     p={6} />
 
-    <GridItem rowSpan={['1', '2', '2', '2', '2']} 
+    <GridItem rowSpan={['15', '15', '2', '2', '2']} 
     colSpan={['5', '5', '1', '1', '1']} 
     bgGradient='linear(to-r, #141E30, #243B55)'
     borderWidth='1px' 
@@ -297,9 +299,9 @@ const Project = function (props) {
                 <Text>|</Text>
                 <a href='#' target='_blank'><Image src={Website.src} alt='Website' w={3}/></a>
                 </HStack>
-                </Box> 
+                </Box>
+                {account === ownerAddress ? (<Text>Manage Collection</Text>) : null}
             </HStack>
-
         <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15} textAlign='left'>{props.description}</Text>
 
     </GridItem>
