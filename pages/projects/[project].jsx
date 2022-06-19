@@ -311,10 +311,9 @@ const [provider, setProvider] = useState();
     <GridItem colSpan={['5', '5', '2', '2', '2']}  
     bgGradient='linear(to-r, #141E30, #243B55)' 
     borderWidth='1px' 
-    borderRadius='lg' 
-    p={6} align={'center'}>
+    borderRadius='lg' align={'center'}>
 
-{!account ? (<><Button
+{!account ? (<><VStack py={'17%'}><Button
               onClick={connectWallet}
               variant={'solid'}
               size='lg'
@@ -326,7 +325,7 @@ const [provider, setProvider] = useState();
                borderRadius={40}
                >
              <b>Connect Your Wallet & Mint</b>
-            </Button></>): (<><VStack gap={3} justify={'center'} py={'7.5%'}>
+            </Button></VStack></>): (<><VStack py={'7.5%'} gap={3} justify={'center'}>
             <Text fontSize={'2xl'}><b>Mint Your {props.name} NFT</b></Text>
             <NumberInput step={1} defaultValue={0} min={0} 
                 focusBorderColor = "white"
