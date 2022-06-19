@@ -33,6 +33,14 @@ const isRevealedCollection = () => {
            <Text mt='30px'><b>Total Supply</b></Text>
            <Input placeholder='1000' mt='10px' />
 
+           <br />
+           <Text mt='30px'><b>Max Amount Per Wallet</b></Text>
+           <Input placeholder='3' mt='10px' />
+
+           <br />
+           <Text mt='30px'><b>Mint Price [MATIC]</b></Text>
+           <Input placeholder='100' mt='10px' />
+
             <br />
            <Text mt='30px'><b>Base URI</b></Text>
            <Input placeholder='Pinata IPFS Link' mt='10px' />
