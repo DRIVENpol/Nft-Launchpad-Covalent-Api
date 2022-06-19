@@ -65,7 +65,7 @@ const isRevealedCollection = () => {
               maxW={'100%'}
               fontSize={['12px', null, null, null, '100%']}
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
-               borderRadius={40}
+               borderRadius={10}
                >
              <b>Create Collection</b>
             </Button></Container>
