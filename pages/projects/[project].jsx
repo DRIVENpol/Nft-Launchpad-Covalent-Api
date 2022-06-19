@@ -242,7 +242,7 @@ const Project = function (props) {
     bgRepeat="no-repeat"
     p={6} />
 
-    <GridItem rowSpan={['15', '15', '2', '2', '2']} 
+    <GridItem rowSpan={['20', '20', '2', '2', '2']} 
     colSpan={['5', '5', '1', '1', '1']} 
     bgGradient='linear(to-r, #141E30, #243B55)'
     borderWidth='1px' 
@@ -269,7 +269,10 @@ const Project = function (props) {
              <>
     <Tr>
         <Td>{_data}</Td>
-        <Td><Link href={`https://www.polygonscan.com/tx/${_tx}`} target='_blank'>See on explorer</Link></Td>
+        <Td><Link href={`https://www.polygonscan.com/tx/${_tx}`} target='_blank'>
+        <Button width={20} height={5} bg='black'
+        _hover={{bgColor: "grey", color: "white"}}><Text fontSize={'10px'}>View</Text></Button>
+        </Link></Td>
       </Tr>
       </>
              )
