@@ -21,7 +21,7 @@ import { providerOptions } from "../../components/Utils/providerOptions";
 
 // Fetching data from the JSON file
 export const getStaticProps = async ({ params }) => {
-  const obj = projects.filter((p) => p.name.toString() === params.project)
+    const obj = projects.filter((p) => p.name.toString() === params.project)
     const key = 'ckey_148ca1425bb2412cb4c98bf085f';
     const baseURL = 'https://api.covalenthq.com/v1'
     const chainId = '137'

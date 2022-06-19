@@ -1,7 +1,9 @@
+import React, { useState } from "react"
+
 import Hero from "../components/Hero"
 
 import { Text, Center, Grid, GridItem, Box, Container } from '@chakra-ui/react'
-import { Stack, Button, HStack, Image } from '@chakra-ui/react'
+import { Stack, Button, HStack, Image, Input } from '@chakra-ui/react'
 
 import { projects } from '../data'
 
@@ -13,12 +15,22 @@ import Link from 'next/link'
 
 const Collections = function ({obj}) {
 
+  const [search, setSearch] = useState("");
+  const searchResult = obj.filter((p) => (p.name.toString().includes(search.toString())
+  || p.address.toString().includes(search.toString()))
+  );
+
   return (
     <>
      <Hero />
       <Container maxW={'100%'} bg='white' color={'black'} mt='-20px' pt='5%' pb='2%'>
         <Center>
-          <Text fontSize='3xl' ><b>All Active Collections</b></Text>
+        <Text fontSize={'xl'} mb={3}>Search by name or address</Text></Center>
+        <Center><Input onChange={(event) => {
+          setSearch(event.target.value)
+        }}maxWidth='50%' placeholder='Search...' mb={10} /></Center>
+        <Center>
+        <Text fontSize='3xl' ><b>All Active Collections</b></Text>
         </Center>
 
         <Center> 
@@ -31,7 +43,7 @@ const Collections = function ({obj}) {
           <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(4, 1fr)']}
           gap={6}
           w='75%'>
-          {obj && obj.map((project) => (
+          {searchResult && searchResult.map((project) => (
             <div key={project.name} {...project}>
               <GridItem w='100%' h='10' align='center' mb={['420', '420', '420', '400', '380', '400']}>
                 <Box
