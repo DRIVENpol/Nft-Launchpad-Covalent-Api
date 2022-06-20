@@ -5,6 +5,7 @@ import {
 } from '@chakra-ui/react'
 
 const CreateNft = () => {
+  
 const [revealed, setRevealed] = useState('No: By Default');
 
 const isRevealedCollection = () => {

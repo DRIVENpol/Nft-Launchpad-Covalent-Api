@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import { useRouter } from 'next/router'
 
 import {
   Box,
   Flex,
-  Image,
   HStack,
   IconButton,
   Button,
-  Stack, Text
+  Stack, Text,
+  useDisclosure
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { useDisclosure } from '@chakra-ui/react'
-
-import { networkParams } from "./Utils/Networks";
-import { ethers } from "ethers";
-import Web3Modal from "web3modal";
-import { providerOptions } from "./Utils/providerOptions";
-
 
 
 const Navbar = () => {

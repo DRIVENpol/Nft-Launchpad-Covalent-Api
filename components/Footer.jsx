@@ -1,4 +1,4 @@
-import { Container, Grid, GridItem, Flex, Image, Text, Button, HStack, Center } from '@chakra-ui/react'
+import { Container, Grid, GridItem, Image, Text, HStack, Center } from '@chakra-ui/react'
 import React from 'react'
 import Twitter from '../assets/icons/twitter.png'
 import Discord from '../assets/icons/discord.png'

@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 
-import { Button, Grid, GridItem, Link, Text, 
-    Container, HStack, Image, Box, Badge,
+
+import {
+Button, Grid, GridItem, Link, Text, 
+Container, HStack, Image, Box,
 TableContainer, Table, Thead, Tr, Th, Tbody, Td,
 NumberInput, NumberInputField, NumberInputStepper,
 NumberIncrementStepper,NumberDecrementStepper,
-VStack, useDisclosure, Modal,
-ModalOverlay,
-ModalContent,
-ModalHeader,
-ModalFooter,
-ModalBody,
-ModalCloseButton, Input } from '@chakra-ui/react'
+VStack, useDisclosure, Modal, ModalOverlay,
+ModalContent, ModalHeader, ModalFooter,
+ModalBody, ModalCloseButton, Input 
+} from '@chakra-ui/react'
 
 import Twitter from '../../assets/icons/twitter.png'
 import Discord from '../../assets/icons/discord.png'
