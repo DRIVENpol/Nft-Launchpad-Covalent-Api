@@ -80,7 +80,7 @@ export async function getStaticPaths() {
 
 
 const Project = function (props) {
-  console.log(props.transactions)
+  // console.log(props.transactions)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ownerAddress, setOwnerAddress] = useState('0x4E8892C244CF98b3e59b709b4c81553ef8FeF5cF');
 
