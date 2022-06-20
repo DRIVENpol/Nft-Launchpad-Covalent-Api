@@ -6,7 +6,13 @@ import { Button, Grid, GridItem, Link, Text,
 TableContainer, Table, Thead, Tr, Th, Tbody, Td,
 NumberInput, NumberInputField, NumberInputStepper,
 NumberIncrementStepper,NumberDecrementStepper,
- VStack } from '@chakra-ui/react'
+VStack, useDisclosure, Modal,
+ModalOverlay,
+ModalContent,
+ModalHeader,
+ModalFooter,
+ModalBody,
+ModalCloseButton, Input } from '@chakra-ui/react'
 
 import Twitter from '../../assets/icons/twitter.png'
 import Discord from '../../assets/icons/discord.png'
@@ -59,6 +65,7 @@ export async function getStaticPaths() {
 
 const Project = function (props) {
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [ownerAddress, setOwnerAddress] = useState('0x4E8892C244CF98b3e59b709b4c81553ef8FeF5cF');
 
   const [provider, setProvider] = useState();
@@ -89,6 +96,7 @@ const Project = function (props) {
         setLibrary(library);
         if (accounts) setAccount(accounts[0]);
         setChainId(network.chainId);
+
 
       } catch (error) {
         setError(error);
@@ -226,7 +234,14 @@ const Project = function (props) {
 
     
   return (
-   <><Container maxW={'100%'} align='center' py={4} bgColor='#e0e0eb'>
+   <><Container maxW={'100%'} align='center' py={4} bgColor='#e0e0eb'> 
+   <Box bgGradient='linear(to-r, #141E30, #243B55)' 
+   py='3' 
+   mb={'4'} 
+   borderRadius='10'
+   color={'white'}
+   boxShadow='md' onClick={onOpen}>
+    {account === ownerAddress ? (<Text as={'b'}>Manage Collection</Text>) : null}</Box>
      <Grid
   templateRows='repeat(2, 1fr)'
   templateColumns='repeat(5, 1fr)'
@@ -303,7 +318,6 @@ const Project = function (props) {
                 <a href='#' target='_blank'><Image src={Website.src} alt='Website' w={3}/></a>
                 </HStack>
                 </Box>
-                {account === ownerAddress ? (<Text>Manage Collection</Text>) : null}
             </HStack>
         <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15} textAlign='left'>{props.description}</Text>
 
@@ -355,6 +369,64 @@ const Project = function (props) {
     </GridItem>
 </Grid>
 </Container>
+
+<Modal isOpen={isOpen} onClose={onClose} isCentered  size={'2xl'}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Manage Your Collection</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Grid templateColumns='repeat(2, 1fr)' gap={6}>
+
+              <GridItem w='100%'>
+                <Text mt='30px'><b>Pause Mint?</b></Text>
+                <Input placeholder='Yes/No' mt='10px' />
+              </GridItem>
+
+              <GridItem w='100%'>
+                <Text mt='30px'><b>Batch Mint (1 NFT)</b></Text>
+                <Input placeholder='Address 1, Addres 2 ...' mt='10px' />
+              </GridItem>
+
+              <GridItem w='100%'>
+                <Text mt='30px'><b>New Base URI</b></Text>
+                <Input placeholder='Pinata IPFS Link' mt='10px' />
+              </GridItem>
+
+              <GridItem w='100%'>
+                <Text mt='30px'><b>New Not-Revealed URI</b></Text>
+                <Input placeholder='Pinata IPFS Link' mt='10px' />
+              </GridItem>
+
+              <GridItem w='100%'>
+                <Text mt='30px'><b>Block Addresses</b></Text>
+                <Input placeholder='Address 1, Addres 2 ...' mt='10px' />
+              </GridItem>
+
+              <GridItem w='100%'>
+                <Text mt='30px'><b>Mint Price (MATIC)</b></Text>
+                <Input placeholder='200' mt='10px' />
+              </GridItem>
+
+              <GridItem w='100%'>
+                <Text mt='30px'><b>Transfer Ownership</b></Text>
+                <Input placeholder='New Owner: Address' mt='10px' />
+              </GridItem>
+
+              <GridItem w='100%'>
+                <Text mt='30px'><b>Banner Image</b></Text>
+                <Input placeholder='www.example.com/image.png' mt='10px' />
+              </GridItem>
+
+            </Grid>
+          </ModalBody>
+          <ModalFooter>
+          <Button onClick={onClose} width={'20%'} bgGradient='linear(to-l, #7928CA, #FF0080)' color={'white'} _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
    </>
   )
 }
