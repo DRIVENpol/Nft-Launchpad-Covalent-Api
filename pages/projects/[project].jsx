@@ -251,13 +251,15 @@ const Project = function (props) {
   return (
     
    <><Container maxW={'100%'} align='center' py={4} bgColor='#e0e0eb'> 
-   <Box bgGradient='linear(to-r, #141E30, #243B55)' 
-   py='3' 
-   mb={'4'} 
-   borderRadius='10'
-   color={'white'}
-   boxShadow='md' onClick={onOpen}>
-    {account === ownerAddress ? (<Text as={'b'}>Manage Collection</Text>) : null}</Box>
+       {account === ownerAddress ? (
+        <Box bgGradient='linear(to-r, #141E30, #243B55)' 
+          py='3' 
+          mb={'4'} 
+          borderRadius='10'
+          color={'white'}
+          boxShadow='md' onClick={onOpen}>
+<Text as={'b'}>Manage Collection</Text></Box>) : null}
+
      <Grid
   templateRows='repeat(2, 1fr)'
   templateColumns='repeat(5, 1fr)'
