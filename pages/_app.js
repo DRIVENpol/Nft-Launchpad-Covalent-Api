@@ -9,8 +9,8 @@ import { Flex } from '@chakra-ui/react'
 function MyApp({ Component, pageProps }) {
   return (<>
     <ChakraProvider>
-    <Navbar />
-      <Component {...pageProps} />
+      <Navbar />
+        <Component {...pageProps} />
       <Footer />
     </ChakraProvider>
     </>)

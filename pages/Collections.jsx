@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 
-import Hero from "../components/Hero"
 
 import { Text, Center, Grid, GridItem, Box, Container } from '@chakra-ui/react'
 import { Stack, Button, HStack, Image, Input } from '@chakra-ui/react'
@@ -22,7 +21,6 @@ const Collections = function ({obj}) {
 
   return (
     <>
-     <Hero />
       <Container maxW={'100%'} bg='white' color={'black'} mt='-20px' pt='5%' pb='2%'>
         <Center>
         <Text fontSize={'ml'} mb={3} color='grey'>Search by name or address</Text></Center>
