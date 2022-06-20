@@ -29,7 +29,6 @@ import { providerOptions } from "../../components/Utils/providerOptions";
 export const getStaticProps = async ({ params }) => {
   let endBlock = '0';
   let startBlock = '1';
-  let _endBlock = '1';
 
   const providers = ethers.providers;
 
@@ -37,7 +36,7 @@ export const getStaticProps = async ({ params }) => {
 
   await _provider.getBlockNumber().then(function(blockNumber) {
    endBlock = blockNumber;
-   startBlock = endBlock - 100000;
+   startBlock = endBlock - 1000000;
 });
 
     const obj = projects.filter((p) => p.name.toString() === params.project);
@@ -54,7 +53,7 @@ export const getStaticProps = async ({ params }) => {
 
   
     const trs = data.filter((t) => t.decoded.name.toString().includes(""));
-    const _trs = trs.filter((e,k) => k < 50);
+    // const _trs = trs.filter((e,k) => k < 50);
     const __trs = data.sort((a, b) => (b.block_height - a.block_height))
     
     return {
