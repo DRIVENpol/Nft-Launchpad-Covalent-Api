@@ -58,6 +58,9 @@ export const getStaticProps = async ({ params }) => {
         props: {name: obj[0].name,
         description: obj[0].type,
         image: obj[0].link,
+        twitter: obj[0].twitter,
+        website: obj[0].website,
+        discord: obj[0].discord,
         transactions: __trs},
           }
 }
@@ -327,11 +330,11 @@ const Project = function (props) {
                 <Text mr={3} fontSize={'2xl'}><b>{props.name}</b></Text>
                <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
                <HStack>
-                <a href='#' target='_blank'><Image src={Twitter.src} alt='Twitter' w={3}/></a>
+                <a href={props.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
                 <Text>|</Text>
-                <a href='#' target='_blank'><Image src={Discord.src} alt='Discord' w={3}/></a>
+                <a href={props.discord} target='_blank' rel="noreferrer" ><Image src={Discord.src} alt='Discord' w={3}/></a>
                 <Text>|</Text>
-                <a href='#' target='_blank'><Image src={Website.src} alt='Website' w={3}/></a>
+                <a href={props.website} target='_blank' rel="noreferrer" ><Image src={Website.src} alt='Website' w={3}/></a>
                 </HStack>
                 </Box>
             </HStack>

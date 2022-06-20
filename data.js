@@ -1,11 +1,11 @@
 export const projects =  [
     {
-       "name": "Project1",
-        "type": "1 Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum .",
-        "link": "https://cdn.pixabay.com/photo/2018/01/24/17/33/light-bulb-3104355_640.jpg",
-        "website": "https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf",
-        "discord": "https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf",
-        "twitter": "https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf",
+       "name": "Cyber Knights",
+        "type": "A collection of 10,000 unique Cyber Knights NFTs to protect the Crypto Realm! A Cyber Knight’s sole mission is to protect its owner from the evil forces that roam the DeFi space.As a core component of the DRIVENecosystem, these sentries are much more than art that sits dormant in your wallet; they are your gatekeeper, your protector, and your companion.",
+        "link": "https://lh3.googleusercontent.com/G5V8Tny1jONBKHZfsAEiOVUYaKMUMgQuo-VwfHBa8_AAgsmAuWdz7lPq6UUmK5dCfilaaNBIOe5l1UoqiHAOyDoD5lAKZpxZtmtOZQ=h600",
+        "website": "https://opensea.io/collection/cyber-knights-drivenecosystem",
+        "discord": "https://t.co/dohqCh54hj",
+        "twitter": "https://twitter.com/CyberKnightsNFT",
         "address": "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3"
       },
       {
