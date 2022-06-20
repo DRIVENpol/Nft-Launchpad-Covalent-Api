@@ -28,9 +28,11 @@ const Home = function ({obj}) {
        <div key={project.name} {...project}>
        <GridItem w='100%' h='10' align='center' mb={['420', '420', '420', '400', '380', '400']}>
        <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' bgGradient='linear(to-r, #141E30, #243B55)' color={'white'}>
-      <Image src={project.link} maxH={200} 
-        maxW='100%' minH={200} alt={project.link}
-      />
+      <Box w={'200'} h='200' bgImg={project.link} bgRepeat="no-repeat" bgPosition={'center'} bgSize='200%'>
+      {/* <Image src={project.link}
+        width='100' height='200' alt={project.link} display='block'
+      /> */}
+      </Box>
     
     <Stack direction='column' mx={4} mb='5%' mt='5%' alignItems="center" my={4}>  
         <Text fontSize={'29px'}><b>{project.name}</b></Text>
