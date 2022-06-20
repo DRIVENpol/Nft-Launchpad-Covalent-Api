@@ -29,6 +29,7 @@ import { providerOptions } from "../../components/Utils/providerOptions";
 export const getStaticProps = async ({ params }) => {
   let endBlock = '0';
   let startBlock = '1';
+  let _endBlock = '1';
 
   const providers = ethers.providers;
 
@@ -53,12 +54,14 @@ export const getStaticProps = async ({ params }) => {
 
   
     const trs = data.filter((t) => t.decoded.name.toString().includes(""));
-    const _trs = trs.filter((e,k) => k < 15);
+    const _trs = trs.filter((e,k) => k < 50);
+    const __trs = data.sort((a, b) => (b.block_height - a.block_height))
+    
     return {
         props: {name: obj[0].name,
         description: obj[0].type,
         image: obj[0].link,
-        transactions: _trs},
+        transactions: __trs},
           }
 }
 
@@ -77,6 +80,7 @@ export async function getStaticPaths() {
 
 
 const Project = function (props) {
+  console.log(props.transactions)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ownerAddress, setOwnerAddress] = useState('0x4E8892C244CF98b3e59b709b4c81553ef8FeF5cF');
 
@@ -275,7 +279,7 @@ const Project = function (props) {
     bgGradient='linear(to-r, #141E30, #243B55)'
     borderWidth='1px' 
     borderRadius='lg'
-    p={6}
+    p={6} maxH='700' overflowY={'scroll'}
     >
 
     <Text><b>Transactions</b></Text>
