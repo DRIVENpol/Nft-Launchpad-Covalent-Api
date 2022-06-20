@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-
 import {
 Button, Grid, GridItem, Link, Text, 
 Container, HStack, Image, Box,
@@ -9,7 +8,7 @@ NumberInput, NumberInputField, NumberInputStepper,
 NumberIncrementStepper,NumberDecrementStepper,
 VStack, useDisclosure, Modal, ModalOverlay,
 ModalContent, ModalHeader, ModalFooter,
-ModalBody, ModalCloseButton, Input 
+ModalBody, ModalCloseButton, Input
 } from '@chakra-ui/react'
 
 import Twitter from '../../assets/icons/twitter.png'
@@ -259,7 +258,7 @@ const Project = function (props) {
           borderRadius='10'
           color={'white'}
           boxShadow='md' onClick={onOpen}>
-<Text as={'b'}>Manage Collection</Text></Box>) : null}
+<Text as={'b'}><Link onClick={onOpen}>Manage Collection</Link></Text></Box>) : null}
 
      <Grid
   templateRows='repeat(2, 1fr)'
