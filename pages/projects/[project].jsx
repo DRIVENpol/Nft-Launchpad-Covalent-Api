@@ -370,9 +370,9 @@ const Project = function (props) {
 </Grid>
 </Container>
 
-<Modal isOpen={isOpen} onClose={onClose} isCentered  size={'2xl'}>
+<Modal isOpen={isOpen} onClose={onClose} isCentered  size={'2xl'} >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bgColor='#e0e0eb'>
           <ModalHeader>Manage Your Collection</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -380,42 +380,42 @@ const Project = function (props) {
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Pause Mint?</b></Text>
-                <Input placeholder='Yes/No' mt='10px' />
+                <Input placeholder='Yes/No' mt='10px' bg='white' />
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Batch Mint (1 NFT)</b></Text>
-                <Input placeholder='Address 1, Addres 2 ...' mt='10px' />
+                <Input placeholder='Address 1, Addres 2 ...' mt='10px' bg='white' />
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>New Base URI</b></Text>
-                <Input placeholder='Pinata IPFS Link' mt='10px' />
+                <Input placeholder='Pinata IPFS Link' mt='10px' bg='white' />
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>New Not-Revealed URI</b></Text>
-                <Input placeholder='Pinata IPFS Link' mt='10px' />
+                <Input placeholder='Pinata IPFS Link' mt='10px' bg='white' />
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Block Addresses</b></Text>
-                <Input placeholder='Address 1, Addres 2 ...' mt='10px' />
+                <Input placeholder='Address 1, Addres 2 ...' mt='10px' bg='white' />
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Mint Price (MATIC)</b></Text>
-                <Input placeholder='200' mt='10px' />
+                <Input placeholder='200' mt='10px' bg='white' />
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Transfer Ownership</b></Text>
-                <Input placeholder='New Owner: Address' mt='10px' />
+                <Input placeholder='New Owner: Address' mt='10px' bg='white' />
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Banner Image</b></Text>
-                <Input placeholder='www.example.com/image.png' mt='10px' />
+                <Input placeholder='www.example.com/image.png' mt='10px' bg='white' />
               </GridItem>
 
             </Grid>
