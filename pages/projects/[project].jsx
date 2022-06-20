@@ -27,19 +27,32 @@ import { providerOptions } from "../../components/Utils/providerOptions";
 
 // Fetching data from the JSON file
 export const getStaticProps = async ({ params }) => {
-    const obj = projects.filter((p) => p.name.toString() === params.project)
+  let endBlock = '0';
+  let startBlock = '1';
+
+  const providers = ethers.providers;
+
+  const _provider = providers.getDefaultProvider('matic');
+
+  await _provider.getBlockNumber().then(function(blockNumber) {
+   endBlock = blockNumber;
+   startBlock = endBlock - 100000;
+});
+
+    const obj = projects.filter((p) => p.name.toString() === params.project);
+
     const key = 'ckey_148ca1425bb2412cb4c98bf085f';
     const baseURL = 'https://api.covalenthq.com/v1'
     const chainId = '137'
     const address = obj[0].address;
 
-    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=28672470&ending-block=29672470&key=${key}&page-number=1`);
+    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
     const response = await fetch(url);
     const result = await response.json();
     const data = result.data.items;
 
   
-    const trs = data.filter((t) => t.decoded.name.toString() === "Transfer");
+    const trs = data.filter((t) => t.decoded.name.toString().includes(""));
     const _trs = trs.filter((e,k) => k < 15);
     return {
         props: {name: obj[0].name,
@@ -64,7 +77,6 @@ export async function getStaticPaths() {
 
 
 const Project = function (props) {
-
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ownerAddress, setOwnerAddress] = useState('0x4E8892C244CF98b3e59b709b4c81553ef8FeF5cF');
 
@@ -234,6 +246,7 @@ const Project = function (props) {
 
     
   return (
+    
    <><Container maxW={'100%'} align='center' py={4} bgColor='#e0e0eb'> 
    <Box bgGradient='linear(to-r, #141E30, #243B55)' 
    py='3' 

@@ -33,7 +33,7 @@ export const projects =  [
          "website": "https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf",
          "discord": "https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf",
          "twitter": "https://github.com/DRIVENx/DRIVENsecurity-audits/blob/main/DRIVENsecurity_TCG_Fundamental_2022.pdf",
-         "address": "0xA2a13cE1824F3916fC84C65e559391fc6674e6e8"
+         "address": "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3"
        },
        {
         "name": "Project5",
