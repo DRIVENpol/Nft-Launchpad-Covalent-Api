@@ -8,8 +8,10 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
+// CHILD SC
 contract NftSmartContract is ERC721Enumerable, Ownable {
 
+    // USING LIBRARIES
     using Strings for uint256;
     using SafeMath for uint256;
 
@@ -103,6 +105,7 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
             }
         }
 
+    // WALLET OF THE OWNER
     function walletOfOwner(address _owner) public view returns (uint256[] memory) {
         uint256 ownerTokenCount = balanceOf(_owner);
         uint256[] memory tokenIds = new uint256[](ownerTokenCount);
@@ -112,6 +115,7 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
         return tokenIds;
     }
 
+    // DISPLAY URI
     function tokenURI(uint256 tokenId)
     public
     view
@@ -177,6 +181,7 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
         blacklist[_who] = _isBlacklisted;
     }
 
+    // GETTER
     function getOwner() public view returns(address) {
         return owner();
     }
