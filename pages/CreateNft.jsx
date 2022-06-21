@@ -7,7 +7,7 @@ import { providerOptions } from "../components/Utils/providerOptions";
 
 
 import {
- Input, Text, Button, Container, Switch
+ Input, Text, Button, Container, Switch, Alert, AlertIcon
 } from '@chakra-ui/react'
 
 const CreateNft = () => {
@@ -41,6 +41,14 @@ const [signedMessage, setSignedMessage] = useState("");
 const [verified, setVerified] = useState();
 
 const [buttonLoading, setButtonLoading] = useState(false);
+const [isNotif, setIsNotif] = useState(false);
+
+// Manipulate notifications
+const manipulateNotif = async() => {
+  setIsNotif(true);
+  await sleep(50000);
+  setIsNotif(false);
+}
 
 // OnChange Handlers
 const nameChangeHandler = (event) => {
@@ -125,7 +133,7 @@ const createCollection = async () => {
           setButtonLoading(true);
           await _createNft.wait();
           setButtonLoading(false);
-        // manipulateNotifNft();
+          manipulateNotif();
 
         console.log(_createNft);
         console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_createNft.hash}`);
@@ -137,6 +145,11 @@ const createCollection = async () => {
       }
     }
    
+}
+
+// Delay
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 const connectWallet = async () => {
@@ -395,6 +408,15 @@ const isRevealedCollection = () => {
              <b>Connect Your Wallet</b>
             </Button></>)
             }
+            {isNotif ? (<Alert mt='10' status='success' borderRadius='15'>
+              <AlertIcon />
+              <b>Congrats! </b>&nbsp; You created your collection!
+            </Alert>) : null}
+
+            {isError != '' ? (<Alert mt='10' status='error' borderRadius='15'>
+              <AlertIcon />
+              <b>Error! </b>&nbsp; {isError.message}
+            </Alert>) : null}
             </Container>
    </>
   )
