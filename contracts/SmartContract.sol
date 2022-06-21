@@ -1,18 +1,26 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.11;
+pragma solidity 0.8.15;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20//utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract NftSmartContract is ERC721Enumerable, Ownable {
 
     using Strings for uint256;
+    using SafeMath for uint256;
+
 
     // VARIABLES
     address public caller;
+
+    string public cName;
+    string public cSymbol;
+    string public cBanner;
+
     string public baseURI;
     string public baseExtension = ".json";
     string public notRevealedUri;
@@ -32,12 +40,19 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
     constructor(
         string memory _name,
         string memory _symbol,
+        string memory _cBanner,
         string memory _initBaseURI,
         string memory _initNotRevealedUri,
         uint256 _fee,
         uint256 _maxSupply,
-        bool _revealed
+        bool _revealed,
+        address _caller
     ) ERC721(_name, _symbol) {
+
+        cName = _name;
+        cSymbol = _symbol;
+        cBanner = _cBanner;
+
         fee = _fee;
         revealed = _revealed;
         maxSupply = _maxSupply;
@@ -47,9 +62,9 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
 
         setBaseURI(_initBaseURI);
         setNotRevealedURI(_initNotRevealedUri);
-        transferOwnership(caller);
+        transferOwnership(_caller);
         // Mint 1 NFT to the owner
-        _mint(caller, 1);
+        _mint(_caller, 1);
 
     }
 
@@ -60,7 +75,7 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
 
     // MINT FUNCTION
     function mint(uint256 _mintAmount) public payable {
-        counter = counter.mul(_mintAmount);
+        counter = counter.add(_mintAmount);
         require(pause != true, "The smart contract is paused!");
         require(blacklist[msg.sender] != true, "You are blacklisted!");
         require(counter < maxSupply, "no more NFTs available!");
@@ -76,10 +91,14 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
     }
 
         function airdropNfts(address[] memory wallets) public onlyOwner() {
+        uint256 _q = wallets.length;
+        uint256 _newQ = counter.add(_q);
+
+        require(_newQ <= maxSupply);
+
         for(uint256 i = 0; i < wallets.length; i++) {
             address who = wallets[i];
-            uint256 _counter = counter;
-            counter++;
+            counter.add(1);
             _mint(who, 1);
             }
         }
@@ -156,5 +175,19 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
  
     function setBlacklistedAddress(address _who, bool _isBlacklisted) public onlyOwner {
         blacklist[_who] = _isBlacklisted;
+    }
+
+    function getOwner() public view returns(address) {
+        return owner();
+    }
+
+    function getCollectionDetails() public view returns(string memory, string memory, string memory, uint256, uint256) {
+        return(
+            cName,
+            cSymbol,
+            cBanner,
+            maxSupply,
+            counter
+        );
     }
 }
