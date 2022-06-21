@@ -30,6 +30,19 @@ const [nftDetails, setNftDetails] = useState({
   maxPerWallet: 1
  });
 
+const [provider, setProvider] = useState();
+const [library, setLibrary] = useState();
+const [account, setAccount] = useState();
+const [signature, setSignature] = useState("");
+const [isError, setError] = useState("");
+const [chainId, setChainId] = useState();
+const [network, setNetwork] = useState();
+const [message, setMessage] = useState("");
+const [signedMessage, setSignedMessage] = useState("");
+const [verified, setVerified] = useState();
+
+const [buttonLoading, setButtonLoading] = useState(false);
+
 // OnChange Handlers
 const nameChangeHandler = (event) => {
   setNftDetails(() => {
@@ -85,17 +98,6 @@ const maxPerWalletChangeHandler = (event) => {
    });
 }
 
-const [provider, setProvider] = useState();
-const [library, setLibrary] = useState();
-const [account, setAccount] = useState();
-const [signature, setSignature] = useState("");
-const [isError, setError] = useState("");
-const [chainId, setChainId] = useState();
-const [network, setNetwork] = useState();
-const [message, setMessage] = useState("");
-const [signedMessage, setSignedMessage] = useState("");
-const [verified, setVerified] = useState();
-
 const createCollection = async () => {
     if (typeof window !== 'undefined'){
       try {
@@ -120,9 +122,10 @@ const createCollection = async () => {
           nftDetails.tokenSupply,
           isRevealed,
           {gasLimit:6000000});
-        // setIsLoadingNft(true);
-        await _createNft.wait();
-        // setIsLoadingNft(false);
+
+          setButtonLoading(true);
+          await _createNft.wait();
+          setButtonLoading(false);
         // manipulateNotifNft();
 
         console.log(_createNft);
@@ -349,7 +352,22 @@ const isRevealedCollection = () => {
            </>): null}
               
            <br />
-           {account  ? (<><Button
+           {account ? (<>
+            {buttonLoading === true ? (<><Button
+              isLoading
+              loadingText='Creating...'
+              variant={'solid'}
+              mt='5'
+              size='lg'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              fontSize={['12px', null, null, null, '100%']}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10}
+               >
+             <b>Create Collection</b>
+            </Button></>) : (<><Button
               onClick={createCollection}
               variant={'solid'}
               mt='5'
@@ -362,7 +380,7 @@ const isRevealedCollection = () => {
                borderRadius={10}
                >
              <b>Create Collection</b>
-            </Button></>):
+            </Button></>)}</>):
            (<><Button
            onClick={connectWallet}
               variant={'solid'}
