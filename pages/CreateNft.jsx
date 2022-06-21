@@ -350,6 +350,7 @@ const isRevealedCollection = () => {
               
            <br />
            {account  ? (<><Button
+              onClick={createCollection}
               variant={'solid'}
               mt='5'
               size='lg'
