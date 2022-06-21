@@ -110,7 +110,7 @@ const createCollection = async () => {
         const abi = ["function createCollection(string memory _name, string memory _symbol, string memory _cBanner, string memory _initBaseURI, string memory _initNotRevealedUri, uint256 _fee, uint256 _maxSupply, bool _revealed) public"]
         const connectedContract = new ethers.Contract(factoryAddress, abi, signer);
 
-        let _createNft = await connectedContract.deployCollection(
+        let _createNft = await connectedContract.createCollection(
           nftDetails.tokenName, 
           nftDetails.tokenSymbol, 
           nftDetails.tokenBanner, 
