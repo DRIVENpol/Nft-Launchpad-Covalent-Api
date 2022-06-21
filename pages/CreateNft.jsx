@@ -26,8 +26,7 @@ const [nftDetails, setNftDetails] = useState({
   simpleUri: '',
   notRevealedUri: '',
   notRevealed: false,
-  price: 0,
-  maxPerWallet: 1
+  price: 0
  });
 
 const [provider, setProvider] = useState();
@@ -92,11 +91,11 @@ const priceChangeHandler = (event) => {
    });
 }
 
-const maxPerWalletChangeHandler = (event) => {
-  setNftDetails(() => {
-    return {...nftDetails, maxPerWallet: event.target.value}
-   });
-}
+// const maxPerWalletChangeHandler = (event) => {
+//   setNftDetails(() => {
+//     return {...nftDetails, maxPerWallet: event.target.value}
+//    });
+// }
 
 const createCollection = async () => {
     if (typeof window !== 'undefined'){
@@ -329,9 +328,9 @@ const isRevealedCollection = () => {
            <Text mt='30px'><b>Total Supply</b></Text>
            <Input placeholder='1000' mt='10px' onChange={supplyChangeHandler} />
 
-           <br />
+           {/* <br />
            <Text mt='30px'><b>Max Amount Per Wallet</b></Text>
-           <Input placeholder='3' mt='10px' onChange={maxPerWalletChangeHandler} />
+           <Input placeholder='3' mt='10px' onChange={maxPerWalletChangeHandler} /> */}
 
            <br />
            <Text mt='30px'><b>Mint Price [MATIC]</b></Text>
