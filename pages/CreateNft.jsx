@@ -15,7 +15,8 @@ const CreateNft = () => {
 const [revealed, setRevealed] = useState('No: By Default');
 const [isRevealed, setIsRevealed] = useState(false);
 
-const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9";
+// const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
+const factoryAddress = "0xc0e19456306FD67A50D1090a5D536489C75D6CF1"; // Without Fee - for testing
 
 const [nftDetails, setNftDetails] = useState({
   tokenName: '',
@@ -60,17 +61,17 @@ const simpleUriChangeHandler = (event) => {
    });
 }
 
-const revealedUriChangeHandler = (event) => {
+const notRevealedUriChangeHandler = (event) => {
   setNftDetails(() => {
     return {...nftDetails, notRevealedUri: event.target.value}
    });
 }
 
-const revealedChangeHandler = (event) => {
-  setNftDetails(() => {
-    return {...nftDetails, notRevealed: event.target.value}
-   });
-}
+// const revealedChangeHandler = (event) => {
+//   setNftDetails(() => {
+//     return {...nftDetails, notRevealed: event.target.value}
+//    });
+// }
 
 const priceChangeHandler = (event) => {
   setNftDetails(() => {
@@ -84,8 +85,6 @@ const maxPerWalletChangeHandler = (event) => {
    });
 }
 
-
-
 const [provider, setProvider] = useState();
 const [library, setLibrary] = useState();
 const [account, setAccount] = useState();
@@ -97,30 +96,45 @@ const [message, setMessage] = useState("");
 const [signedMessage, setSignedMessage] = useState("");
 const [verified, setVerified] = useState();
 
-const mintNft = async () => {
-  if (typeof window !== 'undefined'){
-    try {
-      const web3Modal = new Web3Modal({
-        cacheProvider: true, // optional
-        providerOptions // required
-      });
+const createCollection = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
 
-      
-      const provider = await web3Modal.connect();
-      const library = new ethers.providers.Web3Provider(provider);
-      const accounts = await library.listAccounts();
-      const network = await library.getNetwork();
-      setProvider(provider);
-      setLibrary(library);
-      if (accounts) setAccount(accounts[0]);
-      setChainId(network.chainId);
+        setProvider(provider);
+        setLibrary(library);
+
+        const abi = ["function createCollection(string memory _name, string memory _symbol, string memory _cBanner, string memory _initBaseURI, string memory _initNotRevealedUri, uint256 _fee, uint256 _maxSupply, bool _revealed) public"]
+        const connectedContract = new ethers.Contract(factoryAddress, abi, signer);
+
+        let _createNft = await connectedContract.deployCollection(
+          nftDetails.tokenName, 
+          nftDetails.tokenSymbol, 
+          nftDetails.tokenBanner, 
+          nftDetails.simpleUri,
+          nftDetails.notRevealedUri,
+          nftDetails.price,
+          nftDetails.tokenSupply,
+          isRevealed,
+          {gasLimit:6000000});
+        // setIsLoadingNft(true);
+        await _createNft.wait();
+        // setIsLoadingNft(false);
+        // manipulateNotifNft();
+
+        console.log(_createNft);
+        console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_createNft.hash}`);
+        setTransactionNft(`https://rinkeby.etherscan.io/tx/${_createNft.hash}`);
 
 
-    } catch (error) {
-      setError(error);
+      } catch (error) {
+        setError(error);
+      }
     }
-  }
- 
+   
 }
 
 const connectWallet = async () => {
@@ -286,7 +300,7 @@ const isRevealedCollection = () => {
 
     setRevealed('No: By Default');
     setIsRevealed(false);
-    
+
   }
 }
 
@@ -298,36 +312,40 @@ const isRevealedCollection = () => {
           admin dashboard!
         </Text>
            <Text><b>Collection Name</b></Text>
-           <Input placeholder='My NFTs' mt='10px' />
+           <Input placeholder='My NFTs' mt='10px' onChange={nameChangeHandler} />
+
+           <br />
+           <Text mt='30px'><b>Banner</b></Text>
+           <Input placeholder='Link' mt='10px' onChange={bannerChangeHandler} />
 
            <br />
            <Text mt='30px'><b>Collection Symbol</b></Text>
-           <Input placeholder='$MNFT' mt='10px'/>
+           <Input placeholder='$MNFT' mt='10px' onChange={symbolChangeHandler} />
 
             <br />
            <Text mt='30px'><b>Total Supply</b></Text>
-           <Input placeholder='1000' mt='10px' />
+           <Input placeholder='1000' mt='10px' onChange={supplyChangeHandler} />
 
            <br />
            <Text mt='30px'><b>Max Amount Per Wallet</b></Text>
-           <Input placeholder='3' mt='10px' />
+           <Input placeholder='3' mt='10px' onChange={maxPerWalletChangeHandler} />
 
            <br />
            <Text mt='30px'><b>Mint Price [MATIC]</b></Text>
-           <Input placeholder='100' mt='10px' />
+           <Input placeholder='100' mt='10px' onChange={priceChangeHandler} />
 
             <br />
            <Text mt='30px'><b>Base URI</b></Text>
-           <Input placeholder='Pinata IPFS Link' mt='10px' />
+           <Input placeholder='Pinata IPFS Link' mt='10px' onChange={simpleUriChangeHandler} />
 
            <br />
            <Text mt={5} mb={2}>Enable Reveal Function? [{revealed}]</Text>
-           <Switch size='lg' onChange={isRevealedCollection}/>
+           <Switch size='lg' onChange={isRevealedCollection} />
 
 
            {revealed === 'Yes, I want the reveal function.' ? (<>
             <Text mt='30px'><b>Not Revealed URI</b></Text>
-           <Input placeholder='Pinata IPFS Link' mt='10px' />
+           <Input placeholder='Pinata IPFS Link' mt='10px' onChange={notRevealedUriChangeHandler} />
            </>): null}
               
            <br />
