@@ -7,12 +7,13 @@ import {
   Button,
   Stack,
   createIcon,
-  Flex,
+  Flex, Image, Center
 } from '@chakra-ui/react';
 
 import { useRouter } from 'next/router'
 
 import logoBg from '../assets/bg1.jpg';
+import poweredBy from '../assets/poweredby.png'
 
 export default function Hero() {
 
@@ -37,12 +38,6 @@ export default function Hero() {
 
   return (
     <>
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
     <Flex maxW='100%' bg='#000b22' pt={20} pb={7} backgroundImage={logoBg.src} 
       backgroundPosition='bottom' 
       backgroundRepeat='no-repeat' 
@@ -89,6 +84,8 @@ export default function Hero() {
             </Box>
           </Stack>
         </Stack>
+        <Center>
+        <Image src={poweredBy.src} alt={poweredBy.src} mb='4' maxW={'100%'}/></Center>
         </Container>
       </Flex>
     </>
