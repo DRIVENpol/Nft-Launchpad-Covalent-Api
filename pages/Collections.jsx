@@ -45,8 +45,6 @@ const Collections = function ({obj}) {
   const [cAddresses, setCAddresses] = useState([]);
 
   const getCollectionLength = async () => {
-    if (typeof window !== 'undefined'){
-      try {
         
         // const { ethereum } = window;
         const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
@@ -68,17 +66,9 @@ const Collections = function ({obj}) {
           getCollectionAddress(i);          
         }
    
-
-      } catch (error) {
-        setError(error);
-      }
-    }
-   
 }
 
 const getCollectionAddress = async (index) => {
-  if (typeof window !== 'undefined'){
-    try {
       
       // const { ethereum } = window;
       const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
@@ -95,12 +85,6 @@ const getCollectionAddress = async (index) => {
       // console.log(_cA);
       setCAddresses(oldArray => [...oldArray, _collectionAddress]);
       // cAddresses2.push()
- 
-
-    } catch (error) {
-      setError(error);
-    }
-  }
  
 }
 
