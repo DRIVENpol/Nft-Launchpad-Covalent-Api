@@ -77,12 +77,12 @@ const getCollectionAddress = async (index) => {
       // setProvider(provider);
       // setLibrary(library);
 
-      const abi = ["function getCollectionAddress(uint256 _i) public view returns(address)"];
+      const abi = ["function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory)"];
       const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
 
-      let _collectionAddress = await connectedContract.getCollectionAddress(index);
+      let _collectionAddress = await connectedContract.getColelctionProps(index);
       // let _cA = _collectionAddress;
-      // console.log(_cA);
+      console.log(_collectionAddress);
       setCAddresses(oldArray => [...oldArray, _collectionAddress]);
       // cAddresses2.push()
  
@@ -90,6 +90,7 @@ const getCollectionAddress = async (index) => {
 
 useEffect(() => {
   getCollectionLength();
+  console.log(cAddresses);
 }, [])
 
 
@@ -371,7 +372,10 @@ useEffect(() => {
         </Center>
         {/* {account ? (<> */}
         {cAddresses && cAddresses.map((e) => (<>
-<VStack><Text>{e}</Text></VStack>
+<VStack><Text>{e[0]}</Text></VStack>
+<VStack><Text>{e[1]}</Text></VStack>
+<VStack><Text>{e[2]}</Text></VStack>
+<VStack><Text>{e[3]}</Text></VStack>
 </>))}
  {/* </>): ( <Button onClick={connectWallet}>Button</Button>)} */}
        
