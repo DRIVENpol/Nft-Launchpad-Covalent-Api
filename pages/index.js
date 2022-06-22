@@ -39,7 +39,7 @@ const Home = function ({obj}) {
         <Text fontSize={'29px'}><b>{project.name}</b></Text>
         <Text fontSize={'14px'} noOfLines={2}>{project.type}</Text>
         <Stack direction='row' mb='5%' mt='5%'>
-        <Link href={`/projects/${project.name}`}
+        <Link href={`/projects/promoted/${project.name}`}
               key={project.type} rel="noreferrer" passHref>
         <Button
               variant={'solid'}
