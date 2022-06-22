@@ -103,12 +103,13 @@ contract NftMintyFactory is Ownable {
         return collections[_i];
     }
 
-    function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory){
+    function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory){
         return (
             theCollections[index]._address,
             theCollections[index]._name,
             theCollections[index]._symbol,
-            theCollections[index]._cBanner
+            theCollections[index]._cBanner,
+            theCollections[index]._description
         );
     }
 }
