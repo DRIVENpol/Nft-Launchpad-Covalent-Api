@@ -16,7 +16,7 @@ const [revealed, setRevealed] = useState('No: By Default');
 const [isRevealed, setIsRevealed] = useState(false);
 
 // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
-const factoryAddress = "0x76C1C17fCF196973648b645697Ed8089b658CBE8"; // Without Fee - for testing
+const factoryAddress = "0xf297cE9874Dafd8c87FeF893878C142ED5bdA2e7"; // Without Fee - for testing
 
 const [nftDetails, setNftDetails] = useState({
   tokenName: '',
@@ -123,9 +123,9 @@ const createCollection = async () => {
         setProvider(provider);
         setLibrary(library);
 
-        const abi = ["function createCollection(string memory _name, string memory _symbol, string memory _cBanner, string memory _initBaseURI, string memory _initNotRevealedUri, uint256 _fee, uint256 _maxSupply, bool _revealed) public"]
+        const abi = ["function createCollection(string memory _name, string memory _symbol, string memory _cBanner, string memory _initBaseURI, string memory _initNotRevealedUri, uint256 _fee, uint256 _maxSupply, bool _revealed, string memory _description) public"]
         const connectedContract = new ethers.Contract(factoryAddress, abi, signer);
-
+        setError("");
         let _createNft = await connectedContract.createCollection(
           nftDetails.tokenName, 
           nftDetails.tokenSymbol, 
