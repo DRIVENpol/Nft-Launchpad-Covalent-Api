@@ -36,7 +36,7 @@ export const getStaticProps = async ({ params }) => {
    startBlock = endBlock - 1000000;
 });
 
-    const obj = projects.filter((p) => p.name.toString() === params.project);
+    const obj = projects.filter((p) => p.address.toString() === params.project);
 
     const key = 'ckey_148ca1425bb2412cb4c98bf085f';
     const baseURL = 'https://api.covalenthq.com/v1'
@@ -67,7 +67,7 @@ export const getStaticProps = async ({ params }) => {
 export async function getStaticPaths() {
    const paths = projects.map((d) => {
      return {
-       params: {project: d.name.toString()}
+       params: {project: d.address.toString()}
      }
    })
 

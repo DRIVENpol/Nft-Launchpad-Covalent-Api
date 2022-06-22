@@ -342,7 +342,7 @@ useEffect(() => {
         <Text fontSize={'29px'}><b>{project[1]}</b></Text>
         <Text fontSize={'14px'} noOfLines={2}>{project[4]}</Text>
         <Stack direction='row' mb='5%' mt='5%'>
-        <Link href={`/projects/${project[1]}`}
+        <Link href={`/projects/${project[0]}`}
               key={project.type} rel="noreferrer" passHref>
         <Button
               variant={'solid'}
