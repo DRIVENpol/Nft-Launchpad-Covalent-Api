@@ -21,7 +21,7 @@ import { networkParams } from "../../components/Utils/Networks";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from "../../components/Utils/providerOptions";
-import { getAddress } from 'ethers/lib/utils'
+
 
 
 
@@ -50,27 +50,18 @@ const Project = function (props) {
   const [cAddresses, setCAddresses] = useState([]);
 
    // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
-   const factoryAddress = "0x0F1F231e7B9B4E7383DE62dD262ab383E85dBdEd"; // Without Fee - for testing
-
-
-  const getCollectionAddress = async () => {
-    const _id = router.query;
-    console.log(_id)
-    // const { ethereum } = window;
+   
+   const getCollectionAddress = async () => {
+    let a = router.query.id;
+    const factoryAddress = "0x0F1F231e7B9B4E7383DE62dD262ab383E85dBdEd"; // Without Fee - for testing
     const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
-    // const signer = provider.getSigner();
-
-    // setProvider(provider);
-    // setLibrary(library);
-
+ 
     const abi = ["function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory)"];
     const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
 
-    let _collectionAddress = await connectedContract.getColelctionProps(_id);
-    // let _cA = _collectionAddress;
-    // console.log(_cA);
-    
-    // cAddresses2.push()
+    const _ca = await connectedContract.getColelctionProps(a);
+ 
+    console.log(_ca);
 }
 
   // const getApy = async() => {
@@ -102,10 +93,6 @@ const Project = function (props) {
   //   setApiTransactions[__trs];
   // }
 
-  useEffect(() => {
-    // getApy();
-    getCollectionAddress();
-  }, [])
 
   const connectWallet = async () => {
     if (typeof window !== 'undefined'){
@@ -115,7 +102,7 @@ const Project = function (props) {
           providerOptions // required
         });
 
-        
+        getCollectionAddress();
         const provider = await web3Modal.connect();
         const library = new ethers.providers.Web3Provider(provider);
         const accounts = await library.listAccounts();
@@ -285,7 +272,7 @@ const Project = function (props) {
     bgPosition={'center'}
     bgSize={['400%', '200%', '200%', '200%', '100%']}
     borderRadius='lg'
-    bgImg={props.image}
+    bgImg={cAddresses[0]}
     bgRepeat="no-repeat"
     p={6} />
 
@@ -340,7 +327,7 @@ const Project = function (props) {
     p={6}>
     
         <HStack mb={5}>
-                <Text mr={3} fontSize={'2xl'}><b>{props.name}</b></Text>
+                <Text mr={3} fontSize={'2xl'}><b>{cAddresses[1]}</b></Text>
                <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
                <HStack>
                 <a href={props.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>

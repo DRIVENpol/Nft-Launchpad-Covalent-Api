@@ -90,7 +90,6 @@ const getCollectionAddress = async (index) => {
 
 useEffect(() => {
   getCollectionLength();
-  console.log(cAddresses);
 }, [])
 
 
