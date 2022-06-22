@@ -18,7 +18,7 @@ import Website from '../../assets/icons/click.png'
 import { projects } from '../../data'
 
 import { networkParams } from "../../components/Utils/Networks";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from "../../components/Utils/providerOptions";
 
@@ -53,15 +53,23 @@ const Project = function (props) {
    
    const getCollectionAddress = async () => {
     let a = router.query.id;
+    let _a = new BigNumber.from(_a);
     const factoryAddress = "0x0F1F231e7B9B4E7383DE62dD262ab383E85dBdEd"; // Without Fee - for testing
-    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
- 
-    const abi = ["function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory)"];
-    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
+   // const { ethereum } = window;
+   const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+   // const signer = provider.getSigner();
 
-    const _ca = await connectedContract.getColelctionProps(a);
- 
-    console.log(_ca);
+   // setProvider(provider);
+   // setLibrary(library);
+
+   const abi = ["function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory)"];
+   const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
+
+   let _collectionAddress = await connectedContract.getColelctionProps(_a);
+   // let _cA = _collectionAddress;
+   console.log(_collectionAddress);
+   setCAddresses(oldArray => [...oldArray, _collectionAddress]);
+   // cAddresses2.push()
 }
 
   // const getApy = async() => {
