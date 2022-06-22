@@ -8,7 +8,112 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-// CHILD SC
+contract NftMintyFactory is Ownable {
+
+    // VARIABLES
+    uint256 public createFee;
+    address[] public collections;
+    NftSmartContract[] public collectionsObject;
+
+    struct MyCollection {
+        address _address;
+        string _name;
+        string _symbol;
+        string _cBanner;
+        string _description;
+   }
+
+   MyCollection[] public theCollections;
+
+    // CONSTRUCTOR 
+    constructor() {
+        createFee = 1 ether;
+    }
+
+    // ONLY-OWNER FUNCTIONS
+    function setNewFee(uint256 _newFee) public onlyOwner {
+        uint256 _n = _newFee * 1 ether;
+        createFee = _n;
+    }
+
+    function withdrawMaticFees() public onlyOwner() {
+        uint256 cBalance = payable(address(this)).balance;
+        payable(address(owner())).transfer(cBalance);
+    }
+
+        function _withdrawMaticFees() private {
+        uint256 cBalance = payable(address(this)).balance;
+        payable(address(owner())).transfer(cBalance);
+    }
+
+
+    function withdrawErc20Tokens(IERC20 _tAddress) public onlyOwner() {
+        address _to = owner();
+        uint256 _tBalance = _tAddress.balanceOf(address(this));
+        _tAddress.transferFrom(address(this), _to, _tBalance);
+    }
+
+    // ALOW SC TO RECEIVE MATIC
+    receive() external payable {
+       _withdrawMaticFees();
+    }
+
+    // PUBLIC FUNCTIONS
+    function createCollection(
+        string memory _name,
+        string memory _symbol,
+        string memory _cBanner,
+        string memory _initBaseURI,
+        string memory _initNotRevealedUri,
+        uint256 _fee,
+        uint256 _maxSupply,
+        bool _revealed,
+        string memory _description
+        ) public {
+        // require(msg.value == createFee, "Pay the fee!");
+
+        address newCollection = address(new NftSmartContract(
+            _name,
+            _symbol,
+            _cBanner,
+            _initBaseURI,
+            _initNotRevealedUri,
+            _fee,
+            _maxSupply,
+            _revealed,
+            msg.sender
+        ));
+
+        collections.push(newCollection);
+        collectionsObject.push(NftSmartContract(newCollection));
+        theCollections.push(MyCollection(newCollection, _name, _symbol, _cBanner, _description));
+    }
+
+    // GETTERS
+    function getLengthOfCollections() public view returns(uint256) {
+        uint256 _v = collections.length;
+        return _v;
+        }
+
+    function getCollectionObject() public view returns(NftSmartContract[] memory) {
+        return collectionsObject;
+    }
+
+    function getCollectionAddress(uint256 _i) public view returns(address) {
+        return collections[_i];
+    }
+
+    function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory){
+        return (
+            theCollections[index]._address,
+            theCollections[index]._name,
+            theCollections[index]._symbol,
+            theCollections[index]._cBanner
+        );
+    }
+}
+
+
 contract NftSmartContract is ERC721Enumerable, Ownable {
 
     // USING LIBRARIES
@@ -186,8 +291,9 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
         return owner();
     }
 
-    function getCollectionDetails() public view returns(string memory, string memory, string memory, uint256, uint256) {
+    function getCollectionDetails() public view returns(address, string memory, string memory, string memory, uint256, uint256) {
         return(
+            address(this),
             cName,
             cSymbol,
             cBanner,
