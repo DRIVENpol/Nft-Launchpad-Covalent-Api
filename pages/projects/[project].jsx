@@ -53,7 +53,7 @@ const Project = function (props) {
    
    const getCollectionAddress = async () => {
     let a = router.query.id;
-    let _a = new BigNumber.from(_a);
+    console.log(a)
     const factoryAddress = "0x0F1F231e7B9B4E7383DE62dD262ab383E85dBdEd"; // Without Fee - for testing
    // const { ethereum } = window;
    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
@@ -65,7 +65,7 @@ const Project = function (props) {
    const abi = ["function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory)"];
    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
 
-   let _collectionAddress = await connectedContract.getColelctionProps(_a);
+   let _collectionAddress = await connectedContract.getColelctionProps(0);
    // let _cA = _collectionAddress;
    console.log(_collectionAddress);
    setCAddresses(oldArray => [...oldArray, _collectionAddress]);
