@@ -28,7 +28,7 @@ const Collections = function ({obj}) {
   );
 
   // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
-  const factoryAddress = "0xf297cE9874Dafd8c87FeF893878C142ED5bdA2e7"; // Without Fee - for testing
+  const factoryAddress = "0x0F1F231e7B9B4E7383DE62dD262ab383E85dBdEd"; // Without Fee - for testing
 
   const [provider, setProvider] = useState();
   const [library, setLibrary] = useState();
@@ -77,7 +77,7 @@ const getCollectionAddress = async (index) => {
       // setProvider(provider);
       // setLibrary(library);
 
-      const abi = ["function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory)"];
+      const abi = ["function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory)"];
       const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
 
       let _collectionAddress = await connectedContract.getColelctionProps(index);
@@ -317,7 +317,7 @@ useEffect(() => {
 
 
         <Center>
-        <Text fontSize='3xl' ><b>All Active Collections</b></Text>
+        <Text fontSize='3xl' mt={5}><b>All Active Collections</b></Text>
         </Center>
 
         <Center> 
@@ -328,21 +328,21 @@ useEffect(() => {
 
         <Center>
         <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(4, 1fr)']} gap={6} w='75%'>
-          {searchResult && searchResult.map((project) => (
-            <div key={project.name} {...project}>
+          {cAddresses && cAddresses.map((project) => (
+            <div key={project[0]} {...project}>
             <GridItem w='100%' h='10' align='center' mb={['400', '400', '420', '400', '380', '400']}>
        <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' bgGradient='linear(to-r, #141E30, #243B55)' color={'white'}>
-      <Box w={'200'} h='200' bgImg={project.link} bgRepeat="no-repeat" bgPosition={'center'} bgSize='200%'>
+      <Box w={'200'} h='200' bgImg={project[3]} bgRepeat="no-repeat" bgPosition={'center'} bgSize='200%'>
       {/* <Image src={project.link}
         width='100' height='200' alt={project.link} display='block'
       /> */}
       </Box>
     
     <Stack direction='column' mx={4} mb='5%' mt='5%' alignItems="center" my={4}>  
-        <Text fontSize={'29px'}><b>{project.name}</b></Text>
-        <Text fontSize={'14px'} noOfLines={2}>{project.type}</Text>
+        <Text fontSize={'29px'}><b>{project[1]}</b></Text>
+        <Text fontSize={'14px'} noOfLines={2}>{project[4]}</Text>
         <Stack direction='row' mb='5%' mt='5%'>
-        <Link href={`/projects/${project.name}`}
+        <Link href={`/projects/${project[1]}`}
               key={project.type} rel="noreferrer" passHref>
         <Button
               variant={'solid'}
@@ -370,15 +370,20 @@ useEffect(() => {
             <br />
           </Grid>
         </Center>
-        {/* {account ? (<> */}
-        {cAddresses && cAddresses.map((e) => (<>
+
+
+        {/* {account ? (<>
+        */}
+ {/* </>): ( <Button onClick={connectWallet}>Button</Button>)} */}
+      
+ {cAddresses && cAddresses.map((e) => (<>
 <VStack><Text>{e[0]}</Text></VStack>
 <VStack><Text>{e[1]}</Text></VStack>
 <VStack><Text>{e[2]}</Text></VStack>
 <VStack><Text>{e[3]}</Text></VStack>
+<VStack><Text>{e[4]}</Text></VStack>
+<VStack><Text>{e[5]}</Text></VStack>
 </>))}
- {/* </>): ( <Button onClick={connectWallet}>Button</Button>)} */}
-       
 
         <br />
         <br />
