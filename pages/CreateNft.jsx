@@ -7,7 +7,7 @@ import { providerOptions } from "../components/Utils/providerOptions";
 
 
 import {
- Input, Text, Button, Container, Switch, Alert, AlertIcon
+ Input, Text, Button, Container, Switch, Alert, AlertIcon, Textarea
 } from '@chakra-ui/react'
 
 const CreateNft = () => {
@@ -26,7 +26,8 @@ const [nftDetails, setNftDetails] = useState({
   simpleUri: '',
   notRevealedUri: '',
   notRevealed: false,
-  price: 0
+  price: 0,
+  description: ''
  });
 
 const [provider, setProvider] = useState();
@@ -99,6 +100,12 @@ const priceChangeHandler = (event) => {
    });
 }
 
+const descriptionChangeHandler = (event) => {
+  setNftDetails(() => {
+    return {...nftDetails, description: event.target.value}
+   });
+}
+
 // const maxPerWalletChangeHandler = (event) => {
 //   setNftDetails(() => {
 //     return {...nftDetails, maxPerWallet: event.target.value}
@@ -128,6 +135,7 @@ const createCollection = async () => {
           nftDetails.price,
           nftDetails.tokenSupply,
           isRevealed,
+          nftDetails.description,
           {gasLimit:6000000});
 
           setButtonLoading(true);
@@ -332,6 +340,10 @@ const isRevealedCollection = () => {
            <br />
            <Text mt='30px'><b>Banner</b></Text>
            <Input placeholder='Link' mt='10px' onChange={bannerChangeHandler} />
+
+           <br />
+           <Text mt='30px'><b>Description</b></Text>
+           <Textarea placeholder='Description' mt='10px' onChange={descriptionChangeHandler} />
 
            <br />
            <Text mt='30px'><b>Collection Symbol</b></Text>
