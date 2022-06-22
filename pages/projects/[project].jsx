@@ -54,7 +54,8 @@ const Project = function (props) {
 
 
   const getCollectionAddress = async () => {
-    const _id = Number(router.query.id);
+    const _id = router.query;
+    console.log(_id)
     // const { ethereum } = window;
     const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
     // const signer = provider.getSigner();

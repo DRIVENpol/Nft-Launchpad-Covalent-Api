@@ -342,8 +342,8 @@ useEffect(() => {
         <Text fontSize={'29px'}><b>{project[1]}</b></Text>
         <Text fontSize={'14px'} noOfLines={2}>{project[4]}</Text>
         <Stack direction='row' mb='5%' mt='5%'>
-        <Link href={{pathname: `/projects/${project[0]}/`, query: { id: `${index}`, address: `${project[0]}` } }}
-              key={project.type} rel="noreferrer" passHref>
+        <Link href={{ pathname: `/projects/${project[0]}`, query: { id: `${index}`, address: `${project[0]}` } }}
+              key={project[4]} rel="noreferrer" passHref>
         <Button
               variant={'solid'}
               size='sm' my={4}
@@ -358,9 +358,9 @@ useEffect(() => {
             </Link>
             </Stack>
             <HStack>
-            <a href={project.twitter} target='_blank' rel="noreferrer"><Image src={Twitter.src} alt='Twitter' w={5}/></a>
-            <a href={project.discord} target='_blank' rel="noreferrer"><Image src={Discord.src} alt='Discord' w={5}/></a>
-            <a href={project.website} target='_blank' rel="noreferrer"><Image src={Website.src} alt='Website' w={5}/></a>
+            <a href='#' target='_blank' rel="noreferrer"><Image src={Twitter.src} alt='Twitter' w={5}/></a>
+            <a href='#' target='_blank' rel="noreferrer"><Image src={Discord.src} alt='Discord' w={5}/></a>
+            <a href='#' target='_blank' rel="noreferrer"><Image src={Website.src} alt='Website' w={5}/></a>
            </HStack>
             </Stack>
     </Box>
