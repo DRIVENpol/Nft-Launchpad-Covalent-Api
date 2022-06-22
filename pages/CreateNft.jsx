@@ -16,7 +16,7 @@ const [revealed, setRevealed] = useState('No: By Default');
 const [isRevealed, setIsRevealed] = useState(false);
 
 // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
-const factoryAddress = "0xc0e19456306FD67A50D1090a5D536489C75D6CF1"; // Without Fee - for testing
+const factoryAddress = "0x76C1C17fCF196973648b645697Ed8089b658CBE8"; // Without Fee - for testing
 
 const [nftDetails, setNftDetails] = useState({
   tokenName: '',
@@ -137,7 +137,7 @@ const createCollection = async () => {
 
         console.log(_createNft);
         console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_createNft.hash}`);
-        setTransactionNft(`https://rinkeby.etherscan.io/tx/${_createNft.hash}`);
+        // setTransactionNft(`https://rinkeby.etherscan.io/tx/${_createNft.hash}`);
 
 
       } catch (error) {

@@ -1,7 +1,12 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+
+import { networkParams } from "../components/Utils/Networks";
+import { ethers } from "ethers";
+import Web3Modal from "web3modal";
+import { providerOptions } from "../components/Utils/providerOptions";
 
 
-import { Text, Center, Grid, GridItem, Box, Container } from '@chakra-ui/react'
+import { Text, Center, Grid, GridItem, Box, Container, VStack } from '@chakra-ui/react'
 import { Stack, Button, HStack, Image, Input } from '@chakra-ui/react'
 
 import { projects } from '../data'
@@ -12,12 +17,253 @@ import Website from '../assets/icons/click.png'
 
 import Link from 'next/link'
 
+// import cAbi from "../contracts/abi/Factory.json";
+
 const Collections = function ({obj}) {
+
 
   const [search, setSearch] = useState("");
   const searchResult = obj.filter((p) => (p.name.toString().includes(search.toString())
   || p.address.toString().includes(search.toString()))
   );
+
+  // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
+  const factoryAddress = "0x76C1C17fCF196973648b645697Ed8089b658CBE8"; // Without Fee - for testing
+
+  const [provider, setProvider] = useState();
+  const [library, setLibrary] = useState();
+  const [account, setAccount] = useState();
+  const [signature, setSignature] = useState("");
+  const [isError, setError] = useState("");
+  const [chainId, setChainId] = useState();
+  const [network, setNetwork] = useState();
+  const [message, setMessage] = useState("");
+  const [signedMessage, setSignedMessage] = useState("");
+  const [verified, setVerified] = useState();
+
+  const [cLength, setCLength] = useState(0);
+  const [cAddresses, setCAddresses] = useState([]);
+
+  const getCollectionLength = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        
+        // const { ethereum } = window;
+        const provider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+        // const signer = provider.getSigner();
+
+        setProvider(provider);
+        setLibrary(library);
+
+        const abi = ["function getLengthOfCollections() public view returns(uint256)"];
+        const connectedContract = new ethers.Contract(factoryAddress, abi, provider);
+
+        let _collectionLength = await connectedContract.getLengthOfCollections();
+        let _cL = _collectionLength.toNumber();
+        setCLength(_cL);
+
+        let z = _cL - 1;
+
+        for (let i = 0; i <= z; i++) {
+          getCollectionAddress(i);          
+        }
+   
+
+      } catch (error) {
+        setError(error);
+      }
+    }
+   
+}
+
+const getCollectionAddress = async (index) => {
+  if (typeof window !== 'undefined'){
+    try {
+      
+      // const { ethereum } = window;
+      const provider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+      // const signer = provider.getSigner();
+
+      setProvider(provider);
+      setLibrary(library);
+
+      const abi = ["function getCollectionAddress(uint256 _i) public view returns(address)"];
+      const connectedContract = new ethers.Contract(factoryAddress, abi, provider);
+
+      let _collectionAddress = await connectedContract.getCollectionAddress(index);
+      // let _cA = _collectionAddress;
+      // console.log(_cA);
+      setCAddresses(oldArray => [...oldArray, _collectionAddress]);
+      // cAddresses2.push()
+ 
+
+    } catch (error) {
+      setError(error);
+    }
+  }
+ 
+}
+
+useEffect(() => {
+ 
+}, [])
+
+
+  const connectWallet = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        const web3Modal = new Web3Modal({
+          cacheProvider: true, // optional
+          providerOptions // required
+        });
+  
+        
+        const provider = await web3Modal.connect();
+        const library = new ethers.providers.Web3Provider(provider);
+        const accounts = await library.listAccounts();
+        const network = await library.getNetwork();
+        setProvider(provider);
+        setLibrary(library);
+        if (accounts) setAccount(accounts[0]);
+        setChainId(network.chainId);
+
+        getCollectionLength();
+  
+  
+      } catch (error) {
+        setError(error);
+      }
+    }
+   
+  };
+  
+  const handleNetwork = (e) => {
+    const id = e.target.value;
+    setNetwork(Number(id));
+  };
+  
+  const handleInput = (e) => {
+    const msg = e.target.value;
+    setMessage(msg);
+  };
+  
+  const switchNetwork = async () => {
+    try {
+      await library.provider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: toHex(network) }]
+      });
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        try {
+          await library.provider.request({
+            method: "wallet_addEthereumChain",
+            params: [networkParams[toHex(network)]]
+          });
+        } catch (error) {
+          setError(error);
+        }
+      }
+    }
+  };
+  
+  const signMessage = async () => {
+    if (!library) return;
+    try {
+      const signature = await library.provider.request({
+        method: "personal_sign",
+        params: [message, account]
+      });
+      setSignedMessage(message);
+      setSignature(signature);
+    } catch (error) {
+      setError(error);
+    }
+  };
+  
+  const verifyMessage = async () => {
+    if (!library) return;
+    try {
+      const verify = await library.provider.request({
+        method: "personal_ecRecover",
+        params: [signedMessage, signature]
+      });
+      setVerified(verify === account.toLowerCase());
+    } catch (error) {
+      setError(error);
+    }
+  };
+  
+  const refreshState = () => {
+      
+    setAccount();
+    setChainId();
+    setNetwork("");
+    setMessage("");
+    setSignature("");
+    setVerified(undefined);
+   
+  };
+  
+  const disconnect = async () => {
+    const web3Modal = new Web3Modal({
+      cacheProvider: true, // optional
+      providerOptions // required
+    });
+    await web3Modal.clearCachedProvider();
+    refreshState();
+  };
+  
+  useEffect(() => {
+    const web3Modal = new Web3Modal({
+      cacheProvider: true, // optional
+      providerOptions // required
+    });
+    if (web3Modal.cachedProvider) {
+      connectWallet();
+     
+    }
+  }, []);
+  
+  useEffect(() => {
+      
+    if (provider?.on) {
+      const handleAccountsChanged = (accounts) => {
+        console.log("accountsChanged", accounts);
+        if (accounts) setAccount(accounts[0]);
+      };
+  
+      const handleChainChanged = (_hexChainId) => {
+        setChainId(_hexChainId);
+      };
+  
+      const handleDisconnect = () => {
+        console.log("disconnect", error);
+        disconnect();
+      };
+  
+      provider.on("accountsChanged", handleAccountsChanged);
+      provider.on("chainChanged", handleChainChanged);
+      provider.on("disconnect", handleDisconnect);
+  
+      return () => {
+        if (provider.removeListener) {
+          provider.removeListener("accountsChanged", handleAccountsChanged);
+          provider.removeListener("chainChanged", handleChainChanged);
+          provider.removeListener("disconnect", handleDisconnect);
+        }
+      };
+    }
+  }, [provider]);
+  
+  useEffect(() => {
+    if (window.ethereum){
+      setProvider(new ethers.providers.Web3Provider(window.ethereum))
+    } else {
+      setProvider(providerOptions.walletconnect)
+    }
+  }, []);
+
 
   return (
     <>
@@ -141,9 +387,12 @@ const Collections = function ({obj}) {
             <br />
           </Grid>
         </Center>
-
-
-
+        {/* {account ? (<> */}
+        {cAddresses && cAddresses.map((e) => (<>
+<VStack><Text>{e}</Text></VStack>
+</>))}
+ {/* </>): ( <Button onClick={connectWallet}>Button</Button>)} */}
+       
 
         <br />
         <br />

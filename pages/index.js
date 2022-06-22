@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 import Link from 'next/link'
 
@@ -12,6 +12,7 @@ import Hero from "../components/Hero"
 import { projects } from '../data'
 
 const Home = function ({obj}) {
+
   return (
     <>
      <Hero />
