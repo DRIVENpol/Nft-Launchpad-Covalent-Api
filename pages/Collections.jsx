@@ -328,7 +328,7 @@ useEffect(() => {
 
         <Center>
         <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(4, 1fr)']} gap={6} w='75%'>
-          {cAddresses && cAddresses.map((project) => (
+          {cAddresses && cAddresses.map((project, index) => (
             <div key={project[0]} {...project}>
             <GridItem w='100%' h='10' align='center' mb={['400', '400', '420', '400', '380', '400']}>
        <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' bgGradient='linear(to-r, #141E30, #243B55)' color={'white'}>
@@ -342,7 +342,7 @@ useEffect(() => {
         <Text fontSize={'29px'}><b>{project[1]}</b></Text>
         <Text fontSize={'14px'} noOfLines={2}>{project[4]}</Text>
         <Stack direction='row' mb='5%' mt='5%'>
-        <Link href={`/projects/${project[0]}`}
+        <Link href={{pathname: `/projects/${project[0]}/`, query: { id: `${index}`, address: `${project[0]}` } }}
               key={project.type} rel="noreferrer" passHref>
         <Button
               variant={'solid'}
@@ -370,23 +370,6 @@ useEffect(() => {
             <br />
           </Grid>
         </Center>
-
-
-        {/* {account ? (<>
-        */}
- {/* </>): ( <Button onClick={connectWallet}>Button</Button>)} */}
-      
- {cAddresses && cAddresses.map((e) => (<>
-<VStack><Text>{e[0]}</Text></VStack>
-<VStack><Text>{e[1]}</Text></VStack>
-<VStack><Text>{e[2]}</Text></VStack>
-<VStack><Text>{e[3]}</Text></VStack>
-<VStack><Text>{e[4]}</Text></VStack>
-<VStack><Text>{e[5]}</Text></VStack>
-</>))}
-
-        <br />
-        <br />
       </Container>
     </>
   )

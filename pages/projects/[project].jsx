@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import { useRouter } from 'next/router'
 import {
 Button, Grid, GridItem, Link, Text, 
 Container, HStack, Image, Box,
@@ -21,61 +21,8 @@ import { networkParams } from "../../components/Utils/Networks";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from "../../components/Utils/providerOptions";
+import { getAddress } from 'ethers/lib/utils'
 
-// Fetching data from the JSON file
-export const getStaticProps = async ({ params }) => {
-  let endBlock = '0';
-  let startBlock = '1';
-
-  const providers = ethers.providers;
-
-  const _provider = providers.getDefaultProvider('matic');
-
-  await _provider.getBlockNumber().then(function(blockNumber) {
-   endBlock = blockNumber;
-   startBlock = endBlock - 1000000;
-});
-
-    const obj = projects.filter((p) => p.name.toString() === params.project);
-
-    const key = 'ckey_148ca1425bb2412cb4c98bf085f';
-    const baseURL = 'https://api.covalenthq.com/v1'
-    const chainId = '137'
-    const address = obj[0].address;
-
-    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
-    const response = await fetch(url);
-    const result = await response.json();
-    const data = result.data.items;
-
-  
-    const trs = data.filter((t) => t.decoded.name.toString().includes(""));
-    // const _trs = trs.filter((e,k) => k < 50);
-    const __trs = data.sort((a, b) => (b.block_height - a.block_height))
-    
-    return {
-        props: {name: obj[0].name,
-        description: obj[0].type,
-        image: obj[0].link,
-        twitter: obj[0].twitter,
-        website: obj[0].website,
-        discord: obj[0].discord,
-        transactions: __trs},
-          }
-}
-
-export async function getStaticPaths() {
-   const paths = projects.map((d) => {
-     return {
-       params: {project: d.name.toString()}
-     }
-   })
-
-   return {
-       paths,
-       fallback: false
-     }
-   }
 
 
 const Project = function (props) {
@@ -93,6 +40,71 @@ const Project = function (props) {
   const [message, setMessage] = useState("");
   const [signedMessage, setSignedMessage] = useState("");
   const [verified, setVerified] = useState();
+
+  const [endBlock, setEndBlock] = useState(0);
+  const [startBlock, setStartBlock] = useState(0);
+
+  const router = useRouter();
+
+  const [apiTransactions, setApiTransactions] = useState([]);
+  const [cAddresses, setCAddresses] = useState([]);
+
+   // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
+   const factoryAddress = "0x0F1F231e7B9B4E7383DE62dD262ab383E85dBdEd"; // Without Fee - for testing
+
+
+  const getCollectionAddress = async () => {
+    const _id = Number(router.query.id);
+    // const { ethereum } = window;
+    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+    // const signer = provider.getSigner();
+
+    // setProvider(provider);
+    // setLibrary(library);
+
+    const abi = ["function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory)"];
+    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
+
+    let _collectionAddress = await connectedContract.getColelctionProps(_id);
+    // let _cA = _collectionAddress;
+    // console.log(_cA);
+    
+    // cAddresses2.push()
+}
+
+  // const getApy = async() => {
+
+  //   const providers = ethers.providers;
+  
+  //   const _provider = providers.getDefaultProvider('matic');
+  
+  //   await _provider.getBlockNumber().then(function(blockNumber) {
+  //     setEndBlock(blockNumber);
+  //     setStartBlock(endBlock - 1000000);
+  // });
+  // const obj = projects.filter((p) => p.name.toString() === "");
+
+  //   const key = 'ckey_148ca1425bb2412cb4c98bf085f';
+  //   const baseURL = 'https://api.covalenthq.com/v1'
+  //   const chainId = '137'
+  //   const address = getAddress(router.query.address);
+
+  //   const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
+  //   const response = await fetch(url);
+  //   const result = await response.json();
+  //   const data = result.data.items;
+
+  
+  //   const trs = data.filter((t) => t.decoded.name.toString().includes(""));
+  //   // const _trs = trs.filter((e,k) => k < 50);
+  //   const __trs = data.sort((a, b) => (b.block_height - a.block_height))
+  //   setApiTransactions[__trs];
+  // }
+
+  useEffect(() => {
+    // getApy();
+    getCollectionAddress();
+  }, [])
 
   const connectWallet = async () => {
     if (typeof window !== 'undefined'){
@@ -295,7 +307,7 @@ const Project = function (props) {
       </Tr>
     </Thead>
     <Tbody>
-    {props.transactions && props.transactions.map((transfer) => {
+    {apiTransactions && apiTransactions.map((transfer) => {
          let _data = transfer.decoded.name;
          let _tx = transfer.tx_hash;
       
