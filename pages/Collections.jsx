@@ -89,7 +89,7 @@ const getCollectionAddress = async (index) => {
 }
 
 useEffect(() => {
- 
+  getCollectionLength();
 }, [])
 
 
@@ -110,8 +110,6 @@ useEffect(() => {
         setLibrary(library);
         if (accounts) setAccount(accounts[0]);
         setChainId(network.chainId);
-
-        getCollectionLength();
   
   
       } catch (error) {
