@@ -134,34 +134,35 @@ const Project = function (props) {
    // cAddresses2.push()
 }
 
-  // const getApy = async() => {
+  const getApy = async() => {
 
-  //   const providers = ethers.providers;
+    const providers = ethers.providers;
   
-  //   const _provider = providers.getDefaultProvider('matic');
+    const _provider = providers.getDefaultProvider('matic');
   
-  //   await _provider.getBlockNumber().then(function(blockNumber) {
-  //     setEndBlock(blockNumber);
-  //     setStartBlock(endBlock - 1000000);
-  // });
-  // const obj = projects.filter((p) => p.name.toString() === "");
+    await _provider.getBlockNumber().then(function(blockNumber) {
+      setEndBlock(Number(blockNumber));
+      setStartBlock(Number(blockNumber - 10000));
+  });
 
-  //   const key = 'ckey_148ca1425bb2412cb4c98bf085f';
-  //   const baseURL = 'https://api.covalenthq.com/v1'
-  //   const chainId = '137'
-  //   const address = getAddress(router.query.address);
+    const key = 'ckey_148ca1425bb2412cb4c98bf085f';
+    const baseURL = 'https://api.covalenthq.com/v1'
+    const chainId = '137'
+    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3";
 
-  //   const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
-  //   const response = await fetch(url);
-  //   const result = await response.json();
-  //   const data = result.data.items;
-
+    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=${endBlock}&key=${key}`);
+    const response = await fetch(url);
+    const result = await response.json();
+    const data = result.data.items;
+    // const obj = data.filter((p) => p.name.toString() === "");
   
-  //   const trs = data.filter((t) => t.decoded.name.toString().includes(""));
-  //   // const _trs = trs.filter((e,k) => k < 50);
-  //   const __trs = data.sort((a, b) => (b.block_height - a.block_height))
-  //   setApiTransactions[__trs];
-  // }
+  
+    const trs = data.filter((t) => t.decoded.name.toString().includes(""));
+    // const _trs = trs.filter((e,k) => k < 50);
+    const __trs = trs.sort((a, b) => (b.block_height - a.block_height))
+    console.log(__trs)
+    setApiTransactions[__trs];
+  }
 
   const mintNft = async () => {
     if (typeof window !== 'undefined'){
@@ -349,6 +350,7 @@ const Project = function (props) {
   }, [provider]);
 
   useEffect(() => {
+    getApy();
     getProjectDetails();
     getMintNft();
     if (window.ethereum){
