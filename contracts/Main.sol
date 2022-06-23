@@ -111,19 +111,22 @@ contract NftMintyFactory is Ownable {
         return collections[_i];
     }
 
-    function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address,
-     string memory, string memory, string memory, uint256){
+    function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256){
+        MyCollection memory myColl;
+
+        myColl = theCollections[index];
+        
         return (
-            theCollections[index]._address,
-            theCollections[index]._name,
-            theCollections[index]._symbol,
-            theCollections[index]._cBanner,
-            theCollections[index]._description,
-            theCollections[index]._owner,
-            theCollections[index]._website,
-            theCollections[index]._twitterLink,
-            theCollections[index]._discordLink,
-            theCollections[index]._totalSupply
+            myColl._address,
+            myColl._name,
+            myColl._symbol,
+            myColl._cBanner,
+            myColl._description,
+            myColl._owner,
+            myColl._website,
+            myColl._twitterLink,
+            myColl._discordLink,
+            myColl._totalSupply
         );
     }
 }
