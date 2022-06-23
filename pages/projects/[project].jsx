@@ -45,7 +45,7 @@ const Project = function (props) {
 
   const [tMinted, setTMinted] = useState(0);
 
-  const [toMint, setToMint] = useState();
+  const [toMint, setToMint] = useState(0);
 
   const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
 
@@ -70,6 +70,7 @@ const Project = function (props) {
 
    const inputChangeHandler = (event) => {
     setToMint(event.target.value);
+    console.log(event.target.value)
   }
 
    const getMintNft = async () => {
@@ -179,7 +180,7 @@ const Project = function (props) {
         const _scAddress = router.query.address;
         const connectedContract = new ethers.Contract(_scAddress, abi, signer);
 
-        let _toMint = Number(toMint);
+        let _toMint = toMint.toString();
         let _mintNft = await connectedContract.mintNft(_toMint, {gasLimit:8000000});
         // setIsLoadingNft(true);
         await _mintNft.wait();
@@ -472,13 +473,12 @@ const Project = function (props) {
              <b>Connect Your Wallet & Mint</b>
             </Button></VStack></>): (<><VStack py={'7.5%'} gap={3} justify={'center'}>
             <Text fontSize={'2xl'}><b>Mint Your {projectDetails.tokenSymbol} NFT</b></Text>
-            <NumberInput step={1} defaultValue={1} min={1}
+            <NumberInput step={1} defaultValue={"1"} min={1}
                 focusBorderColor = "white"
                 textColor={'white'} size='lg' maxWidth={'50%'}>
-             <NumberInputField onChange={inputChangeHandler} />
+             <NumberInputField value={1} onChange={inputChangeHandler} />
               <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
+
               </NumberInputStepper>
             </NumberInput>
             <Button
