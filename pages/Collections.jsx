@@ -23,9 +23,6 @@ const Collections = function ({obj}) {
 
 
   const [search, setSearch] = useState("");
-  const searchResult = obj.filter((p) => (p.name.toString().includes(search.toString())
-  || p.address.toString().includes(search.toString()))
-  );
 
   // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
   const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3"; // Without Fee - for testing
@@ -43,6 +40,10 @@ const Collections = function ({obj}) {
 
   const [cLength, setCLength] = useState(0);
   const [cAddresses, setCAddresses] = useState([]);
+
+  const searchResult = cAddresses.filter((p) => (p.toString().includes(search.toString())
+  || p.toString().includes(search.toString()))
+  );
 
   const getCollectionLength = async () => {
         
@@ -251,13 +252,6 @@ useEffect(() => {
     <>
       <Container maxW={'100%'} bg='white' color={'black'} pt='5%' pb='2%'>
         <Center>
-        <Text fontSize={'ml'} mb={3} color='grey'>Search by name or address</Text></Center>
-        <Center><Input onChange={(event) => {
-          setSearch(event.target.value)
-        }}maxWidth={['80%', '80%', '70%', '60%', '50%' ]} placeholder='Search...' mb={10} 
-        borderRadius='40' borderColor={'#FF0080'} borderWidth='2px' />
-        </Center>
-        <Center>
         <Text fontSize='3xl' ><b>Featured Collections</b></Text>
         </Center>
 
@@ -311,23 +305,22 @@ useEffect(() => {
             <br />
           </Grid>
         </Center>
-
-
-
-
-        <Center>
+        
+        <VStack>
         <Text fontSize='3xl' mt={5}><b>All Active Collections</b></Text>
-        </Center>
-
-        <Center> 
-          <Text align='center'>
+        <Text align='center'>
           Created using NFT Minty! DYOR!
-          </Text>
-        </Center><br/>
+          </Text><br />
+          <Text fontSize={'ml'} color='grey'>Search by name or address</Text>
+        <Input onChange={(event) => {
+          setSearch(event.target.value)
+        }}maxWidth={['80%', '80%', '70%', '60%', '50%' ]} placeholder='Search...'
+        borderRadius='40' borderColor={'#FF0080'} borderWidth='2px' />
+        </VStack>
 
         <Center>
-        <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(4, 1fr)']} gap={6} w='75%'>
-          {cAddresses && cAddresses.map((project, index) => (
+        <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(4, 1fr)']} gap={6} w='75%' mt={10}>
+          {searchResult && searchResult.map((project, index) => (
             <div key={project[0]} {...project}>
             <GridItem w='100%' h='10' align='center' mb={['400', '400', '420', '400', '380', '400']}>
        <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' bgGradient='linear(to-r, #141E30, #243B55)' color={'white'}>

@@ -352,7 +352,7 @@ const Project = function (props) {
     }
 }, []);
 
-    
+   
   return (
     
    <><Container maxW={'100%'} align='center' py={4} bgColor='#e0e0eb'> 
