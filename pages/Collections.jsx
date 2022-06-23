@@ -350,9 +350,9 @@ useEffect(() => {
             </Link>
             </Stack>
             <HStack>
-            <a href='#' target='_blank' rel="noreferrer"><Image src={Twitter.src} alt='Twitter' w={5}/></a>
-            <a href='#' target='_blank' rel="noreferrer"><Image src={Discord.src} alt='Discord' w={5}/></a>
-            <a href='#' target='_blank' rel="noreferrer"><Image src={Website.src} alt='Website' w={5}/></a>
+            <a href={project[7] }target='_blank' rel="noreferrer"><Image src={Twitter.src} alt='Twitter' w={5}/></a>
+            <a href={project[8]} target='_blank' rel="noreferrer"><Image src={Discord.src} alt='Discord' w={5}/></a>
+            <a href={project[6]} target='_blank' rel="noreferrer"><Image src={Website.src} alt='Website' w={5}/></a>
            </HStack>
             </Stack>
     </Box>
