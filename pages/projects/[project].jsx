@@ -44,7 +44,7 @@ const Project = function (props) {
   const [endBlock, setEndBlock] = useState(0);
   const [startBlock, setStartBlock] = useState(0);
 
-  const factoryAddress = "0x0F1F231e7B9B4E7383DE62dD262ab383E85dBdEd";
+  const factoryAddress = "0x044d2a6212E48eF3D562e7fd6B16A115dd62A2c9";
 
   const router = useRouter();
 
@@ -130,11 +130,11 @@ const Project = function (props) {
         setProvider(provider);
         setLibrary(library);
 
-        const abi = ["function mint(uint256 _mintAmount) public payable"]
+        const abi = ["function mintNft(uint256 _mintAmount) public payable"]
         const connectedContract = new ethers.Contract(nftFactory, abi, signer);
 
 
-        let _mintNft = await connectedContract.mint(1, {gasLimit:6000000});
+        let _mintNft = await connectedContract.mintNft(1, {gasLimit:6000000});
         // setIsLoadingNft(true);
         await _mintNft.wait();
         // setIsLoadingNft(false);

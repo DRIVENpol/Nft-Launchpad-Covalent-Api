@@ -16,7 +16,7 @@ const [revealed, setRevealed] = useState('No: By Default');
 const [isRevealed, setIsRevealed] = useState(false);
 
 // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
-const factoryAddress = "0x0F1F231e7B9B4E7383DE62dD262ab383E85dBdEd"; // Without Fee - for testing
+const factoryAddress = "0x044d2a6212E48eF3D562e7fd6B16A115dd62A2c9"; // Without Fee - for testing
 
 const [nftDetails, setNftDetails] = useState({
   tokenName: '',
