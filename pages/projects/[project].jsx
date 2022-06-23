@@ -495,7 +495,7 @@ const Project = function (props) {
                >
              <b>Mint Now!</b>
             </Button></VStack></>)}
-            <Text>{tMinted} / {projectDetails.mintedSupply} Minted</Text>
+            <Text mb={7}>{tMinted} / {projectDetails.mintedSupply} Minted</Text>
     </GridItem>
 </Grid>
 </Container>
