@@ -184,7 +184,7 @@ const Project = function (props) {
         // let _amount = await connectedContract.getMintedAmount();
         //       setTMinted(_amount.toString());
         //       console.log(_amount.toString())
-
+        getMintNft();
         console.log(_mintNft);
         console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
         setTransactionNft(`https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
