@@ -50,7 +50,6 @@ const Project = function (props) {
   const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
 
   const router = useRouter();
-  const [a, setA] = useState(0);
 
   const apiTransactions = [];
   // const [cAddresses, setCAddresses] = useState([]);
@@ -139,8 +138,8 @@ const Project = function (props) {
 
    
    const getProjectDetails = async () => {
-    setA(router.query.address)
-    console.log("getProjectDetails " + a);
+
+    let a = router.query.id;
 
    // const { ethereum } = window;
    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
@@ -152,10 +151,9 @@ const Project = function (props) {
    const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
    
-   let _collectionAddress = await connectedContract.getCollectionProps(Number(a));
+   let _collectionAddress = await connectedContract.getCollectionProps(0);
    // let _cA = _collectionAddress;
   //  console.log(_collectionAddress);
-  getMintNft();
    setProjectDetails(() => {
     return {
       tokenName: _collectionAddress[1],
@@ -364,7 +362,7 @@ const Project = function (props) {
 
   useEffect(() => {
     getProjectDetails();
-    // getMintNft();
+    getMintNft();
     if (window.ethereum){
       setProvider(new ethers.providers.Web3Provider(window.ethereum))
     } else {
