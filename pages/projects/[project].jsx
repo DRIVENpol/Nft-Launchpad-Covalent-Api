@@ -44,17 +44,26 @@ const Project = function (props) {
   const [endBlock, setEndBlock] = useState(0);
   const [startBlock, setStartBlock] = useState(0);
 
+  const factoryAddress = "0x0F1F231e7B9B4E7383DE62dD262ab383E85dBdEd";
+
   const router = useRouter();
 
   const [apiTransactions, setApiTransactions] = useState([]);
-  const [cAddresses, setCAddresses] = useState([]);
+  // const [cAddresses, setCAddresses] = useState([]);
+  const [projectDetails, setProjectDetails] = useState({
+    tokenName: '',
+    tokenSymbol: '',
+    tokenBanner: '',
+    tokenAddress: '',
+    projectDescription: ''
+   });
 
    // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
    
    const getCollectionAddress = async () => {
     let a = router.query.id;
     console.log(a)
-    const factoryAddress = "0x0F1F231e7B9B4E7383DE62dD262ab383E85dBdEd"; // Without Fee - for testing
+
    // const { ethereum } = window;
    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
    // const signer = provider.getSigner();
@@ -68,7 +77,16 @@ const Project = function (props) {
    let _collectionAddress = await connectedContract.getColelctionProps(0);
    // let _cA = _collectionAddress;
    console.log(_collectionAddress);
-   setCAddresses(oldArray => [...oldArray, _collectionAddress]);
+   setProjectDetails(() => {
+    return {
+      tokenName: _collectionAddress[1],
+      tokenSymbol: _collectionAddress[2],
+      tokenBanner: _collectionAddress[3],
+      tokenAddress: _collectionAddress[0],
+      projectDescription: _collectionAddress[4]
+    }
+   });
+  //  setCAddresses(oldArray => [...oldArray, _collectionAddress]);
    // cAddresses2.push()
 }
 
@@ -100,6 +118,40 @@ const Project = function (props) {
   //   const __trs = data.sort((a, b) => (b.block_height - a.block_height))
   //   setApiTransactions[__trs];
   // }
+
+  const mintNft = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        setProvider(provider);
+        setLibrary(library);
+
+        const abi = ["function mint(uint256 _mintAmount) public payable"]
+        const connectedContract = new ethers.Contract(nftFactory, abi, signer);
+
+
+        let _mintNft = await connectedContract.mint(1, {gasLimit:6000000});
+        // setIsLoadingNft(true);
+        await _mintNft.wait();
+        // setIsLoadingNft(false);
+        // manipulateNotifNft();
+
+
+        console.log(_mintNft);
+        console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
+        setTransactionNft(`https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
+
+
+      } catch (error) {
+        setError(error);
+      }
+    }
+   
+  };
 
 
   const connectWallet = async () => {
@@ -280,7 +332,7 @@ const Project = function (props) {
     bgPosition={'center'}
     bgSize={['400%', '200%', '200%', '200%', '100%']}
     borderRadius='lg'
-    bgImg={cAddresses[0]}
+    bgImg={projectDetails.tokenBanner}
     bgRepeat="no-repeat"
     p={6} />
 
@@ -335,7 +387,7 @@ const Project = function (props) {
     p={6}>
     
         <HStack mb={5}>
-                <Text mr={3} fontSize={'2xl'}><b>{cAddresses[1]}</b></Text>
+                <Text mr={3} fontSize={'2xl'}><b>{projectDetails.tokenName}</b></Text>
                <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
                <HStack>
                 <a href={props.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
@@ -346,7 +398,7 @@ const Project = function (props) {
                 </HStack>
                 </Box>
             </HStack>
-        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15} textAlign='left'>{props.description}</Text>
+        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15} textAlign='left'>{projectDetails.projectDescription}</Text>
 
     </GridItem>
 
@@ -369,7 +421,7 @@ const Project = function (props) {
                >
              <b>Connect Your Wallet & Mint</b>
             </Button></VStack></>): (<><VStack py={'7.5%'} gap={3} justify={'center'}>
-            <Text fontSize={'2xl'}><b>Mint Your {props.name} NFT</b></Text>
+            <Text fontSize={'2xl'}><b>Mint Your {projectDetails.tokenSymbol} NFT</b></Text>
             <NumberInput step={1} defaultValue={0} min={0} 
                 focusBorderColor = "white"
                 textColor={'white'} size='lg' maxWidth={'50%'}>
@@ -380,7 +432,7 @@ const Project = function (props) {
               </NumberInputStepper>
             </NumberInput>
             <Button
-              onClick={connectWallet}
+              onClick={mintNft}
               variant={'solid'}
               size='lg'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
