@@ -28,7 +28,6 @@ import { providerOptions } from "../../components/Utils/providerOptions";
 const Project = function (props) {
   // console.log(props.transactions)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [ownerAddress, setOwnerAddress] = useState('0x4E8892C244CF98b3e59b709b4c81553ef8FeF5cF');
 
   const [provider, setProvider] = useState();
   const [library, setLibrary] = useState();
@@ -45,6 +44,8 @@ const Project = function (props) {
   const [startBlock, setStartBlock] = useState(0);
 
   const [tMinted, setTMinted] = useState(0);
+
+  const [toMint, setToMint] = useState();
 
   const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
 
@@ -66,6 +67,10 @@ const Project = function (props) {
    });
 
    // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
+
+   const inputChangeHandler = (event) => {
+    setToMint(event.target.value);
+  }
 
    const getMintNft = async () => {
     if (typeof window !== 'undefined'){
@@ -174,8 +179,8 @@ const Project = function (props) {
         const _scAddress = router.query.address;
         const connectedContract = new ethers.Contract(_scAddress, abi, signer);
 
-
-        let _mintNft = await connectedContract.mintNft(7, {gasLimit:8000000});
+        let _toMint = Number(toMint);
+        let _mintNft = await connectedContract.mintNft(_toMint, {gasLimit:8000000});
         // setIsLoadingNft(true);
         await _mintNft.wait();
         // setIsLoadingNft(false);
@@ -467,10 +472,10 @@ const Project = function (props) {
              <b>Connect Your Wallet & Mint</b>
             </Button></VStack></>): (<><VStack py={'7.5%'} gap={3} justify={'center'}>
             <Text fontSize={'2xl'}><b>Mint Your {projectDetails.tokenSymbol} NFT</b></Text>
-            <NumberInput step={1} defaultValue={0} min={0} 
+            <NumberInput step={1} defaultValue={1} min={1}
                 focusBorderColor = "white"
                 textColor={'white'} size='lg' maxWidth={'50%'}>
-             <NumberInputField />
+             <NumberInputField onChange={inputChangeHandler} />
               <NumberInputStepper>
                 <NumberIncrementStepper />
                 <NumberDecrementStepper />
