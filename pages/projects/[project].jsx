@@ -40,8 +40,8 @@ const Project = function (props) {
   const [signedMessage, setSignedMessage] = useState("");
   const [verified, setVerified] = useState();
 
-  const [endBlock, setEndBlock] = useState(0);
-  const [startBlock, setStartBlock] = useState(0);
+  let endBlock = 0;
+  let startBlock = 0;
 
   const [tMinted, setTMinted] = useState(0);
 
@@ -98,8 +98,8 @@ const Project = function (props) {
   };
    
    const getProjectDetails = async () => {
-    let a = router.query.id;
 
+    let a = router.query.id;
 
    // const { ethereum } = window;
    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
@@ -141,9 +141,11 @@ const Project = function (props) {
     const _provider = providers.getDefaultProvider('matic');
   
     await _provider.getBlockNumber().then(function(blockNumber) {
-      setEndBlock(Number(blockNumber));
-      setStartBlock(Number(blockNumber - 10000));
-  });
+      endBlock = blockNumber;
+      startBlock = blockNumber - 100000;
+      // console.log(blockNumber - 1000);
+      // console.log(blockNumber)
+      });
 
     const key = 'ckey_148ca1425bb2412cb4c98bf085f';
     const baseURL = 'https://api.covalenthq.com/v1'
@@ -162,6 +164,10 @@ const Project = function (props) {
     const __trs = trs.sort((a, b) => (b.block_height - a.block_height))
     console.log(__trs)
     setApiTransactions[__trs];
+
+    // setApiTransactions(() => {
+    //   return {...apiTransactions, __trs}
+    //  });
   }
 
   const mintNft = async () => {
