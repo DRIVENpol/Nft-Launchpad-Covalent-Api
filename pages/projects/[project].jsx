@@ -51,7 +51,7 @@ const Project = function (props) {
 
   const router = useRouter();
 
-  const [apiTransactions, setApiTransactions] = useState([]);
+  const apiTransactions = [];
   // const [cAddresses, setCAddresses] = useState([]);
   const [projectDetails, setProjectDetails] = useState({
     tokenName: '',
@@ -70,7 +70,7 @@ const Project = function (props) {
 
    const inputChangeHandler = (event) => {
     setToMint(event.target.value);
-    console.log(event.target.value)
+    // console.log(event.target.value)
   }
 
    const getMintNft = async () => {
@@ -87,7 +87,7 @@ const Project = function (props) {
 
         let _amount = await connectedContract.getMintedAmount();
               setTMinted(_amount.toString());
-              console.log(_amount.toString())
+              // console.log(_amount.toString())
 
 
       } catch (error) {
@@ -96,6 +96,46 @@ const Project = function (props) {
     }
    
   };
+
+  const getApy = async () => {
+
+    const providers = ethers.providers;
+  
+    const _provider = providers.getDefaultProvider('matic');
+  
+    await _provider.getBlockNumber().then(function(blockNumber) {
+      endBlock = blockNumber;
+      startBlock = blockNumber - 100000;
+      // console.log(blockNumber - 1000);
+      // console.log(blockNumber)
+      });
+
+    const key = 'ckey_148ca1425bb2412cb4c98bf085f';
+    const baseURL = 'https://api.covalenthq.com/v1'
+    const chainId = '137'
+    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3";
+
+    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=${endBlock}&key=${key}`);
+    const response = await fetch(url);
+    const result = await response.json();
+    const data = result.data.items;
+    // const obj = data.filter((p) => p.name.toString() === "");
+  
+  
+    const trs = data.filter((t) => t.decoded.name.toString().includes(""));
+    // const _trs = trs.filter((e,k) => k < 50);
+    const __trs = trs.sort((a, b) => (b.block_height - a.block_height))
+    apiTransactions.push(__trs);
+    // setApiTransactions[__trs];
+
+
+    // setApiTransactions(() => {
+    //   return {...apiTransactions, __trs}
+    //  });
+
+    // console.log(apiTransactions[0][1]);
+  }
+
    
    const getProjectDetails = async () => {
 
@@ -134,46 +174,11 @@ const Project = function (props) {
    // cAddresses2.push()
 }
 
-  const getApy = async() => {
-
-    const providers = ethers.providers;
   
-    const _provider = providers.getDefaultProvider('matic');
-  
-    await _provider.getBlockNumber().then(function(blockNumber) {
-      endBlock = blockNumber;
-      startBlock = blockNumber - 100000;
-      // console.log(blockNumber - 1000);
-      // console.log(blockNumber)
-      });
-
-    const key = 'ckey_148ca1425bb2412cb4c98bf085f';
-    const baseURL = 'https://api.covalenthq.com/v1'
-    const chainId = '137'
-    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3";
-
-    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=${endBlock}&key=${key}`);
-    const response = await fetch(url);
-    const result = await response.json();
-    const data = result.data.items;
-    // const obj = data.filter((p) => p.name.toString() === "");
-  
-  
-    const trs = data.filter((t) => t.decoded.name.toString().includes(""));
-    // const _trs = trs.filter((e,k) => k < 50);
-    const __trs = trs.sort((a, b) => (b.block_height - a.block_height))
-    console.log(__trs)
-    setApiTransactions[__trs];
-
-    // setApiTransactions(() => {
-    //   return {...apiTransactions, __trs}
-    //  });
-  }
-
   const mintNft = async () => {
     if (typeof window !== 'undefined'){
       try {
-        
+        getApy();
         const { ethereum } = window;
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
@@ -356,7 +361,6 @@ const Project = function (props) {
   }, [provider]);
 
   useEffect(() => {
-    getApy();
     getProjectDetails();
     getMintNft();
     if (window.ethereum){
@@ -414,10 +418,11 @@ const Project = function (props) {
       </Tr>
     </Thead>
     <Tbody>
-    {apiTransactions && apiTransactions.map((transfer) => {
-         let _data = transfer.decoded.name;
-         let _tx = transfer.tx_hash;
-      
+    {apiTransactions && apiTransactions.map((t, index) => {
+      console.log(t);
+         let _data = t[0][index].decoded.name;
+         let _tx = t[0][index].tx_hash;
+        {/* console.log(t[0][index].decoded.name); */}
           return (
              <>
     <Tr>
