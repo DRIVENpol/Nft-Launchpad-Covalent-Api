@@ -21,6 +21,11 @@ contract NftMintyFactory is Ownable {
         string _symbol;
         string _cBanner;
         string _description;
+        address _owner;
+        string _website;
+        string _twitterLink;
+        string _discordLink;
+        uint256 _totalSupply;
    }
 
    MyCollection[] public theCollections;
@@ -68,7 +73,10 @@ contract NftMintyFactory is Ownable {
         uint256 _fee,
         uint256 _maxSupply,
         bool _revealed,
-        string memory _description
+        string memory _description,
+        string memory _website,
+        string memory _twitterLink,
+        string memory _discordLink
         ) public {
         // require(msg.value == createFee, "Pay the fee!");
 
@@ -86,7 +94,7 @@ contract NftMintyFactory is Ownable {
 
         collections.push(newCollection);
         collectionsObject.push(NftSmartContract(newCollection));
-        theCollections.push(MyCollection(newCollection, _name, _symbol, _cBanner, _description));
+        theCollections.push(MyCollection(newCollection, _name, _symbol, _cBanner, _description, msg.sender, _website, _twitterLink, _discordLink, _maxSupply));
     }
 
     // GETTERS
@@ -103,13 +111,19 @@ contract NftMintyFactory is Ownable {
         return collections[_i];
     }
 
-    function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory){
+    function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address,
+     string memory, string memory, string memory, uint256){
         return (
             theCollections[index]._address,
             theCollections[index]._name,
             theCollections[index]._symbol,
             theCollections[index]._cBanner,
-            theCollections[index]._description
+            theCollections[index]._description,
+            theCollections[index]._owner,
+            theCollections[index]._website,
+            theCollections[index]._twitterLink,
+            theCollections[index]._discordLink,
+            theCollections[index]._totalSupply
         );
     }
 }
@@ -172,7 +186,7 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
         setNotRevealedURI(_initNotRevealedUri);
         transferOwnership(_caller);
         // Mint 1 NFT to the owner
-        _mint(_caller, 1);
+        _mint(_caller, 0);
 
     }
 
@@ -182,33 +196,42 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
     }
 
     // MINT FUNCTION
-    function mint(uint256 _mintAmount) public payable {
-        counter = counter.add(_mintAmount);
+    function mintNft(uint256 _mintAmount) public payable {
+        require(_mintAmount != 0);
+        // uint256 _counter = counter.add(_mintAmount);
+        uint256 supply = totalSupply();
         require(pause != true, "The smart contract is paused!");
         require(blacklist[msg.sender] != true, "You are blacklisted!");
-        require(counter < maxSupply, "no more NFTs available!");
+        require(supply + _mintAmount < maxSupply, "No more NFTs available!");
 
         if(msg.sender == owner()) {
             // MINT
-             _mint(msg.sender, _mintAmount);
+             for (uint256 i = 1; i <= _mintAmount; i++){
+                 _mint(msg.sender, supply + i);
+            }
+            
 
         } else {
-            require(msg.value == fee, "Pay the fee for mint!");
-            _mint(msg.sender, _mintAmount);
+            // require(msg.value == fee * _mintAmount, "Pay the fee for mint!"); REMOVED FOR TESTING
+                for (uint256 i = 1; i <= _mintAmount; i++){
+                        _mint(msg.sender, supply + i);
+                    }
         }
     }
 
         function airdropNfts(address[] memory wallets) public onlyOwner() {
-        uint256 _q = wallets.length;
-        uint256 _newQ = counter.add(_q);
+        // require(_mintAmount != 0);
+        // uint256 _counter = counter.add(_mintAmount);
+        uint256 supply = totalSupply();
+        // require(pause != true, "The smart contract is paused!");
+        // require(blacklist[msg.sender] != true, "You are blacklisted!");
+        require(supply + wallets.length < maxSupply, "No more NFTs available!");
 
-        require(_newQ <= maxSupply);
-
-        for(uint256 i = 0; i < wallets.length; i++) {
-            address who = wallets[i];
-            counter.add(1);
-            _mint(who, 1);
+            // MINT
+             for (uint256 i = 1; i <= wallets.length; i++){
+                 _mint(wallets[i], supply + i);
             }
+    
         }
 
     // WALLET OF THE OWNER
@@ -301,5 +324,10 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
             maxSupply,
             counter
         );
+    }
+
+    function getMintedAmount() public view returns(uint256) {
+        uint256 _sup = totalSupply();
+        return _sup;
     }
 }

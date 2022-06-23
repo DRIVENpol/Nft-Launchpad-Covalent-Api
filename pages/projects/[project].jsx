@@ -44,7 +44,7 @@ const Project = function (props) {
   const [endBlock, setEndBlock] = useState(0);
   const [startBlock, setStartBlock] = useState(0);
 
-  const factoryAddress = "0x044d2a6212E48eF3D562e7fd6B16A115dd62A2c9";
+  const factoryAddress = "0xc040D8eb49675272464eE55c503EE456AfdBAd5b";
 
   const router = useRouter();
 
@@ -55,12 +55,17 @@ const Project = function (props) {
     tokenSymbol: '',
     tokenBanner: '',
     tokenAddress: '',
-    projectDescription: ''
+    projectDescription: '',
+    owner: '',
+    website: '',
+    twitter: '',
+    discord: '',
+    mintedSupply: ''
    });
 
    // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
    
-   const getCollectionAddress = async () => {
+   const getProjectDetails = async () => {
     let a = router.query.id;
     console.log(a)
 
@@ -71,19 +76,24 @@ const Project = function (props) {
    // setProvider(provider);
    // setLibrary(library);
 
-   const abi = ["function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory)"];
+   const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
 
-   let _collectionAddress = await connectedContract.getColelctionProps(0);
+   let _collectionAddress = await connectedContract.getCollectionProps(0);
    // let _cA = _collectionAddress;
-   console.log(_collectionAddress);
+  //  console.log(_collectionAddress);
    setProjectDetails(() => {
     return {
       tokenName: _collectionAddress[1],
       tokenSymbol: _collectionAddress[2],
       tokenBanner: _collectionAddress[3],
       tokenAddress: _collectionAddress[0],
-      projectDescription: _collectionAddress[4]
+      projectDescription: _collectionAddress[4],
+      owner: _collectionAddress[5],
+      website: _collectionAddress[6],
+      twitter: _collectionAddress[7],
+      discord: _collectionAddress[8],
+      mintedSupply: _collectionAddress[9]
     }
    });
   //  setCAddresses(oldArray => [...oldArray, _collectionAddress]);
@@ -131,10 +141,11 @@ const Project = function (props) {
         setLibrary(library);
 
         const abi = ["function mintNft(uint256 _mintAmount) public payable"]
-        const connectedContract = new ethers.Contract(nftFactory, abi, signer);
+        const _scAddress = router.query.address;
+        const connectedContract = new ethers.Contract(_scAddress, abi, signer);
 
 
-        let _mintNft = await connectedContract.mintNft(1, {gasLimit:6000000});
+        let _mintNft = await connectedContract.mintNft(7, {gasLimit:8000000});
         // setIsLoadingNft(true);
         await _mintNft.wait();
         // setIsLoadingNft(false);
@@ -162,7 +173,6 @@ const Project = function (props) {
           providerOptions // required
         });
 
-        getCollectionAddress();
         const provider = await web3Modal.connect();
         const library = new ethers.providers.Web3Provider(provider);
         const accounts = await library.listAccounts();
@@ -300,6 +310,7 @@ const Project = function (props) {
   }, [provider]);
 
   useEffect(() => {
+    getProjectDetails();
     if (window.ethereum){
       setProvider(new ethers.providers.Web3Provider(window.ethereum))
     } else {
@@ -390,11 +401,11 @@ const Project = function (props) {
                 <Text mr={3} fontSize={'2xl'}><b>{projectDetails.tokenName}</b></Text>
                <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
                <HStack>
-                <a href={props.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
+                <a href={projectDetails.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
                 <Text>|</Text>
-                <a href={props.discord} target='_blank' rel="noreferrer" ><Image src={Discord.src} alt='Discord' w={3}/></a>
+                <a href={projectDetails.discord} target='_blank' rel="noreferrer" ><Image src={Discord.src} alt='Discord' w={3}/></a>
                 <Text>|</Text>
-                <a href={props.website} target='_blank' rel="noreferrer" ><Image src={Website.src} alt='Website' w={3}/></a>
+                <a href={projectDetails.website} target='_blank' rel="noreferrer" ><Image src={Website.src} alt='Website' w={3}/></a>
                 </HStack>
                 </Box>
             </HStack>

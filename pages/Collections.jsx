@@ -28,7 +28,7 @@ const Collections = function ({obj}) {
   );
 
   // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
-  const factoryAddress = "0x044d2a6212E48eF3D562e7fd6B16A115dd62A2c9"; // Without Fee - for testing
+  const factoryAddress = "0xc040D8eb49675272464eE55c503EE456AfdBAd5b"; // Without Fee - for testing
 
   const [provider, setProvider] = useState();
   const [library, setLibrary] = useState();
@@ -72,15 +72,15 @@ const getCollectionAddress = async (index) => {
       
       // const { ethereum } = window;
       const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
-      // const signer = provider.getSigner();
+      const signer = iProvider.getSigner();
 
       // setProvider(provider);
       // setLibrary(library);
 
-      const abi = ["function getColelctionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory)"];
+      const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
       const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
-
-      let _collectionAddress = await connectedContract.getColelctionProps(index);
+   
+      let _collectionAddress = await connectedContract.getCollectionProps(index);
       // let _cA = _collectionAddress;
       console.log(_collectionAddress);
       setCAddresses(oldArray => [...oldArray, _collectionAddress]);

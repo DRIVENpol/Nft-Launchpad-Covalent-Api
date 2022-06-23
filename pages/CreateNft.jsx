@@ -16,7 +16,7 @@ const [revealed, setRevealed] = useState('No: By Default');
 const [isRevealed, setIsRevealed] = useState(false);
 
 // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
-const factoryAddress = "0x044d2a6212E48eF3D562e7fd6B16A115dd62A2c9"; // Without Fee - for testing
+const factoryAddress = "0xc040D8eb49675272464eE55c503EE456AfdBAd5b"; // Without Fee - for testing
 
 const [nftDetails, setNftDetails] = useState({
   tokenName: '',
@@ -27,7 +27,10 @@ const [nftDetails, setNftDetails] = useState({
   notRevealedUri: '',
   notRevealed: false,
   price: 0,
-  description: ''
+  description: '',
+  website: '',
+  twitter: '',
+  discord: '',
  });
 
 const [provider, setProvider] = useState();
@@ -106,6 +109,24 @@ const descriptionChangeHandler = (event) => {
    });
 }
 
+const websiteChangeHandler = (event) => {
+  setNftDetails(() => {
+    return {...nftDetails, website: event.target.value}
+   });
+}
+
+const twitterChangeHandler = (event) => {
+  setNftDetails(() => {
+    return {...nftDetails, twitter: event.target.value}
+   });
+}
+
+const discordChangeHandler = (event) => {
+  setNftDetails(() => {
+    return {...nftDetails, discord: event.target.value}
+   });
+}
+
 // const maxPerWalletChangeHandler = (event) => {
 //   setNftDetails(() => {
 //     return {...nftDetails, maxPerWallet: event.target.value}
@@ -123,7 +144,7 @@ const createCollection = async () => {
         setProvider(provider);
         setLibrary(library);
 
-        const abi = ["function createCollection(string memory _name, string memory _symbol, string memory _cBanner, string memory _initBaseURI, string memory _initNotRevealedUri, uint256 _fee, uint256 _maxSupply, bool _revealed, string memory _description) public"]
+        const abi = ["function createCollection(string memory _name, string memory _symbol, string memory _cBanner, string memory _initBaseURI, string memory _initNotRevealedUri, uint256 _fee, uint256 _maxSupply, bool _revealed, string memory _description, string memory _website, string memory _twitterLink, string memory _discordLink) public"]
         const connectedContract = new ethers.Contract(factoryAddress, abi, signer);
         setError("");
         let _createNft = await connectedContract.createCollection(
@@ -136,6 +157,9 @@ const createCollection = async () => {
           nftDetails.tokenSupply,
           isRevealed,
           nftDetails.description,
+          nftDetails.website,
+          nftDetails.twitter,
+          nftDetails.discord,
           {gasLimit:6000000});
 
           setButtonLoading(true);
@@ -338,16 +362,29 @@ const isRevealedCollection = () => {
            <Input placeholder='My NFTs' mt='10px' onChange={nameChangeHandler} />
 
            <br />
-           <Text mt='30px'><b>Banner</b></Text>
-           <Input placeholder='Link' mt='10px' onChange={bannerChangeHandler} />
+           <Text mt='30px'><b>Collection Symbol</b></Text>
+           <Input placeholder='$MNFT' mt='10px' onChange={symbolChangeHandler} />
 
            <br />
            <Text mt='30px'><b>Description</b></Text>
            <Textarea placeholder='Description' mt='10px' onChange={descriptionChangeHandler} />
 
            <br />
-           <Text mt='30px'><b>Collection Symbol</b></Text>
-           <Input placeholder='$MNFT' mt='10px' onChange={symbolChangeHandler} />
+           <Text mt='30px'><b>Website</b></Text>
+           <Input placeholder='HTTPS://' mt='10px' onChange={websiteChangeHandler} />
+
+           <br />
+           <Text mt='30px'><b>Twitter</b></Text>
+           <Input placeholder='HTTPS://' mt='10px' onChange={twitterChangeHandler} />
+
+           <br />
+           <Text mt='30px'><b>Discord</b></Text>
+           <Input placeholder='HTTPS://' mt='10px' onChange={discordChangeHandler} />
+
+           <br />
+           <Text mt='30px'><b>Banner</b></Text>
+           <Input placeholder='Link' mt='10px' onChange={bannerChangeHandler} />
+
 
             <br />
            <Text mt='30px'><b>Total Supply</b></Text>
