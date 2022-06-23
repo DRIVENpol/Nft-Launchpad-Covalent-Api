@@ -67,27 +67,29 @@ const Project = function (props) {
 
    // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
 
-  //  const getMintedA = async () => {
-  //   if (typeof window !== 'undefined'){
-  //     try {
+   const getMintNft = async () => {
+    if (typeof window !== 'undefined'){
+      try {
         
-  //       const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+        const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+
+        const abi = ["function mintNft(uint256 _mintAmount) public payable",
+        "function getMintedAmount() public view returns(uint256)"
+      ];
+        const _scAddress = router.query.address;
+        const connectedContract = new ethers.Contract(_scAddress, abi, iProvider);
+
+        let _amount = await connectedContract.getMintedAmount();
+              setTMinted(_amount.toString());
+              console.log(_amount.toString())
 
 
-  //       const abi = ["function getMintedAmount() public view returns(uint256)"];
-  //       const _scAddress = router.query.address;
-  //       const connectedContract = new ethers.Contract(_scAddress, abi, iProvider);
-
-  //       let _amount = await connectedContract.getMintedAmount();
-  //       setTMinted(Number(_amount));
-  //       console.log(_amount)
-
-  //     } catch (error) {
-  //       setError(error);
-  //     }
-  //   }
+      } catch (error) {
+        setError(error);
+      }
+    }
    
-  //  }
+  };
    
    const getProjectDetails = async () => {
     let a = router.query.id;
@@ -117,7 +119,7 @@ const Project = function (props) {
       website: _collectionAddress[6],
       twitter: _collectionAddress[7],
       discord: _collectionAddress[8],
-      mintedSupply: _collectionAddress[9]
+      mintedSupply: _collectionAddress[9].toString()
     }
    });
 
@@ -179,9 +181,9 @@ const Project = function (props) {
         // setIsLoadingNft(false);
         // manipulateNotifNft();
 
-        let _amount = await connectedContract.getMintedAmount();
-              // setTMinted(_amount);
-              console.log(_amount)
+        // let _amount = await connectedContract.getMintedAmount();
+        //       setTMinted(_amount.toString());
+        //       console.log(_amount.toString())
 
         console.log(_mintNft);
         console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
@@ -342,7 +344,7 @@ const Project = function (props) {
 
   useEffect(() => {
     getProjectDetails();
-    // getMintedA();
+    getMintNft();
     if (window.ethereum){
       setProvider(new ethers.providers.Web3Provider(window.ethereum))
     } else {
@@ -488,7 +490,7 @@ const Project = function (props) {
                >
              <b>Mint Now!</b>
             </Button></VStack></>)}
-            <Text>{tMinted}</Text>
+            <Text>{tMinted} / {projectDetails.mintedSupply} Minted</Text>
     </GridItem>
 </Grid>
 </Container>
