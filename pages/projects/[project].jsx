@@ -356,7 +356,7 @@ const Project = function (props) {
   return (
     
    <><Container maxW={'100%'} align='center' py={4} bgColor='#e0e0eb'> 
-       {/* {account === ownerAddress ? ( */}
+       {account === projectDetails.owner ? (
         <Box bgGradient='linear(to-r, #141E30, #243B55)' 
           py='3' 
           mb={'4'} 
@@ -364,7 +364,7 @@ const Project = function (props) {
           color={'white'}
           boxShadow='md' onClick={onOpen}>
 <Text as={'b'}><Link onClick={onOpen}>Manage Collection</Link></Text></Box>
-{/* ) : null} */}
+) : null}
 
      <Grid
   templateRows='repeat(2, 1fr)'
