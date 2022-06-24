@@ -139,8 +139,8 @@ const Project = function (props) {
    
    const getProjectDetails = async () => {
 
-    let a = router.query.id;
-    console.log("getProjectDetails" + Number(a));
+    // let a = router.query.id;
+    // console.log("getProjectDetails" + Number(a));
 
    // const { ethereum } = window;
    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
@@ -152,7 +152,7 @@ const Project = function (props) {
    const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
    
-   let _collectionAddress = await connectedContract.getCollectionProps(Number(a));
+   let _collectionAddress = await connectedContract.getCollectionProps(router.query.id);
    // let _cA = _collectionAddress;
   //  console.log(_collectionAddress);
    setProjectDetails(() => {
