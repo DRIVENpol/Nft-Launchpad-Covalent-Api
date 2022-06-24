@@ -113,7 +113,7 @@ const Project = function (props) {
     const key = 'ckey_148ca1425bb2412cb4c98bf085f';
     const baseURL = 'https://api.covalenthq.com/v1'
     const chainId = '137'
-    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3";
+    const address = router.query.address;
 
     const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=${endBlock}&key=${key}`);
     const response = await fetch(url);
@@ -140,7 +140,7 @@ const Project = function (props) {
    const getProjectDetails = async () => {
 
     let a = router.query.id;
-    console.log("getProjectDetails" + a);
+    console.log("getProjectDetails" + Number(a));
 
    // const { ethereum } = window;
    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");

@@ -334,7 +334,7 @@ useEffect(() => {
         <Text fontSize={'29px'}><b>{project[1]}</b></Text>
         <Text fontSize={'14px'} noOfLines={2}>{project[4]}</Text>
         <Stack direction='row' mb='5%' mt='5%'>
-        <Link  href={{ pathname: `/projects/${project[0]}`, query: { id: `${index}`, address: `${project[0]}` } }}
+        <Link href={{ pathname: `/projects/${project[0]}`, query: { id: {index}, address: `${project[0]}` } }}
               key={project[4]} rel="noreferrer" passHref>
         <Button
               variant={'solid'}
