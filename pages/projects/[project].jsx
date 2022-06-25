@@ -23,76 +23,6 @@ import { BigNumber, ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from "../../components/Utils/providerOptions";
 
-// Fetching data from the JSON file
-export const getStaticProps = async ({ params }) => {
-  let endBlock = '0';
-  let startBlock = '1';
-
-  const providers = ethers.providers;
-
-  const _provider = providers.getDefaultProvider('matic');
-
-  await _provider.getBlockNumber().then(function(blockNumber) {
-   endBlock = blockNumber;
-   startBlock = endBlock - 1000000;
-});
-
-    // const obj = projects.filter((p) => p.address.toString() === params.project);
-    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
-    const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
-    const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
-    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
-    
-    let _collectionAddress = await connectedContract.getCollectionProps(0);
-
-    
-    const key = 'ckey_148ca1425bb2412cb4c98bf085f';
-    const baseURL = 'https://api.covalenthq.com/v1'
-    const chainId = '137'
-    // const address = _collectionAddress[0];
-    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3";
-
-    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
-    const response = await fetch(url);
-    const result = await response.json();
-    const data = result.data.items;
-    
-  
-    const trs = data.filter((t) => t.decoded.name.toString().includes(""));
-    // const _trs = trs.filter((e,k) => k < 50);
-    const __trs = data.sort((a, b) => (b.block_height - a.block_height))
-
-    return {
-        props: {name: _collectionAddress[1],
-        description: _collectionAddress[4],
-        image: _collectionAddress[3],
-        twitter: _collectionAddress[7],
-        website: _collectionAddress[6],
-        discord: _collectionAddress[8],
-        mintedSupply: _collectionAddress[9].toString(),
-        transactions: __trs},
-          }
-}
-
-export async function getStaticPaths() {
-  const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
-  const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
-  const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
-  const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
-  
-  let _collectionAddress = await connectedContract.getCollectionProps(0);
-
-   const paths = _collectionAddress.map((d) => {
-     return {
-       params: {project: _collectionAddress[0].toString()}
-     }
-   })
-
-   return {
-       paths,
-       fallback: false
-     }
-   }
 
 const Project = function (props) {
 
@@ -193,44 +123,44 @@ const Project = function (props) {
   // }
 
    
-//    const getProjectDetails = async (index) => {
-//     getMintNft();
-//     // if (router.isReady) {
-//     //   setPid(router.query.id);
-//     // }
+   const getProjectDetails = async (index) => {
+    getMintNft();
+    // if (router.isReady) {
+    //   setPid(router.query.id);
+    // }
 
-//    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+   const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
 
-//    const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
-//    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
+   const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
+   const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
    
-//    let _collectionAddress = await connectedContract.getCollectionProps(index);
+   let _collectionAddress = await connectedContract.getCollectionProps(index);
 
-//    setProjectDetails(() => {
-//     return {
-//       tokenName: _collectionAddress[1],
-//       tokenSymbol: _collectionAddress[2],
-//       tokenBanner: _collectionAddress[3],
-//       tokenAddress: _collectionAddress[0],
-//       projectDescription: _collectionAddress[4],
-//       owner: _collectionAddress[5],
-//       website: _collectionAddress[6],
-//       twitter: _collectionAddress[7],
-//       discord: _collectionAddress[8],
-//       mintedSupply: _collectionAddress[9].toString()
-//     }
-//    });
+   setProjectDetails(() => {
+    return {
+      tokenName: _collectionAddress[1],
+      tokenSymbol: _collectionAddress[2],
+      tokenBanner: _collectionAddress[3],
+      tokenAddress: _collectionAddress[0],
+      projectDescription: _collectionAddress[4],
+      owner: _collectionAddress[5],
+      website: _collectionAddress[6],
+      twitter: _collectionAddress[7],
+      discord: _collectionAddress[8],
+      mintedSupply: _collectionAddress[9].toString()
+    }
+   });
 
-// }
+}
 
 
-// useEffect(() => {
-//   if (router.isReady) {
-//     setPid(router.query.id);
-//   }
-//   getProjectDetails(router.query.id);
-//   getMintNft();
-// }, [router.isReady]);
+useEffect(() => {
+  if (router.isReady) {
+    setPid(router.query.id);
+  }
+  getProjectDetails(router.query.id);
+  getMintNft();
+}, [router.isReady]);
 
 
   const mintNft = async () => {
@@ -437,7 +367,7 @@ const Project = function (props) {
   return (
     
    <><Container maxW={'100%'} align='center' py={4} bgColor='#e0e0eb'> 
-       {/* {account === projectDetails.owner ? (
+       {account === projectDetails.owner ? (
         <Box bgGradient='linear(to-r, #141E30, #243B55)' 
           py='3' 
           mb={'4'} 
@@ -445,7 +375,7 @@ const Project = function (props) {
           color={'white'}
           boxShadow='md' onClick={onOpen}>
 <Text as={'b'}><Link onClick={onOpen}>Manage Collection</Link></Text></Box>
-) : null} */}
+) : null}
 
      <Grid
   templateRows='repeat(2, 1fr)'
@@ -458,7 +388,7 @@ const Project = function (props) {
     bgPosition={'center'}
     bgSize={['400%', '200%', '200%', '200%', '100%']}
     borderRadius='lg'
-    bgImg={props.image}
+    bgImg={projectDetails.tokenBanner}
     bgRepeat="no-repeat"
     p={6} />
 
@@ -511,18 +441,18 @@ const Project = function (props) {
     p={6}>
     
         <HStack mb={5}>
-                <Text mr={3} fontSize={'2xl'}><b>{props.name}</b></Text>
+                <Text mr={3} fontSize={'2xl'}><b>{projectDetails.tokenName}</b></Text>
                <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
                <HStack>
-                <a href={props.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
+                <a href={projectDetails.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
                 <Text>|</Text>
-                <a href={props.discord} target='_blank' rel="noreferrer" ><Image src={Discord.src} alt='Discord' w={3}/></a>
+                <a href={projectDetails.discord} target='_blank' rel="noreferrer" ><Image src={Discord.src} alt='Discord' w={3}/></a>
                 <Text>|</Text>
-                <a href={props.website} target='_blank' rel="noreferrer" ><Image src={Website.src} alt='Website' w={3}/></a>
+                <a href={projectDetails.website} target='_blank' rel="noreferrer" ><Image src={Website.src} alt='Website' w={3}/></a>
                 </HStack>
                 </Box>
             </HStack>
-        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15} textAlign='left'>{props.description}</Text>
+        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15} textAlign='left'>{projectDetails.projectDescription}</Text>
 
     </GridItem>
 
@@ -584,7 +514,7 @@ const Project = function (props) {
            
             
             </VStack></>)}
-            <Text mb={7}>{tMinted} / {props.mintedSupply} Minted</Text>
+            <Text mb={7}>{tMinted} / {projectDetails.mintedSupply} Minted</Text>
     </GridItem>
 </Grid>
 </Container>
@@ -649,5 +579,76 @@ const Project = function (props) {
    </>
   )
 }
+
+// Fetching data from the JSON file
+export const getStaticProps = async ({ params }) => {
+  let endBlock = '0';
+  let startBlock = '1';
+
+  const providers = ethers.providers;
+
+  const _provider = providers.getDefaultProvider('matic');
+
+  await _provider.getBlockNumber().then(function(blockNumber) {
+   endBlock = blockNumber;
+   startBlock = endBlock - 1000000;
+});
+
+    // const obj = projects.filter((p) => p.address.toString() === params.project);
+    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+    const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
+    const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
+    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
+    
+    let _collectionAddress = await connectedContract.getCollectionProps(0);
+
+    
+    const key = 'ckey_148ca1425bb2412cb4c98bf085f';
+    const baseURL = 'https://api.covalenthq.com/v1'
+    const chainId = '137'
+    const address = _collectionAddress[0];
+
+    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
+    const response = await fetch(url);
+    const result = await response.json();
+    const data = result.data.items;
+    
+  
+    const trs = data.filter((t) => t.decoded.name.toString().includes(""));
+    // const _trs = trs.filter((e,k) => k < 50);
+    const __trs = data.sort((a, b) => (b.block_height - a.block_height))
+
+    return {
+        props: {name: _collectionAddress[1],
+        description: _collectionAddress[4],
+        image: _collectionAddress[3],
+        twitter: _collectionAddress[7],
+        website: _collectionAddress[6],
+        discord: _collectionAddress[8],
+        mintedSupply: _collectionAddress[9].toString(),
+        transactions: __trs},
+          }
+}
+
+export async function getStaticPaths() {
+  const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+  const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
+  const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
+  const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
+  
+  let _collectionAddress = await connectedContract.getCollectionProps(0);
+
+   const paths = _collectionAddress.map((d) => {
+     return {
+       params: {project: _collectionAddress[0].toString()}
+     }
+   })
+
+   return {
+       paths,
+       fallback: false
+     }
+   }
+
 
 export default Project
