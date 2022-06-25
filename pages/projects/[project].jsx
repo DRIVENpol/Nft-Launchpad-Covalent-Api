@@ -459,7 +459,7 @@ useEffect(() => {
              <b>Connect Your Wallet & Mint</b>
             </Button></VStack></>): (<><VStack py={'7.5%'} gap={3} justify={'center'}>
             <Text fontSize={'2xl'}><b>Mint Your {projectDetails.tokenSymbol} NFT</b></Text>
-            <NumberInput step={1} defaultValue={"1"} min={1}
+            <NumberInput step={1} defaultValue={"0"} min={1}
                 focusBorderColor = "white"
                 textColor={'white'} size='lg' maxWidth={'50%'}>
              <NumberInputField value={1} onChange={inputChangeHandler} />
