@@ -54,7 +54,8 @@ const Collections = function ({obj}) {
         // setProvider(provider);
         // setLibrary(library);
 
-        const abi = ["function getLengthOfCollections() public view returns(uint256)"];
+        const abi = ["function getLengthOfCollections() public view returns(uint256)",
+        "function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
         const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
 
         let _collectionLength = await connectedContract.getLengthOfCollections();
@@ -64,30 +65,33 @@ const Collections = function ({obj}) {
         let z = _cL - 1;
 
         for (let i = 0; i <= z; i++) {
-          getCollectionAddress(i);          
+          let _collectionAddress = await connectedContract.getCollectionProps(i);
+          // let _cA = _collectionAddress;
+          console.log(_collectionAddress);
+          setCAddresses(oldArray => [...oldArray, _collectionAddress]);        
         }
    
 }
 
-const getCollectionAddress = async (index) => {
+// const getCollectionAddress = async (index) => {
       
-      // const { ethereum } = window;
-      const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
-      const signer = iProvider.getSigner();
+//       // const { ethereum } = window;
+//       const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+//       const signer = iProvider.getSigner();
 
-      // setProvider(provider);
-      // setLibrary(library);
+//       // setProvider(provider);
+//       // setLibrary(library);
 
-      const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
-      const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
+//       const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
+//       const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
    
-      let _collectionAddress = await connectedContract.getCollectionProps(index);
-      // let _cA = _collectionAddress;
-      console.log(_collectionAddress);
-      setCAddresses(oldArray => [...oldArray, _collectionAddress]);
-      // cAddresses2.push()
+//       let _collectionAddress = await connectedContract.getCollectionProps(index);
+//       // let _cA = _collectionAddress;
+//       console.log(_collectionAddress);
+//       setCAddresses(oldArray => [...oldArray, _collectionAddress]);
+//       // cAddresses2.push()
  
-}
+// }
 
 useEffect(() => {
   getCollectionLength();
