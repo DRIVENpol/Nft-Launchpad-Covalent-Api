@@ -50,7 +50,7 @@ export const getStaticProps = async ({ params }) => {
     const baseURL = 'https://api.covalenthq.com/v1'
     const chainId = '137'
     // const address = _collectionAddress[0];
-    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3"
+    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3";
 
     const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
     const response = await fetch(url);
@@ -59,8 +59,8 @@ export const getStaticProps = async ({ params }) => {
     
   
     const trs = data.filter((t) => t.decoded.name.toString().includes(""));
-    // const _trs = trs.filter((e,k) => k < 50);
-    const __trs = data.sort((a, b) => (b.block_height - a.block_height))
+    const _trs = trs.filter((e,k) => k <200);
+    const __trs = _trs.sort((a, b) => (b.block_height - a.block_height))
 
     return {
         props: {name: _collectionAddress[1],
