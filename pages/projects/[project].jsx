@@ -110,7 +110,7 @@ const Project = function (props) {
 
    
    const getProjectDetails = async (index) => {
-
+ getMintNft();
     // if (router.isReady) {
     //   setPid(router.query.id);
     // }
