@@ -114,17 +114,17 @@ const Project = function (props) {
   }
 
    
-   const getProjectDetails = async () => {
-    if (router.isReady) {
-      setPid(router.query.id);
-    }
+   const getProjectDetails = async (index) => {
+    // if (router.isReady) {
+    //   setPid(router.query.id);
+    // }
 
    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
 
    const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
    
-   let _collectionAddress = await connectedContract.getCollectionProps(pId);
+   let _collectionAddress = await connectedContract.getCollectionProps(index);
 
    setProjectDetails(() => {
     return {
@@ -148,6 +148,7 @@ useEffect(() => {
   if (router.isReady) {
     setPid(router.query.id);
   }
+  getProjectDetails(router.query.id);
 }, [router.isReady]);
 
 
