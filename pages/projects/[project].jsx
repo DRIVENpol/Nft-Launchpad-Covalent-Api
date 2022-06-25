@@ -190,7 +190,7 @@ useEffect(() => {
           title: 'Great!',
           description: `You minted ${_toMint} ${projectDetails.tokenSymbol} NFTs!`,
           status: 'success',
-          duration: 9000,
+          duration: 10000,
           isClosable: true,
         });
         setButtonLoading(true);
