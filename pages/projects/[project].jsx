@@ -41,11 +41,11 @@ const Project = function (props) {
 
   const [tMinted, setTMinted] = useState(0);
   const [toMint, setToMint] = useState(0);
-  const [pId, setPid] = useState(0);
+
 
   const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
   const router = useRouter();
-
+  const [pId, setPid] = useState(router.query.id);
 
   const apiTransactions = [];
   const [projectDetails, setProjectDetails] = useState({
