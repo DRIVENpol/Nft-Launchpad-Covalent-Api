@@ -193,44 +193,44 @@ const Project = function (props) {
   // }
 
    
-   const getProjectDetails = async (index) => {
-    getMintNft();
-    // if (router.isReady) {
-    //   setPid(router.query.id);
-    // }
+//    const getProjectDetails = async (index) => {
+//     getMintNft();
+//     // if (router.isReady) {
+//     //   setPid(router.query.id);
+//     // }
 
-   const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+//    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
 
-   const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
-   const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
+//    const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
+//    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
    
-   let _collectionAddress = await connectedContract.getCollectionProps(index);
+//    let _collectionAddress = await connectedContract.getCollectionProps(index);
 
-   setProjectDetails(() => {
-    return {
-      tokenName: _collectionAddress[1],
-      tokenSymbol: _collectionAddress[2],
-      tokenBanner: _collectionAddress[3],
-      tokenAddress: _collectionAddress[0],
-      projectDescription: _collectionAddress[4],
-      owner: _collectionAddress[5],
-      website: _collectionAddress[6],
-      twitter: _collectionAddress[7],
-      discord: _collectionAddress[8],
-      mintedSupply: _collectionAddress[9].toString()
-    }
-   });
+//    setProjectDetails(() => {
+//     return {
+//       tokenName: _collectionAddress[1],
+//       tokenSymbol: _collectionAddress[2],
+//       tokenBanner: _collectionAddress[3],
+//       tokenAddress: _collectionAddress[0],
+//       projectDescription: _collectionAddress[4],
+//       owner: _collectionAddress[5],
+//       website: _collectionAddress[6],
+//       twitter: _collectionAddress[7],
+//       discord: _collectionAddress[8],
+//       mintedSupply: _collectionAddress[9].toString()
+//     }
+//    });
 
-}
+// }
 
 
-useEffect(() => {
-  if (router.isReady) {
-    setPid(router.query.id);
-  }
-  getProjectDetails(router.query.id);
-  getMintNft();
-}, [router.isReady]);
+// useEffect(() => {
+//   if (router.isReady) {
+//     setPid(router.query.id);
+//   }
+//   getProjectDetails(router.query.id);
+//   getMintNft();
+// }, [router.isReady]);
 
 
   const mintNft = async () => {
@@ -437,7 +437,7 @@ useEffect(() => {
   return (
     
    <><Container maxW={'100%'} align='center' py={4} bgColor='#e0e0eb'> 
-       {account === projectDetails.owner ? (
+       {/* {account === projectDetails.owner ? (
         <Box bgGradient='linear(to-r, #141E30, #243B55)' 
           py='3' 
           mb={'4'} 
@@ -445,7 +445,7 @@ useEffect(() => {
           color={'white'}
           boxShadow='md' onClick={onOpen}>
 <Text as={'b'}><Link onClick={onOpen}>Manage Collection</Link></Text></Box>
-) : null}
+) : null} */}
 
      <Grid
   templateRows='repeat(2, 1fr)'
@@ -458,7 +458,7 @@ useEffect(() => {
     bgPosition={'center'}
     bgSize={['400%', '200%', '200%', '200%', '100%']}
     borderRadius='lg'
-    bgImg={projectDetails.tokenBanner}
+    bgImg={props.image}
     bgRepeat="no-repeat"
     p={6} />
 
@@ -511,18 +511,18 @@ useEffect(() => {
     p={6}>
     
         <HStack mb={5}>
-                <Text mr={3} fontSize={'2xl'}><b>{projectDetails.tokenName}</b></Text>
+                <Text mr={3} fontSize={'2xl'}><b>{props.name}</b></Text>
                <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
                <HStack>
-                <a href={projectDetails.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
+                <a href={props.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
                 <Text>|</Text>
-                <a href={projectDetails.discord} target='_blank' rel="noreferrer" ><Image src={Discord.src} alt='Discord' w={3}/></a>
+                <a href={props.discord} target='_blank' rel="noreferrer" ><Image src={Discord.src} alt='Discord' w={3}/></a>
                 <Text>|</Text>
-                <a href={projectDetails.website} target='_blank' rel="noreferrer" ><Image src={Website.src} alt='Website' w={3}/></a>
+                <a href={props.website} target='_blank' rel="noreferrer" ><Image src={Website.src} alt='Website' w={3}/></a>
                 </HStack>
                 </Box>
             </HStack>
-        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15} textAlign='left'>{projectDetails.projectDescription}</Text>
+        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15} textAlign='left'>{props.description}</Text>
 
     </GridItem>
 
@@ -584,7 +584,7 @@ useEffect(() => {
            
             
             </VStack></>)}
-            <Text mb={7}>{tMinted} / {projectDetails.mintedSupply} Minted</Text>
+            <Text mb={7}>{tMinted} / {props.mintedSupply} Minted</Text>
     </GridItem>
 </Grid>
 </Container>
