@@ -46,6 +46,7 @@ const Project = function (props) {
   const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
   const router = useRouter();
   const [pId, setPid] = useState(0);
+  const [_scAddress, setScAddress] = useState("");
 
   const apiTransactions = [];
   const [projectDetails, setProjectDetails] = useState({
@@ -74,7 +75,7 @@ const Project = function (props) {
         const abi = ["function mintNft(uint256 _mintAmount) public payable",
         "function getMintedAmount() public view returns(uint256)"
       ];
-        const _scAddress = router.query.address;
+
         const connectedContract = new ethers.Contract(_scAddress, abi, iProvider);
 
         let _amount = await connectedContract.getMintedAmount();
@@ -147,8 +148,10 @@ const Project = function (props) {
 useEffect(() => {
   if (router.isReady) {
     setPid(router.query.id);
+    setScAddress(router.query.address);
   }
   getProjectDetails(router.query.id);
+  getMintNft();
 }, [router.isReady]);
 
 
@@ -338,7 +341,6 @@ useEffect(() => {
   }, [provider]);
 
   useEffect(() => {
-    getMintNft();
     if (window.ethereum){
       setProvider(new ethers.providers.Web3Provider(window.ethereum))
     } else {
