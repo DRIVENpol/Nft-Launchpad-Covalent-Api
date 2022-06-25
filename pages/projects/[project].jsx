@@ -147,7 +147,6 @@ const Project = function (props) {
 useEffect(() => {
   if (router.isReady) {
     setPid(router.query.id);
-    getProjectDetails();
   }
 }, [router.isReady]);
 
