@@ -180,16 +180,6 @@ useEffect(() => {
         setButtonLoading(true);
         await _mintNft.wait();
         setButtonLoading(false);
-        // let _amount = await connectedContract.getMintedAmount();
-        //       setTMinted(_amount.toString());
-        //       console.log(_amount.toString())
-        getMintNft();
-        console.log(_mintNft);
-        console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
-        setTransactionNft(`https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
-
-
-
         toast({
           title: 'Great!',
           description: `You minted ${_toMint} ${projectDetails.tokenSymbol} NFTs!`,
@@ -197,7 +187,14 @@ useEffect(() => {
           duration: 10000,
           isClosable: true,
         });
-
+        
+        // let _amount = await connectedContract.getMintedAmount();
+        //       setTMinted(_amount.toString());
+        //       console.log(_amount.toString())
+        getMintNft();
+        console.log(_mintNft);
+        console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
+        setTransactionNft(`https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
 
       } catch (error) {
         setError(error);
