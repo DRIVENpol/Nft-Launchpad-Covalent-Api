@@ -82,7 +82,7 @@ export async function getStaticPaths() {
   
   let _collectionAddress = await connectedContract.getCollectionProps(0);
 
-   const paths = _collectionAddress.map((d) => {
+   const paths = _collectionAddress.map((d, index) => {
      return {
        params: {project: _collectionAddress[0].toString()}
      }
