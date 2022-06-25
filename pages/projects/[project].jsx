@@ -68,8 +68,7 @@ const Project = function (props) {
   }
 
    const getMintNft = async () => {
-    if (typeof window !== 'undefined'){
-      try {
+
         const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
 
         const abi = ["function mintNft(uint256 _mintAmount) public payable",
@@ -80,11 +79,6 @@ const Project = function (props) {
 
         let _amount = await connectedContract.getMintedAmount();
               setTMinted(_amount.toString());
- 
-      } catch (error) {
-        setError(error);
-      }
-    }
    
   };
 
@@ -342,7 +336,7 @@ useEffect(() => {
   }, [provider]);
 
   useEffect(() => {
-    getMintNft();
+
     if (window.ethereum){
       setProvider(new ethers.providers.Web3Provider(window.ethereum))
     } else {
