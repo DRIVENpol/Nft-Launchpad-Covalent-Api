@@ -47,12 +47,12 @@ export const getStaticProps = async ({ params }) => {
     const response = await fetch(url);
     const result = await response.json();
     const data = result.data.items;
-
+    
   
     const trs = data.filter((t) => t.decoded.name.toString().includes(""));
     // const _trs = trs.filter((e,k) => k < 50);
     const __trs = data.sort((a, b) => (b.block_height - a.block_height))
-    
+
     return {
         props: {name: obj[0].name,
         description: obj[0].type,
