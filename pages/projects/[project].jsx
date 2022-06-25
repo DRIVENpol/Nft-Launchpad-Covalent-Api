@@ -23,76 +23,6 @@ import { BigNumber, ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from "../../components/Utils/providerOptions";
 
-// Fetching data from the JSON file
-export const getStaticProps = async ({ params }) => {
-  let endBlock = '0';
-  let startBlock = '1';
-
-  const providers = ethers.providers;
-
-  const _provider = providers.getDefaultProvider('matic');
-
-  await _provider.getBlockNumber().then(function(blockNumber) {
-   endBlock = blockNumber;
-   startBlock = endBlock - 1000000;
-});
-
-    // const obj = projects.filter((p) => p.address.toString() === params.project);
-    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
-    const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
-    const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
-    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
-    
-    let _collectionAddress = await connectedContract.getCollectionProps(0);
-
-    
-    const key = 'ckey_148ca1425bb2412cb4c98bf085f';
-    const baseURL = 'https://api.covalenthq.com/v1'
-    const chainId = '137'
-    // const address = _collectionAddress[0];
-    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3";
-
-    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
-    const response = await fetch(url);
-    const result = await response.json();
-    const data = result.data.items;
-    
-  
-    const trs = data.filter((t) => t.decoded.name.toString().includes(""));
-    const _trs = trs.filter((e,k) => k <200);
-    const __trs = _trs.sort((a, b) => (b.block_height - a.block_height))
-
-    return {
-        props: {name: _collectionAddress[1],
-        description: _collectionAddress[4],
-        image: _collectionAddress[3],
-        twitter: _collectionAddress[7],
-        website: _collectionAddress[6],
-        discord: _collectionAddress[8],
-        mintedSupply: _collectionAddress[9].toString(),
-        transactions: __trs},
-          }
-}
-
-export async function getStaticPaths() {
-  const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
-  const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
-  const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
-  const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
-  
-  let _collectionAddress = await connectedContract.getCollectionProps(0);
-
-   const paths = _collectionAddress.map((d) => {
-     return {
-       params: {project: _collectionAddress[0].toString()}
-     }
-   })
-
-   return {
-       paths,
-       fallback: false
-     }
-   }
 
 const Project = function (props) {
 
@@ -469,6 +399,7 @@ useEffect(() => {
     borderRadius='lg'
     p={6} maxH='700' overflowY={'scroll'}
     >
+
     <Text><b>Transactions</b></Text>
         <Text>Last Recorded Transactions</Text>
         <TableContainer>
@@ -480,10 +411,11 @@ useEffect(() => {
       </Tr>
     </Thead>
     <Tbody>
-    {props.transactions && props.transactions.map((transfer) => {
-         let _data = transfer.decoded.name;
-         let _tx = transfer.tx_hash;
-      
+    {props.transactions && props.map((t, index) => {
+      console.log(t);
+         let _data = t[0][index].decoded.name;
+         let _tx = t[0][index].tx_hash;
+        {/* console.log(t[0][index].decoded.name); */}
           return (
              <>
     <Tr>
@@ -499,6 +431,7 @@ useEffect(() => {
     </Tbody>
   </Table>
 </TableContainer>
+
     </GridItem>
 
   
@@ -648,6 +581,41 @@ useEffect(() => {
       </Modal>
    </>
   )
+}
+
+export const getInitialProps = async ({ params }) => {
+  let endBlock = '0';
+  let startBlock = '1';
+
+  const providers = ethers.providers;
+
+  const _provider = providers.getDefaultProvider('matic');
+
+  await _provider.getBlockNumber().then(function(blockNumber) {
+   endBlock = blockNumber;
+   startBlock = endBlock - 1000000;
+});
+
+
+    const key = 'ckey_148ca1425bb2412cb4c98bf085f';
+    const baseURL = 'https://api.covalenthq.com/v1'
+    const chainId = '137'
+    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3"
+
+    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
+    const response = await fetch(url);
+    const result = await response.json();
+    const data = result.data.items;
+    console.log(data)
+  
+    const trs = data.filter((t) => t.decoded.name.toString().includes(""));
+    // const _trs = trs.filter((e,k) => k < 50);
+    const __trs = data.sort((a, b) => (b.block_height - a.block_height))
+
+    return {
+        props: {
+        transactions: __trs},
+          }
 }
 
 export default Project
