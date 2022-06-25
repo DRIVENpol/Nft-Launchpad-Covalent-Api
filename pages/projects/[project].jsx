@@ -26,6 +26,7 @@ import { providerOptions } from "../../components/Utils/providerOptions";
 
 const Project = function (props) {
 
+  console.log(props.transactions)
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,7 +56,7 @@ const Project = function (props) {
   const [pId, setPid] = useState(0);
 
 
-  const apiTransactions = [];
+  const [apiTransactions, setApiTransactions] = useState([]);
   const [projectDetails, setProjectDetails] = useState({
     tokenName: '',
     tokenSymbol: '',
@@ -75,7 +76,7 @@ const Project = function (props) {
   }
 
    const getMintNft = async () => {
-
+        getApy();
         const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
 
         const abi = ["function mintNft(uint256 _mintAmount) public payable",
@@ -90,37 +91,42 @@ const Project = function (props) {
   };
 
 
-  // const getApy = async () => {
-  //   const providers = ethers.providers;
-  //   const _provider = providers.getDefaultProvider('matic');
-  
-  //   await _provider.getBlockNumber().then(function(blockNumber) {
-  //     endBlock = blockNumber;
-  //     startBlock = blockNumber - 100000;
-  //     });
+const getApy = async () => {
+  let endBlock = '0';
+  let startBlock = '1';
+
+  const providers = ethers.providers;
+
+  const _provider = providers.getDefaultProvider('matic');
+
+  await _provider.getBlockNumber().then(function(blockNumber) {
+   endBlock = blockNumber;
+   startBlock = endBlock - 1000000;
+});
 
 
-  //   const key = 'ckey_148ca1425bb2412cb4c98bf085f';
-  //   const baseURL = 'https://api.covalenthq.com/v1'
-  //   const chainId = '137'
-  //   const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3";
+    const key = 'ckey_148ca1425bb2412cb4c98bf085f';
+    const baseURL = 'https://api.covalenthq.com/v1'
+    const chainId = '137'
+    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3"
 
-  //   const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=${endBlock}&key=${key}`);
-  //   const response = await fetch(url);
-  //   const result = await response.json();
-  //   const data = result.data.items;
-
+    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
+    const response = await fetch(url);
+    const result = await response.json();
+    const data = result.data.items;
  
-  //   const trs = data.filter((t) => t.decoded.name.toString().includes(""));
-  //   // const _trs = trs.filter((e,k) => k < 50);
-  //   const __trs = data.sort((a, b) => (b.block_height - a.block_height))
-    
-  //   apiTransactions.push(__trs);
-  //   console.log("Transactions" + url);
-  //   console.log("Start Block: " + startBlock);
-  //   console.log("End Block: " + endBlock);
+  
+    const trs = data.filter((t) => t.decoded.name.toString().includes(""));
+    // const _trs = trs.filter((e,k) => k < 50);
+    const __trs = data.sort((a, b) => (b.block_height - a.block_height))
 
-  // }
+    
+    setApiTransactions(data);
+    console.log(data);
+    console.log("Start Block: " + startBlock);
+    console.log("End Block: " + endBlock);
+
+  }
 
    
    const getProjectDetails = async (index) => {
@@ -411,10 +417,10 @@ useEffect(() => {
       </Tr>
     </Thead>
     <Tbody>
-    {props.transactions && props.map((t, index) => {
+    {apiTransactions && apiTransactions.map((t) => {
       console.log(t);
-         let _data = t[0][index].decoded.name;
-         let _tx = t[0][index].tx_hash;
+         let _data = t.decoded.name;
+         let _tx = t.tx_hash;
         {/* console.log(t[0][index].decoded.name); */}
           return (
              <>
@@ -581,41 +587,6 @@ useEffect(() => {
       </Modal>
    </>
   )
-}
-
-export const getInitialProps = async ({ params }) => {
-  let endBlock = '0';
-  let startBlock = '1';
-
-  const providers = ethers.providers;
-
-  const _provider = providers.getDefaultProvider('matic');
-
-  await _provider.getBlockNumber().then(function(blockNumber) {
-   endBlock = blockNumber;
-   startBlock = endBlock - 1000000;
-});
-
-
-    const key = 'ckey_148ca1425bb2412cb4c98bf085f';
-    const baseURL = 'https://api.covalenthq.com/v1'
-    const chainId = '137'
-    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3"
-
-    const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
-    const response = await fetch(url);
-    const result = await response.json();
-    const data = result.data.items;
-    console.log(data)
-  
-    const trs = data.filter((t) => t.decoded.name.toString().includes(""));
-    // const _trs = trs.filter((e,k) => k < 50);
-    const __trs = data.sort((a, b) => (b.block_height - a.block_height))
-
-    return {
-        props: {
-        transactions: __trs},
-          }
 }
 
 export default Project
