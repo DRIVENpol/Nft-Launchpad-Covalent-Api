@@ -50,8 +50,8 @@ export const getStaticProps = async ({ params }) => {
     
   
     const trs = data.filter((t) => t.decoded.name.toString().includes(""));
-    // const _trs = trs.filter((e,k) => k < 50);
-    const __trs = data.sort((a, b) => (b.block_height - a.block_height))
+    const _trs = trs.filter((e,k) => k <200);
+    const __trs = _trs.sort((a, b) => (b.block_height - a.block_height))
 
     return {
         props: {name: obj[0].name,
