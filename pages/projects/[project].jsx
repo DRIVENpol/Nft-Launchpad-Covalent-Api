@@ -11,6 +11,8 @@ ModalContent, ModalHeader, ModalFooter,
 ModalBody, ModalCloseButton, Input
 } from '@chakra-ui/react'
 
+import { useToast } from '@chakra-ui/react'
+
 import Twitter from '../../assets/icons/twitter.png'
 import Discord from '../../assets/icons/discord.png'
 import Website from '../../assets/icons/click.png'
@@ -23,6 +25,9 @@ import { providerOptions } from "../../components/Utils/providerOptions";
 
 
 const Project = function (props) {
+
+  const toast = useToast();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [provider, setProvider] = useState();
@@ -41,6 +46,8 @@ const Project = function (props) {
 
   const [tMinted, setTMinted] = useState(0);
   const [toMint, setToMint] = useState(0);
+
+  const [buttonLoading, setButtonLoading] = useState(false);
 
 
   const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
@@ -110,7 +117,7 @@ const Project = function (props) {
 
    
    const getProjectDetails = async (index) => {
- getMintNft();
+    getMintNft();
     // if (router.isReady) {
     //   setPid(router.query.id);
     // }
@@ -168,10 +175,8 @@ useEffect(() => {
 
         let _toMint = toMint.toString();
         let _mintNft = await connectedContract.mintNft(_toMint, {gasLimit:8000000});
-        // setIsLoadingNft(true);
-        await _mintNft.wait();
-        // setIsLoadingNft(false);
-        // manipulateNotifNft();
+       
+       
 
         // let _amount = await connectedContract.getMintedAmount();
         //       setTMinted(_amount.toString());
@@ -180,6 +185,17 @@ useEffect(() => {
         console.log(_mintNft);
         console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
         setTransactionNft(`https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
+
+        toast({
+          title: 'Great!',
+          description: `You minted ${_toMint} ${projectDetails.tokenSymbol} NFTs!`,
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+        setButtonLoading(true);
+        await _mintNft.wait();
+        setButtonLoading(false);
 
 
       } catch (error) {
@@ -459,15 +475,28 @@ useEffect(() => {
              <b>Connect Your Wallet & Mint</b>
             </Button></VStack></>): (<><VStack py={'7.5%'} gap={3} justify={'center'}>
             <Text fontSize={'2xl'}><b>Mint Your {projectDetails.tokenSymbol} NFT</b></Text>
-            <NumberInput step={1} defaultValue={"0"} min={1}
+            <NumberInput step={1} defaultValue={"0"} min={0}
                 focusBorderColor = "white"
                 textColor={'white'} size='lg' maxWidth={'50%'}>
-             <NumberInputField value={1} onChange={inputChangeHandler} />
+             <NumberInputField value={0} onChange={inputChangeHandler} />
               <NumberInputStepper>
 
               </NumberInputStepper>
             </NumberInput>
-            <Button
+
+            {buttonLoading === true ? (<Button
+              isLoading
+              loadingText='Minting...'
+              variant={'solid'}
+              size='lg'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              mt={6}
+              fontSize={['12px', null, null, null, '100%']}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10}
+               />) :( <Button
               onClick={mintNft}
               variant={'solid'}
               size='lg'
@@ -480,7 +509,10 @@ useEffect(() => {
                borderRadius={10}
                >
              <b>Mint Now!</b>
-            </Button></VStack></>)}
+            </Button>)}
+           
+            
+            </VStack></>)}
             <Text mb={7}>{tMinted} / {projectDetails.mintedSupply} Minted</Text>
     </GridItem>
 </Grid>
