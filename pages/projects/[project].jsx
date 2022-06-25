@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
+
 import {
 Button, Grid, GridItem, Link, Text, 
 Container, HStack, Image, Box,
 TableContainer, Table, Thead, Tr, Th, Tbody, Td,
 NumberInput, NumberInputField, NumberInputStepper,
-NumberIncrementStepper,NumberDecrementStepper,
 VStack, useDisclosure, Modal, ModalOverlay,
 ModalContent, ModalHeader, ModalFooter,
 ModalBody, ModalCloseButton, Input
@@ -15,7 +15,6 @@ import Twitter from '../../assets/icons/twitter.png'
 import Discord from '../../assets/icons/discord.png'
 import Website from '../../assets/icons/click.png'
 
-import { projects } from '../../data'
 
 import { networkParams } from "../../components/Utils/Networks";
 import { BigNumber, ethers } from "ethers";
@@ -23,11 +22,8 @@ import Web3Modal from "web3modal";
 import { providerOptions } from "../../components/Utils/providerOptions";
 
 
-
-
 const Project = function (props) {
-  // console.log(props.transactions)
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [provider, setProvider] = useState();
   const [library, setLibrary] = useState();
@@ -44,15 +40,14 @@ const Project = function (props) {
   let startBlock = 0;
 
   const [tMinted, setTMinted] = useState(0);
-
   const [toMint, setToMint] = useState(0);
+  const [pId, setPid] = useState(0);
 
   const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
-
   const router = useRouter();
 
+
   const apiTransactions = [];
-  // const [cAddresses, setCAddresses] = useState([]);
   const [projectDetails, setProjectDetails] = useState({
     tokenName: '',
     tokenSymbol: '',
@@ -66,17 +61,14 @@ const Project = function (props) {
     mintedSupply: ''
    });
 
-   // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
 
    const inputChangeHandler = (event) => {
     setToMint(event.target.value);
-    // console.log(event.target.value)
   }
 
    const getMintNft = async () => {
     if (typeof window !== 'undefined'){
       try {
-        
         const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
 
         const abi = ["function mintNft(uint256 _mintAmount) public payable",
@@ -87,9 +79,7 @@ const Project = function (props) {
 
         let _amount = await connectedContract.getMintedAmount();
               setTMinted(_amount.toString());
-              // console.log(_amount.toString())
-
-
+ 
       } catch (error) {
         setError(error);
       }
@@ -97,17 +87,14 @@ const Project = function (props) {
    
   };
 
-  const getApy = async () => {
 
+  const getApy = async () => {
     const providers = ethers.providers;
-  
     const _provider = providers.getDefaultProvider('matic');
   
     await _provider.getBlockNumber().then(function(blockNumber) {
       endBlock = blockNumber;
       startBlock = blockNumber - 100000;
-      // console.log(blockNumber - 1000);
-      // console.log(blockNumber)
       });
 
     const key = 'ckey_148ca1425bb2412cb4c98bf085f';
@@ -119,42 +106,23 @@ const Project = function (props) {
     const response = await fetch(url);
     const result = await response.json();
     const data = result.data.items;
-    // const obj = data.filter((p) => p.name.toString() === "");
-  
   
     const trs = data.filter((t) => t.decoded.name.toString().includes(""));
     // const _trs = trs.filter((e,k) => k < 50);
     const __trs = trs.sort((a, b) => (b.block_height - a.block_height))
     apiTransactions.push(__trs);
-    // setApiTransactions[__trs];
-
-
-    // setApiTransactions(() => {
-    //   return {...apiTransactions, __trs}
-    //  });
-
-    // console.log(apiTransactions[0][1]);
   }
 
    
    const getProjectDetails = async () => {
 
-    // let a = router.query.id;
-    // console.log("getProjectDetails" + Number(a));
-
-   // const { ethereum } = window;
    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
-   // const signer = provider.getSigner();
-
-   // setProvider(provider);
-   // setLibrary(library);
 
    const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
    
-   let _collectionAddress = await connectedContract.getCollectionProps(router.query.id);
-   // let _cA = _collectionAddress;
-  //  console.log(_collectionAddress);
+   let _collectionAddress = await connectedContract.getCollectionProps(pId);
+
    setProjectDetails(() => {
     return {
       tokenName: _collectionAddress[1],
@@ -170,12 +138,16 @@ const Project = function (props) {
     }
    });
 
-  //  getMintedA();
-  //  setCAddresses(oldArray => [...oldArray, _collectionAddress]);
-   // cAddresses2.push()
 }
 
-  
+
+useEffect(() => {
+  if (router.isReady) {
+    setPid(router.query.id);
+  }
+}, [router.isReady]);
+
+
   const mintNft = async () => {
     if (typeof window !== 'undefined'){
       try {
@@ -574,5 +546,7 @@ const Project = function (props) {
    </>
   )
 }
+
+
 
 export default Project
