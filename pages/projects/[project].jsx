@@ -116,6 +116,7 @@ const Project = function (props) {
 
    
    const getProjectDetails = async (index) => {
+
     // if (router.isReady) {
     //   setPid(router.query.id);
     // }
@@ -341,6 +342,7 @@ useEffect(() => {
   }, [provider]);
 
   useEffect(() => {
+    getMintNft();
     if (window.ethereum){
       setProvider(new ethers.providers.Web3Provider(window.ethereum))
     } else {
