@@ -367,7 +367,7 @@ useEffect(() => {
   return (
     
    <><Container maxW={'100%'} align='center' py={4} bgColor='#e0e0eb'> 
-       {account === projectDetails.owner ? (
+       {/* {account === projectDetails.owner ? (
         <Box bgGradient='linear(to-r, #141E30, #243B55)' 
           py='3' 
           mb={'4'} 
@@ -375,7 +375,7 @@ useEffect(() => {
           color={'white'}
           boxShadow='md' onClick={onOpen}>
 <Text as={'b'}><Link onClick={onOpen}>Manage Collection</Link></Text></Box>
-) : null}
+) : null} */}
 
      <Grid
   templateRows='repeat(2, 1fr)'
@@ -388,7 +388,7 @@ useEffect(() => {
     bgPosition={'center'}
     bgSize={['400%', '200%', '200%', '200%', '100%']}
     borderRadius='lg'
-    bgImg={projectDetails.tokenBanner}
+    bgImg={props.image}
     bgRepeat="no-repeat"
     p={6} />
 
@@ -441,14 +441,14 @@ useEffect(() => {
     p={6}>
     
         <HStack mb={5}>
-                <Text mr={3} fontSize={'2xl'}><b>{projectDetails.tokenName}</b></Text>
+                <Text mr={3} fontSize={'2xl'}><b>{props.name}</b></Text>
                <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
                <HStack>
-                <a href={projectDetails.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
+                <a href={props.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
                 <Text>|</Text>
-                <a href={projectDetails.discord} target='_blank' rel="noreferrer" ><Image src={Discord.src} alt='Discord' w={3}/></a>
+                <a href={props.discord} target='_blank' rel="noreferrer" ><Image src={Discord.src} alt='Discord' w={3}/></a>
                 <Text>|</Text>
-                <a href={projectDetails.website} target='_blank' rel="noreferrer" ><Image src={Website.src} alt='Website' w={3}/></a>
+                <a href={props.website} target='_blank' rel="noreferrer" ><Image src={Website.src} alt='Website' w={3}/></a>
                 </HStack>
                 </Box>
             </HStack>
@@ -514,7 +514,7 @@ useEffect(() => {
            
             
             </VStack></>)}
-            <Text mb={7}>{tMinted} / {projectDetails.mintedSupply} Minted</Text>
+            <Text mb={7}>{tMinted} / {props.mintedSupply} Minted</Text>
     </GridItem>
 </Grid>
 </Container>
