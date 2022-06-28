@@ -26,7 +26,7 @@ import { providerOptions } from "../../components/Utils/providerOptions";
 
 const Project = function (props) {
 
-  console.log(props.transactions)
+  // console.log(props.transactions)
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -65,6 +65,100 @@ const Project = function (props) {
     discord: '',
     mintedSupply: ''
    });
+
+
+  const [newProjectDetails, setNewProjectDetails] = useState({
+    isPaused: '',
+    batchMint: "",
+    newBaseUri: '',
+    newNotRevealedUri: '',
+    block: [],
+    mintPrice: '',
+    newOwner: '',
+    newBannerUrl: ''
+   });
+
+   const batchAirdrop = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        setProvider(provider);
+        setLibrary(library);
+
+        const abi = ["function airdropNfts(address[] memory wallets) public onlyOwner()"];
+        const _scAddress = router.query.address;
+        const connectedContract = new ethers.Contract(_scAddress, abi, signer);
+
+        let _toMint = toMint.toString();
+        let _mintNft = await connectedContract.airdropNfts(newProjectDetails.batchMint, {gasLimit:8000000});
+       
+    
+      } catch (error) {
+        setError(error);
+      }
+    }
+   
+  };
+
+   const newBannerChangeHandler = (event) => {
+    setNewProjectDetails({
+         ...newProjectDetails, // Copy the existing value
+         newBannerUrl: event.target.value // Override this value
+      })
+  }
+
+   const newOwnerChangeHandler = (event) => {
+    setNewProjectDetails({
+      ...newProjectDetails, // Copy the existing value
+      newOwner: event.target.value // Override this value
+      })
+  }
+
+   const newPriceChangeHandler = (event) => {
+    setNewProjectDetails({
+      ...newProjectDetails, // Copy the existing value
+      mintPrice: event.target.value // Override this value
+      })
+  }
+
+   const blockAddressChangeHandler = (event) => {
+    setNewProjectDetails({
+      ...newProjectDetails, // Copy the existing value
+      block: event.target.value // Override this value
+      })
+  }
+
+
+   const notRevealedUriChangeHandler = (event) => {
+    setNewProjectDetails({
+      ...newProjectDetails, // Copy the existing value
+      newNotRevealedUri: event.target.value // Override this value
+      })
+  }
+
+   const newBaseUriChangeHandler = (event) => {
+    setNewProjectDetails({
+      ...newProjectDetails, // Copy the existing value
+      newBaseUri: event.target.value // Override this value
+      })
+  }
+
+   const batchMintChangeHandler = (event) => {
+    setNewProjectDetails({
+      ...newProjectDetails, // Copy the existing value
+      batchMint: event.target.value // Override this value
+      })
+  }
+
+   const pauseChangeHandler = (event) => {
+    setNewProjectDetails({
+      ...newProjectDetails, // Copy the existing value
+      isPaused: event.target.value // Override this value
+      })
+  }
 
 
    const inputChangeHandler = (event) => {
@@ -118,9 +212,9 @@ const getApy = async () => {
 
     
     setApiTransactions(data);
-    console.log(data);
-    console.log("Start Block: " + startBlock);
-    console.log("End Block: " + endBlock);
+    // console.log(data);
+    // console.log("Start Block: " + startBlock);
+    // console.log("End Block: " + endBlock);
 
   }
 
@@ -414,7 +508,7 @@ useEffect(() => {
     </Thead>
     <Tbody>
     {apiTransactions && apiTransactions.map((t) => {
-      console.log(t);
+      {/* console.log(t); */}
          let _data = t.decoded.name;
          let _tx = t.tx_hash;
         {/* console.log(t[0][index].decoded.name); */}
@@ -534,7 +628,9 @@ useEffect(() => {
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Pause Mint?</b></Text>
-                <Input placeholder='Yes/No' mt='10px' bg='white' />
+                <Input placeholder='Yes/No' mt='10px' bg='white' 
+                  onChange={pauseChangeHandler}
+                />
                 <Button
               onClick={mintNft}
               variant={'solid'}
@@ -550,9 +646,11 @@ useEffect(() => {
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Batch Mint (1 NFT)</b></Text>
-                <Input placeholder='Address 1, Addres 2 ...' mt='10px' bg='white' />
+                <Input placeholder='Address 1, Addres 2 ...' mt='10px' bg='white' 
+                  onChange={batchMintChangeHandler}
+                />
                 <Button
-              onClick={mintNft}
+              onClick={batchAirdrop}
               variant={'solid'}
               size='xs'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
@@ -566,7 +664,9 @@ useEffect(() => {
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>New Base URI</b></Text>
-                <Input placeholder='Pinata IPFS Link' mt='10px' bg='white' />
+                <Input placeholder='Pinata IPFS Link' mt='10px' bg='white' 
+                  onChange={newBaseUriChangeHandler}
+                />
                 <Button
               onClick={mintNft}
               variant={'solid'}
@@ -582,7 +682,9 @@ useEffect(() => {
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>New Not-Revealed URI</b></Text>
-                <Input placeholder='Pinata IPFS Link' mt='10px' bg='white' />
+                <Input placeholder='Pinata IPFS Link' mt='10px' bg='white' 
+                  onChange={notRevealedUriChangeHandler}
+                />
                 <Button
               onClick={mintNft}
               variant={'solid'}
@@ -598,7 +700,9 @@ useEffect(() => {
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Block Addresses</b></Text>
-                <Input placeholder='Address 1, Addres 2 ...' mt='10px' bg='white' />
+                <Input placeholder='Address 1, Addres 2 ...' mt='10px' bg='white' 
+                  onChange={blockAddressChangeHandler}
+                />
                 <Button
               onClick={mintNft}
               variant={'solid'}
@@ -614,7 +718,9 @@ useEffect(() => {
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Mint Price (MATIC)</b></Text>
-                <Input placeholder='200' mt='10px' bg='white' />
+                <Input placeholder='200' mt='10px' bg='white' 
+                  onChange={newPriceChangeHandler}
+                />
                 <Button
               onClick={mintNft}
               variant={'solid'}
@@ -630,7 +736,9 @@ useEffect(() => {
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Transfer Ownership</b></Text>
-                <Input placeholder='New Owner: Address' mt='10px' bg='white' />
+                <Input placeholder='New Owner: Address' mt='10px' bg='white' 
+                  onChange={newOwnerChangeHandler}
+                />
                 <Button
               onClick={mintNft}
               variant={'solid'}
@@ -646,7 +754,9 @@ useEffect(() => {
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Banner Image</b></Text>
-                <Input placeholder='www.example.com/image.png' mt='10px' bg='white' />
+                <Input placeholder='www.example.com/image.png' mt='10px' bg='white' 
+                  onChange={newBannerChangeHandler}
+                />
                 <Button
               onClick={mintNft}
               variant={'solid'}
