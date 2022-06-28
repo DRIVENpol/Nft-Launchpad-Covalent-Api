@@ -42,7 +42,7 @@ export const getStaticProps = async ({ params }) => {
     const key = 'ckey_148ca1425bb2412cb4c98bf085f';
     const baseURL = 'https://api.covalenthq.com/v1'
     const chainId = '137'
-    const address = obj[0].address;
+    const address = params.project;
 
     const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
     const response = await fetch(url);
@@ -382,7 +382,7 @@ useEffect(() => {
   return (
     
    <><Container maxW={'100%'} align='center' py={4} bgColor='#e0e0eb'> 
-       {/* {account === ownerAddress ? ( */}
+       {account === projectDetails.owner ? (
         <Box bgGradient='linear(to-r, #141E30, #243B55)' 
           py='3' 
           mb={'4'} 
@@ -390,7 +390,8 @@ useEffect(() => {
           color={'white'}
           boxShadow='md' onClick={onOpen}>
 <Text as={'b'}><Link onClick={onOpen}>Manage Collection</Link></Text></Box>
-{/* ) : null} */}
+) : null}
+
 
      <Grid
   templateRows='repeat(2, 1fr)'
