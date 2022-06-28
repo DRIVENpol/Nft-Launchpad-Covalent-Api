@@ -18,6 +18,7 @@ import Discord from '../assets/icons/discord.png'
 import Website from '../assets/icons/click.png'
 
 import Link from 'next/link'
+import Spiner from "../components/Spiner";
 
 // import cAbi from "../contracts/abi/Factory.json";
 
@@ -39,6 +40,8 @@ const Collections = function ({obj}) {
   const [signedMessage, setSignedMessage] = useState("");
   const [verified, setVerified] = useState();
 
+  const [isSpinner, setIsSpinner] = useState(false);
+
   const [cLength, setCLength] = useState(0);
   const [cAddresses, setCAddresses] = useState([]);
 
@@ -47,7 +50,7 @@ const Collections = function ({obj}) {
   );
 
   const getCollectionLength = async () => {
-        
+        setIsSpinner(false);
         // const { ethereum } = window;
         const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
         // const signer = provider.getSigner();
@@ -68,7 +71,8 @@ const Collections = function ({obj}) {
         for (let i = 0; i <= z; i++) {
           let _collectionAddress = await connectedContract.getCollectionProps(i);
           // let _cA = _collectionAddress;
-          console.log(_collectionAddress);
+          // console.log(_collectionAddress);
+          setIsSpinner(true);
           setCAddresses(oldArray => [...oldArray, _collectionAddress]);        
         }
    
@@ -255,6 +259,7 @@ useEffect(() => {
 
   return (
     <>
+
       <Container maxW={'100%'} bg='white' color={'black'} pt='5%' pb='2%'>
         {/* <Center> */}
         {/* <Text fontSize='3xl' ><b>Featured Collections</b></Text>
@@ -312,7 +317,7 @@ useEffect(() => {
             <br />
           </Grid>
         {/* </Center> */}
-        
+
         <VStack>
         <Text fontSize='3xl' mt={5}><b>All Active Collections</b></Text>
         <Text align='center'>
@@ -324,7 +329,7 @@ useEffect(() => {
         }}maxWidth={['80%', '80%', '70%', '60%', '50%' ]} placeholder='Search...'
         borderRadius='40' borderColor={'#FF0080'} borderWidth='2px' />
         </VStack>
-
+        {isSpinner == false ? (<Spiner />):null}
         <Center>
         <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(4, 1fr)']} gap={6} w='75%' mt={10}>
           {searchResult && searchResult.map((project, index) => (

@@ -459,7 +459,7 @@ const isRevealedCollection = () => {
             }
             {isNotif ? (<Alert mt='10' status='success' borderRadius='15'>
               <AlertIcon />
-              <b>Congrats! </b>&nbsp; You created your collection!
+              <b>Congrats! </b>&nbsp; You created your collection! Check it on the EXPLORE page!
             </Alert>) : null}
 
             {isError != '' ? (<Alert mt='10' status='error' borderRadius='15'>
