@@ -83,7 +83,7 @@ export async function getStaticPaths() {
 
 const Project = function (props) {
   
-  console.log(props.transactions)
+  // console.log(props.transactions)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ownerAddress, setOwnerAddress] = useState('0x4E8892C244CF98b3e59b709b4c81553ef8FeF5cF');
 
@@ -132,7 +132,7 @@ const Project = function (props) {
         const abi = ["function mintNft(uint256 _mintAmount) public payable",
         "function getMintedAmount() public view returns(uint256)"
       ];
-      const _scAddress = router.query.address;
+      const _scAddress = props.address;
         const connectedContract = new ethers.Contract(_scAddress, abi, iProvider);
 
         let _amount = await connectedContract.getMintedAmount();

@@ -6,7 +6,7 @@ export const projects =  [
         "website": "https://opensea.io/collection/cyber-knights-drivenecosystem",
         "discord": "https://t.co/dohqCh54hj",
         "twitter": "https://twitter.com/CyberKnightsNFT",
-        "address": "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3",
+        "address": "0x7847a1ED83dC19E586adb7eEcEe18e0eED50337e",
         "id": "0"
       },
        ]
