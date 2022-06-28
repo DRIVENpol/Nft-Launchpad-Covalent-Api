@@ -534,41 +534,129 @@ useEffect(() => {
               <GridItem w='100%'>
                 <Text mt='30px'><b>Pause Mint?</b></Text>
                 <Input placeholder='Yes/No' mt='10px' bg='white' />
+                <Button
+              onClick={mintNft}
+              variant={'solid'}
+              size='xs'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              mt={6}
+              fontSize={11}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10} >Do Action</Button>
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Batch Mint (1 NFT)</b></Text>
                 <Input placeholder='Address 1, Addres 2 ...' mt='10px' bg='white' />
+                <Button
+              onClick={mintNft}
+              variant={'solid'}
+              size='xs'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              mt={6}
+              fontSize={11}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10} >Do Action</Button>
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>New Base URI</b></Text>
                 <Input placeholder='Pinata IPFS Link' mt='10px' bg='white' />
+                <Button
+              onClick={mintNft}
+              variant={'solid'}
+              size='xs'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              mt={6}
+              fontSize={11}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10} >Do Action</Button>
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>New Not-Revealed URI</b></Text>
                 <Input placeholder='Pinata IPFS Link' mt='10px' bg='white' />
+                <Button
+              onClick={mintNft}
+              variant={'solid'}
+              size='xs'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              mt={6}
+              fontSize={11}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10} >Do Action</Button>
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Block Addresses</b></Text>
                 <Input placeholder='Address 1, Addres 2 ...' mt='10px' bg='white' />
+                <Button
+              onClick={mintNft}
+              variant={'solid'}
+              size='xs'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              mt={6}
+              fontSize={11}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10} >Do Action</Button>
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Mint Price (MATIC)</b></Text>
                 <Input placeholder='200' mt='10px' bg='white' />
+                <Button
+              onClick={mintNft}
+              variant={'solid'}
+              size='xs'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              mt={6}
+              fontSize={11}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10} >Do Action</Button>
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Transfer Ownership</b></Text>
                 <Input placeholder='New Owner: Address' mt='10px' bg='white' />
+                <Button
+              onClick={mintNft}
+              variant={'solid'}
+              size='xs'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              mt={6}
+              fontSize={11}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10} >Do Action</Button>
               </GridItem>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Banner Image</b></Text>
                 <Input placeholder='www.example.com/image.png' mt='10px' bg='white' />
+                <Button
+              onClick={mintNft}
+              variant={'solid'}
+              size='xs'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              mt={6}
+              fontSize={11}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10} >Do Action</Button>
               </GridItem>
 
             </Grid>
