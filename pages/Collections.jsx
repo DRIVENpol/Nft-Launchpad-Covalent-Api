@@ -256,8 +256,8 @@ useEffect(() => {
   return (
     <>
       <Container maxW={'100%'} bg='white' color={'black'} pt='5%' pb='2%'>
-        <Center>
-        <Text fontSize='3xl' ><b>Featured Collections</b></Text>
+        {/* <Center> */}
+        {/* <Text fontSize='3xl' ><b>Featured Collections</b></Text>
         </Center>
 
         <Center> 
@@ -276,7 +276,7 @@ useEffect(() => {
       {/* <Image src={project.link}
         width='100' height='200' alt={project.link} display='block'
       /> */}
-      </Box>
+      {/* </Box>
     
     <Stack direction='column' mx={4} mb='5%' mt='5%' alignItems="center" my={4}>  
         <Text fontSize={'29px'}><b>{project.name}</b></Text>
@@ -284,7 +284,7 @@ useEffect(() => {
         <Stack direction='row' mb='5%' mt='5%'>
         {/* <Link href={`/projects/promoted/${project.address}`}
               key={project.type} rel="noreferrer" passHref> */}
-              <Link href={{ pathname: `/projects/promoted/${project.address}`, query: { id: `${project.id}`, address: `${project.address}` } }}
+              {/* <Link href={{ pathname: `/projects/promoted/${project.address}`, query: { id: `${project.id}`, address: `${project.address}` } }}
               key={project[4]} rel="noreferrer" passHref>
         <Button
               variant={'solid'}
@@ -305,13 +305,13 @@ useEffect(() => {
             <a href={project.website} target='_blank' rel="noreferrer"><Image src={Website.src} alt='Website' w={5}/></a>
            </HStack>
             </Stack>
-    </Box>
-    </GridItem>
+    </Box> */}
+    {/* </GridItem>
        </div>
    ))}
             <br />
           </Grid>
-        </Center>
+        {/* </Center> */}
         
         <VStack>
         <Text fontSize='3xl' mt={5}><b>All Active Collections</b></Text>
