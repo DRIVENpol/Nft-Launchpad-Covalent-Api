@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"
 
+import { useRouter } from 'next/router'
+
 import { networkParams } from "../components/Utils/Networks";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
@@ -20,7 +22,6 @@ import Link from 'next/link'
 // import cAbi from "../contracts/abi/Factory.json";
 
 const Collections = function ({obj}) {
-
 
   const [search, setSearch] = useState("");
 
@@ -281,8 +282,10 @@ useEffect(() => {
         <Text fontSize={'29px'}><b>{project.name}</b></Text>
         <Text fontSize={'14px'} noOfLines={2}>{project.type}</Text>
         <Stack direction='row' mb='5%' mt='5%'>
-        <Link href={`/projects/promoted/${project.address}`}
-              key={project.type} rel="noreferrer" passHref>
+        {/* <Link href={`/projects/promoted/${project.address}`}
+              key={project.type} rel="noreferrer" passHref> */}
+              <Link href={{ pathname: `/projects/promoted/${project.address}`, query: { id: `${project.id}`, address: `${project.address}` } }}
+              key={project[4]} rel="noreferrer" passHref>
         <Button
               variant={'solid'}
               size='sm' my={4}

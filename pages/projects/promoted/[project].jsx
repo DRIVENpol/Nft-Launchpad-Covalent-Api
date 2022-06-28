@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 import {
 Button, Grid, GridItem, Link, Text, 
@@ -60,7 +61,9 @@ export const getStaticProps = async ({ params }) => {
         twitter: obj[0].twitter,
         website: obj[0].website,
         discord: obj[0].discord,
-        transactions: __trs},
+        transactions: __trs,
+        address: obj[0].address,
+        id: obj[0].id},
           }
 }
 
@@ -79,6 +82,7 @@ export async function getStaticPaths() {
 
 
 const Project = function (props) {
+  
   console.log(props.transactions)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ownerAddress, setOwnerAddress] = useState('0x4E8892C244CF98b3e59b709b4c81553ef8FeF5cF');
@@ -93,6 +97,133 @@ const Project = function (props) {
   const [message, setMessage] = useState("");
   const [signedMessage, setSignedMessage] = useState("");
   const [verified, setVerified] = useState();
+
+  const [tMinted, setTMinted] = useState(0);
+  const [toMint, setToMint] = useState(0);
+
+  const [buttonLoading, setButtonLoading] = useState(false);
+
+
+  const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
+  const router = useRouter();
+
+
+  // const [apiTransactions, setApiTransactions] = useState([]);
+  const [projectDetails, setProjectDetails] = useState({
+    tokenName: '',
+    tokenSymbol: '',
+    tokenBanner: '',
+    tokenAddress: '',
+    projectDescription: '',
+    owner: '',
+    website: '',
+    twitter: '',
+    discord: '',
+    mintedSupply: ''
+   });
+
+   const inputChangeHandler = (event) => {
+    setToMint(event.target.value);
+  }
+
+   const getMintNft = async () => {
+        const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+
+        const abi = ["function mintNft(uint256 _mintAmount) public payable",
+        "function getMintedAmount() public view returns(uint256)"
+      ];
+      const _scAddress = router.query.address;
+        const connectedContract = new ethers.Contract(_scAddress, abi, iProvider);
+
+        let _amount = await connectedContract.getMintedAmount();
+              setTMinted(_amount.toString());
+   
+  };
+
+  const getProjectDetails = async () => {
+    getMintNft();
+    // if (router.isReady) {
+    //   setPid(router.query.id);
+    // }
+
+   const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+
+   const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
+   const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
+   
+   let _collectionAddress = await connectedContract.getCollectionProps(props.id);
+
+   setProjectDetails(() => {
+    return {
+      tokenName: _collectionAddress[1],
+      tokenSymbol: _collectionAddress[2],
+      tokenBanner: _collectionAddress[3],
+      tokenAddress: _collectionAddress[0],
+      projectDescription: _collectionAddress[4],
+      owner: _collectionAddress[5],
+      website: _collectionAddress[6],
+      twitter: _collectionAddress[7],
+      discord: _collectionAddress[8],
+      mintedSupply: _collectionAddress[9].toString()
+    }
+   });
+
+}
+
+
+useEffect(() => {
+  if (router.isReady) {
+  getProjectDetails();
+}
+  getMintNft();
+}, [router.isReady]);
+
+
+  const mintNft = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        setProvider(provider);
+        setLibrary(library);
+
+        const abi = ["function mintNft(uint256 _mintAmount) public payable",
+        "function getMintedAmount() public view returns(uint256)"
+      ];
+        const _scAddress = router.query.address;
+        const connectedContract = new ethers.Contract(_scAddress, abi, signer);
+
+        let _toMint = toMint.toString();
+        let _mintNft = await connectedContract.mintNft(_toMint, {gasLimit:8000000});
+       
+       
+        setButtonLoading(true);
+        await _mintNft.wait();
+        setButtonLoading(false);
+        toast({
+          title: 'Great!',
+          description: `You minted ${_toMint} ${projectDetails.tokenSymbol} NFTs!`,
+          status: 'success',
+          duration: 10000,
+          isClosable: true,
+        });
+        
+        // let _amount = await connectedContract.getMintedAmount();
+        //       setTMinted(_amount.toString());
+        //       console.log(_amount.toString())
+        getMintNft();
+        console.log(_mintNft);
+        console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
+        setTransactionNft(`https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
+
+      } catch (error) {
+        setError(error);
+      }
+    }
+   
+  };
 
   const connectWallet = async () => {
     if (typeof window !== 'undefined'){
@@ -272,7 +403,7 @@ const Project = function (props) {
     bgPosition={'center'}
     bgSize={['400%', '200%', '200%', '200%', '100%']}
     borderRadius='lg'
-    bgImg={props.image}
+    bgImg={projectDetails.tokenBanner}
     bgRepeat="no-repeat"
     p={6} />
 
@@ -327,14 +458,14 @@ const Project = function (props) {
     p={6}>
     
         <HStack mb={5}>
-                <Text mr={3} fontSize={'2xl'}><b>{props.name}</b></Text>
+                <Text mr={3} fontSize={'2xl'}><b>{projectDetails.tokenName}</b></Text>
                <Box  bgGradient='linear(to-l, #7928CA, #FF0080)' py={2} px={4} color='white' borderRadius='lg'>
                <HStack>
-                <a href={props.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
+                <a href={projectDetails.twitter} target='_blank' rel="noreferrer" ><Image src={Twitter.src} alt='Twitter' w={3}/></a>
                 <Text>|</Text>
-                <a href={props.discord} target='_blank' rel="noreferrer" ><Image src={Discord.src} alt='Discord' w={3}/></a>
+                <a href={projectDetails.discord} target='_blank' rel="noreferrer" ><Image src={Discord.src} alt='Discord' w={3}/></a>
                 <Text>|</Text>
-                <a href={props.website} target='_blank' rel="noreferrer" ><Image src={Website.src} alt='Website' w={3}/></a>
+                <a href={projectDetails.website} target='_blank' rel="noreferrer" ><Image src={Website.src} alt='Website' w={3}/></a>
                 </HStack>
                 </Box>
             </HStack>
@@ -361,7 +492,7 @@ const Project = function (props) {
                >
              <b>Connect Your Wallet & Mint</b>
             </Button></VStack></>): (<><VStack py={'7.5%'} gap={3} justify={'center'}>
-            <Text fontSize={'2xl'}><b>Mint Your {props.name} NFT</b></Text>
+            <Text fontSize={'2xl'}><b>Mint Your {projectDetails.tokenSymbol} NFT</b></Text>
             <NumberInput step={1} defaultValue={0} min={0} 
                 focusBorderColor = "white"
                 textColor={'white'} size='lg' maxWidth={'50%'}>

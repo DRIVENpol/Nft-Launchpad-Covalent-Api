@@ -42,9 +42,6 @@ const Project = function (props) {
   const [signedMessage, setSignedMessage] = useState("");
   const [verified, setVerified] = useState();
 
-  let endBlock = 0;
-  let startBlock = 0;
-
   const [tMinted, setTMinted] = useState(0);
   const [toMint, setToMint] = useState(0);
 
@@ -53,7 +50,6 @@ const Project = function (props) {
 
   const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
   const router = useRouter();
-  const [pId, setPid] = useState(0);
 
 
   const [apiTransactions, setApiTransactions] = useState([]);
@@ -162,9 +158,8 @@ const getApy = async () => {
 
 useEffect(() => {
   if (router.isReady) {
-    setPid(router.query.id);
-  }
   getProjectDetails(router.query.id);
+}
   getMintNft();
 }, [router.isReady]);
 
