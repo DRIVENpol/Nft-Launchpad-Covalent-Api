@@ -392,7 +392,6 @@ useEffect(() => {
 <Text as={'b'}><Link onClick={onOpen}>Manage Collection</Link></Text></Box>
 ) : null}
 
-
      <Grid
   templateRows='repeat(2, 1fr)'
   templateColumns='repeat(5, 1fr)'
@@ -494,17 +493,29 @@ useEffect(() => {
              <b>Connect Your Wallet & Mint</b>
             </Button></VStack></>): (<><VStack py={'7.5%'} gap={3} justify={'center'}>
             <Text fontSize={'2xl'}><b>Mint Your {projectDetails.tokenSymbol} NFT</b></Text>
-            <NumberInput step={1} defaultValue={0} min={0} 
+            <NumberInput step={1} defaultValue={"0"} min={0}
                 focusBorderColor = "white"
                 textColor={'white'} size='lg' maxWidth={'50%'}>
-             <NumberInputField />
+             <NumberInputField value={0} onChange={inputChangeHandler} />
               <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
+
               </NumberInputStepper>
             </NumberInput>
-            <Button
-              onClick={connectWallet}
+
+            {buttonLoading === true ? (<Button
+              isLoading
+              loadingText='Minting...'
+              variant={'solid'}
+              size='lg'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'100%'}
+              mt={6}
+              fontSize={['12px', null, null, null, '100%']}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10}
+               />) :( <Button
+              onClick={mintNft}
               variant={'solid'}
               size='lg'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
@@ -516,7 +527,11 @@ useEffect(() => {
                borderRadius={10}
                >
              <b>Mint Now!</b>
-            </Button></VStack></>)}
+            </Button>)}
+           
+            
+            </VStack></>)}
+            <Text mb={7}>{tMinted} / {projectDetails.mintedSupply} Minted</Text>
     </GridItem>
 </Grid>
 </Container>
