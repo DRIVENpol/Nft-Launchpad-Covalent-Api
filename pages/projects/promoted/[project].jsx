@@ -192,7 +192,7 @@ useEffect(() => {
         const abi = ["function mintNft(uint256 _mintAmount) public payable",
         "function getMintedAmount() public view returns(uint256)"
       ];
-        const _scAddress = router.query.address;
+        const _scAddress = props.address;
         const connectedContract = new ethers.Contract(_scAddress, abi, signer);
 
         let _toMint = toMint.toString();
