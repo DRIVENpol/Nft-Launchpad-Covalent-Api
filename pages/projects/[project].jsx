@@ -159,6 +159,7 @@ const getApy = async () => {
 useEffect(() => {
   if (router.isReady) {
   getProjectDetails(router.query.id);
+  getMintNft();
 }
   getMintNft();
 }, [router.isReady]);
