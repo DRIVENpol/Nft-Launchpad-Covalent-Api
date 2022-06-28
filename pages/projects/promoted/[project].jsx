@@ -124,6 +124,7 @@ const Project = function (props) {
 
    const inputChangeHandler = (event) => {
     setToMint(event.target.value);
+    console.log(event.target.value)
   }
 
    const getMintNft = async () => {
@@ -180,6 +181,7 @@ useEffect(() => {
 
 
 const mintNft = async () => {
+  getMintNft();
   if (typeof window !== 'undefined'){
     try {
       const { ethereum } = window;
