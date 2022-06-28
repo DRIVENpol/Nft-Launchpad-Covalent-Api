@@ -91,10 +91,9 @@ const Project = function (props) {
         const abi = ["function airdropNfts(address[] memory wallets) public onlyOwner()"];
         const _scAddress = router.query.address;
         const connectedContract = new ethers.Contract(_scAddress, abi, signer);
-
-        let _toMint = toMint.toString();
-        let _mintNft = await connectedContract.airdropNfts(newProjectDetails.batchMint, {gasLimit:8000000});
-       
+        console.log("Succes! 1")
+        await connectedContract.airdropNfts(newProjectDetails.batchMint, {gasLimit:8000000});
+        console.log("Succes! 2")
     
       } catch (error) {
         setError(error);
