@@ -332,7 +332,7 @@ useEffect(() => {
         {isSpinner == false ? (<Spiner />):null}
         <Center>
         <Grid templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(4, 1fr)']} gap={6} w='75%' mt={10}>
-          {searchResult && searchResult.map((project, index) => (
+          {searchResult ? (searchResult.map((project, index) => (
             <div key={project[0]} {...project}>
             <GridItem w='100%' h='10' align='center' mb={['400', '400', '420', '400', '380', '400']}>
        <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' bgGradient='linear(to-r, #141E30, #243B55)' color={'white'}>
@@ -370,7 +370,7 @@ useEffect(() => {
     </Box>
     </GridItem>
        </div>
-   ))}
+   ))): (<Text align={'center'}>No collections found!</Text>)}
             <br />
           </Grid>
         </Center>
