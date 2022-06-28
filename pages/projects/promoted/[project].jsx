@@ -179,51 +179,51 @@ useEffect(() => {
 }, [router.isReady]);
 
 
-  const mintNft = async () => {
-    if (typeof window !== 'undefined'){
-      try {
-        const { ethereum } = window;
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
+const mintNft = async () => {
+  if (typeof window !== 'undefined'){
+    try {
+      const { ethereum } = window;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
 
-        setProvider(provider);
-        setLibrary(library);
+      setProvider(provider);
+      setLibrary(library);
 
-        const abi = ["function mintNft(uint256 _mintAmount) public payable",
-        "function getMintedAmount() public view returns(uint256)"
-      ];
-        const _scAddress = props.address;
-        const connectedContract = new ethers.Contract(_scAddress, abi, signer);
+      const abi = ["function mintNft(uint256 _mintAmount) public payable",
+      "function getMintedAmount() public view returns(uint256)"
+    ];
+      const _scAddress = router.query.address;
+      const connectedContract = new ethers.Contract(_scAddress, abi, signer);
 
-        let _toMint = toMint.toString();
-        let _mintNft = await connectedContract.mintNft(_toMint, {gasLimit:8000000});
-       
-       
-        setButtonLoading(true);
-        await _mintNft.wait();
-        setButtonLoading(false);
-        toast({
-          title: 'Great!',
-          description: `You minted ${_toMint} ${projectDetails.tokenSymbol} NFTs!`,
-          status: 'success',
-          duration: 10000,
-          isClosable: true,
-        });
-        
-        // let _amount = await connectedContract.getMintedAmount();
-        //       setTMinted(_amount.toString());
-        //       console.log(_amount.toString())
-        getMintNft();
-        console.log(_mintNft);
-        console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
-        setTransactionNft(`https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
+      let _toMint = toMint.toString();
+      let _mintNft = await connectedContract.mintNft(_toMint, {gasLimit:8000000});
+     
+     
+      setButtonLoading(true);
+      await _mintNft.wait();
+      setButtonLoading(false);
+      toast({
+        title: 'Great!',
+        description: `You minted ${_toMint} ${projectDetails.tokenSymbol} NFTs!`,
+        status: 'success',
+        duration: 10000,
+        isClosable: true,
+      });
+      
+      // let _amount = await connectedContract.getMintedAmount();
+      //       setTMinted(_amount.toString());
+      //       console.log(_amount.toString())
+      getMintNft();
+      console.log(_mintNft);
+      console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
+      setTransactionNft(`https://rinkeby.etherscan.io/tx/${_mintNft.hash}`);
 
-      } catch (error) {
-        setError(error);
-      }
+    } catch (error) {
+      setError(error);
     }
-   
-  };
+  }
+ 
+};
 
   const connectWallet = async () => {
     if (typeof window !== 'undefined'){
