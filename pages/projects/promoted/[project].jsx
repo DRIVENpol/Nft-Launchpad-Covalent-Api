@@ -469,7 +469,7 @@ useEffect(() => {
                 </HStack>
                 </Box>
             </HStack>
-        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15} textAlign='left'>{props.description}</Text>
+        <Text noOfLines={['5', '5', '5', '7', '9']} fontSize={15} textAlign='left'>{projectDetails.projectDescription}</Text>
 
     </GridItem>
 
