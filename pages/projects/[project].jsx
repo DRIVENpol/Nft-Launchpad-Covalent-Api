@@ -365,7 +365,7 @@ const getApy = async () => {
     const key = 'ckey_148ca1425bb2412cb4c98bf085f';
     const baseURL = 'https://api.covalenthq.com/v1'
     const chainId = '137'
-    const address = "0x8a33e477F73D22960D850Ff61FD8C58b3B2E21b3"
+    const address = projectDetails.tokenAddress;
 
     const url = new URL(`${baseURL}/${chainId}/events/address/${address}/?starting-block=${startBlock}&ending-block=29793247&key=${key}`);
     const response = await fetch(url);
