@@ -27,7 +27,7 @@ const Collections = function ({obj}) {
   const [search, setSearch] = useState("");
 
   // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
-  const factoryAddress = "0x628F20bF739C4676E36Dac9aA069ded2613A703d"; // Without Fee - for testing
+  const factoryAddress = "0x287C1ed176C8a9053Ca7Add96d23F93CDc129E26"; // Without Fee - for testing
 
   const [provider, setProvider] = useState();
   const [library, setLibrary] = useState();
@@ -59,7 +59,7 @@ const Collections = function ({obj}) {
         // setLibrary(library);
 
         const abi = ["function getLengthOfCollections() public view returns(uint256)",
-        "function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
+        "function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256, bool)"];
         const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
 
         let _collectionLength = await connectedContract.getLengthOfCollections();

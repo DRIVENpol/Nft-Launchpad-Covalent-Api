@@ -26,6 +26,7 @@ contract NftMintyFactory is Ownable {
         string _twitterLink;
         string _discordLink;
         uint256 _totalSupply;
+        bool _revealed;
    }
 
    MyCollection[] public theCollections;
@@ -94,7 +95,7 @@ contract NftMintyFactory is Ownable {
 
         collections.push(newCollection);
         collectionsObject.push(NftSmartContract(newCollection));
-        theCollections.push(MyCollection(newCollection, _name, _symbol, _cBanner, _description, msg.sender, _website, _twitterLink, _discordLink, _maxSupply));
+        theCollections.push(MyCollection(newCollection, _name, _symbol, _cBanner, _description, msg.sender, _website, _twitterLink, _discordLink, _maxSupply, _revealed));
     }
 
     // GETTERS
@@ -111,7 +112,7 @@ contract NftMintyFactory is Ownable {
         return collections[_i];
     }
 
-    function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256){
+    function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256, bool){
         MyCollection memory myColl;
 
         myColl = theCollections[index];
@@ -126,7 +127,8 @@ contract NftMintyFactory is Ownable {
             myColl._website,
             myColl._twitterLink,
             myColl._discordLink,
-            myColl._totalSupply
+            myColl._totalSupply,
+            myColl._revealed
         );
     }
 }
@@ -279,6 +281,10 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
         super._transfer(from,to,tokenId);
     }
 
+    function newBanner(string memory _newBanner) public onlyOwner {
+        cBanner = _newBanner;
+    }
+
     // REVEAL
     function reveal() public onlyOwner {
         require(revealed == false, "You can't reveal the collection");
@@ -310,8 +316,8 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
         baseExtension = _newBaseExtension;
     }
  
-    function setBlacklistedAddress(address _who, bool _isBlacklisted) public onlyOwner {
-        blacklist[_who] = _isBlacklisted;
+    function setBlacklistedAddress(address _who) public onlyOwner {
+        blacklist[_who] = true;
     }
 
     // GETTER

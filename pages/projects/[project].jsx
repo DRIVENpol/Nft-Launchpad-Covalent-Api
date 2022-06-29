@@ -49,7 +49,7 @@ const Project = function (props) {
   const [buttonLoading, setButtonLoading] = useState(false);
 
 
-  const factoryAddress = "0x628F20bF739C4676E36Dac9aA069ded2613A703d"; // Without Fee - for testing
+  const factoryAddress = "0x287C1ed176C8a9053Ca7Add96d23F93CDc129E26"; // Without Fee - for testing
   const router = useRouter();
 
 
@@ -64,7 +64,8 @@ const Project = function (props) {
     website: '',
     twitter: '',
     discord: '',
-    mintedSupply: ''
+    mintedSupply: '',
+    revealed: false
    });
 
 
@@ -231,7 +232,7 @@ const Project = function (props) {
         setProvider(provider);
         setLibrary(library);
 
-        const abi = ["function reveal() public onlyOwner"];
+        const abi = ["function reveal() public"];
         const _scAddress = projectDetails.tokenAddress;
         const connectedContract = new ethers.Contract(_scAddress, abi, signer);
         // console.log("Success! 1")
@@ -245,19 +246,19 @@ const Project = function (props) {
    
   };
 
-   const newBannerChangeHandler = (event) => {
-    setNewProjectDetails({
-         ...newProjectDetails, // Copy the existing value
-         newBannerUrl: event.target.value // Override this value
-      })
-  }
+  //  const newBannerChangeHandler = (event) => {
+  //   setNewProjectDetails({
+  //        ...newProjectDetails, // Copy the existing value
+  //        newBannerUrl: event.target.value // Override this value
+  //     })
+  // }
 
-   const newOwnerChangeHandler = (event) => {
-    setNewProjectDetails({
-      ...newProjectDetails, // Copy the existing value
-      newOwner: event.target.value // Override this value
-      })
-  }
+  //  const newOwnerChangeHandler = (event) => {
+  //   setNewProjectDetails({
+  //     ...newProjectDetails, // Copy the existing value
+  //     newOwner: event.target.value // Override this value
+  //     })
+  // }
 
    const newPriceChangeHandler = (event) => {
     setNewProjectDetails({
@@ -393,11 +394,11 @@ const getApy = async () => {
 
    const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
 
-   const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256)"];
+   const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256, bool)"];
    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
    
    let _collectionAddress = await connectedContract.getCollectionProps(index);
-
+    console.log(_collectionAddress);
    setProjectDetails(() => {
     return {
       tokenName: _collectionAddress[1],
@@ -409,7 +410,8 @@ const getApy = async () => {
       website: _collectionAddress[6],
       twitter: _collectionAddress[7],
       discord: _collectionAddress[8],
-      mintedSupply: _collectionAddress[9].toString()
+      mintedSupply: _collectionAddress[9].toString(),
+      revealed: _collectionAddress[10]
     }
    });
 
@@ -934,7 +936,7 @@ useEffect(() => {
                borderRadius={10} >Do Action</Button></VStack>
               </GridItem>
 
-              <GridItem w='100%'><VStack align='left'>
+              {projectDetails.revealed === false ? (<GridItem w='100%'><VStack align='left'>
                 <Text mt='30px' mb='2'><b>Reveal?</b></Text>
                 <Switch size='lg' onChange={revealChangeHandler} /> 
                 <Button
@@ -948,7 +950,7 @@ useEffect(() => {
               fontSize={11}
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
                borderRadius={10} >Do Action</Button></VStack>
-              </GridItem>
+              </GridItem>): null}
 
 
             </Grid>

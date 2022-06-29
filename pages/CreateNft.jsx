@@ -16,7 +16,7 @@ const [revealed, setRevealed] = useState('No: By Default');
 const [isRevealed, setIsRevealed] = useState(false);
 
 // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
-const factoryAddress = "0x36cAD3ee3ac5eb17931dbdA45D80f42A825d7B55"; // Without Fee - for testing
+const factoryAddress = "0x287C1ed176C8a9053Ca7Add96d23F93CDc129E26"; // Without Fee - for testing
 
 const [nftDetails, setNftDetails] = useState({
   tokenName: '',
@@ -341,12 +341,12 @@ const isRevealedCollection = () => {
   if(revealed == 'No: By Default') {
 
     setRevealed('Yes, I want the reveal function.');
-    setIsRevealed(true);
+    setIsRevealed(false);
 
   } else {
 
     setRevealed('No: By Default');
-    setIsRevealed(false);
+    setIsRevealed(true);
 
   }
 }
@@ -459,7 +459,7 @@ const isRevealedCollection = () => {
             }
             {isNotif ? (<Alert mt='10' status='success' borderRadius='15' maxW={'100%'}>
               <AlertIcon  mr='10' />
-              <b>Congrats! </b>&nbsp; You created your collection! Check it on the EXPLORE page!
+              <b>Congrats! </b>&nbsp; You created your collection!
             </Alert>) : null}
 
             {isError != '' ? (<Alert mt='10' status='error' borderRadius='15'>
