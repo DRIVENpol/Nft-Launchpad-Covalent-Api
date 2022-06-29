@@ -27,7 +27,7 @@ const Collections = function ({obj}) {
   const [search, setSearch] = useState("");
 
   // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
-  const factoryAddress = "0xD9F9f3e08b02829a403d3Df582FcB382A5394cD7"; // Without Fee - for testing
+  const factoryAddress = "0xC3a0Db8dc25E9Bee442124bf4D3d03f2F96AE0Cb"; // Without Fee - for testing
 
   const [provider, setProvider] = useState();
   const [library, setLibrary] = useState();
@@ -52,7 +52,7 @@ const Collections = function ({obj}) {
   const getCollectionLength = async () => {
         setIsSpinner(false);
         // const { ethereum } = window;
-        const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+        const iProvider = new ethers.providers.JsonRpcProvider("https://polygon-mainnet.g.alchemy.com/v2/7uVt40M_j-gIF7lYsjAgKA69Ah7NDo89");
         // const signer = provider.getSigner();
 
         // setProvider(provider);

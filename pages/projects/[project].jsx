@@ -49,7 +49,7 @@ const Project = function (props) {
   const [buttonLoading, setButtonLoading] = useState(false);
 
 
-  const factoryAddress = "0xD9F9f3e08b02829a403d3Df582FcB382A5394cD7"; // Without Fee - for testing
+  const factoryAddress = "0xC3a0Db8dc25E9Bee442124bf4D3d03f2F96AE0Cb"; // Without Fee - for testing
   const router = useRouter();
 
 
@@ -334,7 +334,7 @@ const Project = function (props) {
 
    const getMintNft = async () => {
         getApy();
-        const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+        const iProvider = new ethers.providers.JsonRpcProvider("https://polygon-mainnet.g.alchemy.com/v2/7uVt40M_j-gIF7lYsjAgKA69Ah7NDo89");
 
         const abi = ["function mintNft(uint256 _mintAmount) public payable",
         "function getMintedAmount() public view returns(uint256)"
@@ -392,7 +392,7 @@ const getApy = async () => {
     //   setPid(router.query.id);
     // }
 
-   const iProvider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/3be75b2217884d8d85a91da35b3b7a4f");
+   const iProvider = new ethers.providers.JsonRpcProvider("https://polygon-mainnet.g.alchemy.com/v2/7uVt40M_j-gIF7lYsjAgKA69Ah7NDo89");
 
    const abi = ["function getCollectionProps(uint256 index) public view returns(address, string memory, string memory, string memory, string memory, address, string memory, string memory, string memory, uint256, bool)"];
    const connectedContract = new ethers.Contract(factoryAddress, abi, iProvider);
