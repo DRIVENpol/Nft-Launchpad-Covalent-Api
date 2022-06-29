@@ -76,8 +76,31 @@ const Project = function (props) {
     block: "",
     mintPrice: '',
     newOwner: '',
-    newBannerUrl: ''
+    newBannerUrl: '',
+    isRevealed: false
    });
+
+   const setNewPrice = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        setProvider(provider);
+        setLibrary(library);
+
+        const _abi = ["function setCost(uint256 _cost) public onlyOwner"];
+
+        const connectedContract = new ethers.Contract(projectDetails.tokenAddress, _abi, signer);
+        await connectedContract.setCost(newProjectDetails.mintPrice, {gasLimit:8000000});
+    
+      } catch (error) {
+        setError(error);
+      }
+    }
+   
+  };
 
    const blockAddress = async () => {
     if (typeof window !== 'undefined'){
@@ -198,6 +221,30 @@ const Project = function (props) {
    
   };
 
+  const reveal = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        setProvider(provider);
+        setLibrary(library);
+
+        const abi = ["function reveal() public onlyOwner"];
+        const _scAddress = projectDetails.tokenAddress;
+        const connectedContract = new ethers.Contract(_scAddress, abi, signer);
+        // console.log("Success! 1")
+        await connectedContract.reveal({gasLimit:8000000});
+        // console.log("Success! 2")
+    
+      } catch (error) {
+        setError(error);
+      }
+    }
+   
+  };
+
    const newBannerChangeHandler = (event) => {
     setNewProjectDetails({
          ...newProjectDetails, // Copy the existing value
@@ -259,6 +306,21 @@ const Project = function (props) {
       setNewProjectDetails({
         ...newProjectDetails, // Copy the existing value
         isPaused: false // Override this value
+        })
+    }
+    
+  }
+
+  const revealChangeHandler = (event) => {
+    if ( newProjectDetails.isRevealed == false ) {
+      setNewProjectDetails({
+        ...newProjectDetails, // Copy the existing value
+        isRevealed: true // Override this value
+        })
+    } else {
+      setNewProjectDetails({
+        ...newProjectDetails, // Copy the existing value
+        isRevealed: false // Override this value
         })
     }
     
@@ -808,7 +870,7 @@ useEffect(() => {
                   onChange={newPriceChangeHandler}
                 />
                 <Button
-              onClick={mintNft}
+              onClick={setNewPrice}
               variant={'solid'}
               size='xs'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
@@ -820,7 +882,7 @@ useEffect(() => {
                borderRadius={10} >Do Action</Button>
               </GridItem>
 
-              <GridItem w='100%'>
+              {/* <GridItem w='100%'>
                 <Text mt='30px'><b>Transfer Ownership</b></Text>
                 <Input placeholder='New Owner: Address' mt='10px' bg='white' 
                   onChange={newOwnerChangeHandler}
@@ -836,9 +898,9 @@ useEffect(() => {
               fontSize={11}
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
                borderRadius={10} >Do Action</Button>
-              </GridItem>
+              </GridItem> */}
 
-              <GridItem w='100%'>
+              {/* <GridItem w='100%'>
                 <Text mt='30px'><b>Banner Image</b></Text>
                 <Input placeholder='www.example.com/image.png' mt='10px' bg='white' 
                   onChange={newBannerChangeHandler}
@@ -854,11 +916,11 @@ useEffect(() => {
               fontSize={11}
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
                borderRadius={10} >Do Action</Button>
-              </GridItem>
-              
-              <GridItem w='100%' ml={'10'}><VStack align='left'>
-                <Text mt='30px'><b>Pause Mint?</b></Text>
-                <Switch size='lg' onChange={pauseChangeHandler} mb='20'/> 
+              </GridItem> */}
+              <GridItem />
+              <GridItem w='100%'><VStack align='left'>
+                <Text mt='30px' mb='2'><b>Pause Mint?</b></Text>
+                <Switch size='lg' onChange={pauseChangeHandler} /> 
                 <Button
               onClick={pauseSc}
               variant={'solid'}
@@ -871,6 +933,24 @@ useEffect(() => {
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
                borderRadius={10} >Do Action</Button></VStack>
               </GridItem>
+
+              <GridItem w='100%'><VStack align='left'>
+                <Text mt='30px' mb='2'><b>Reveal?</b></Text>
+                <Switch size='lg' onChange={revealChangeHandler} /> 
+                <Button
+              onClick={reveal}
+              variant={'solid'}
+              size='xs'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'20'}
+              mt={6}
+              fontSize={11}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10} >Do Action</Button></VStack>
+              </GridItem>
+
+
             </Grid>
           </ModalBody>
           <ModalFooter>
