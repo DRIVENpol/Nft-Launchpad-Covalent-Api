@@ -72,11 +72,35 @@ const Project = function (props) {
     batchMint: "",
     newBaseUri: '',
     newNotRevealedUri: '',
-    block: [],
+    block: "",
     mintPrice: '',
     newOwner: '',
     newBannerUrl: ''
    });
+
+   const airdropNft = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        setProvider(provider);
+        setLibrary(library);
+
+        const abi = ["function airdropNfts(address airdropWallets) public onlyOwner()"];
+        const _scAddress = projectDetails.tokenAddress;
+        const connectedContract = new ethers.Contract(_scAddress, abi, signer);
+        // console.log("Succes! 1")
+        await connectedContract.airdropNfts(getAddress(newProjectDetails.batchMint), {gasLimit:8000000});
+        // console.log("Succes! 2")
+    
+      } catch (error) {
+        setError(error);
+      }
+    }
+   
+  };
 
    const pauseSc = async () => {
     if (typeof window !== 'undefined'){
@@ -634,12 +658,12 @@ useEffect(() => {
             <Grid templateColumns='repeat(2, 1fr)' gap={2}>
 
               <GridItem w='100%'>
-                <Text mt='30px'><b>Batch Mint (1 NFT)</b></Text>
-                <Input placeholder='Address 1, Addres 2 ...' mt='10px' bg='white' 
+                <Text mt='30px'><b>Airdrop (1 NFT)</b></Text>
+                <Input placeholder='Address' mt='10px' bg='white' 
                   onChange={batchMintChangeHandler}
                 />
                 <Button
-              onClick={pauseSc}
+              onClick={airdropNft}
               variant={'solid'}
               size='xs'
               bgGradient='linear(to-l, #7928CA, #FF0080)'

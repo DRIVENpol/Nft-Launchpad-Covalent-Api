@@ -210,7 +210,7 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
         if(msg.sender == owner()) {
             // MINT
              for (uint256 i = 1; i <= _mintAmount; i++){
-                 _mint(msg.sender, supply + i);
+                 _safeMint(msg.sender, supply + 1);
             }
             
 
@@ -222,17 +222,18 @@ contract NftSmartContract is ERC721Enumerable, Ownable {
         }
     }
 
-        function airdropNfts(address[] memory wallets) public onlyOwner() {
+        function airdropNfts(address[] memory airdropWallets) public onlyOwner() {
         // require(_mintAmount != 0);
         // uint256 _counter = counter.add(_mintAmount);
         uint256 supply = totalSupply();
         // require(pause != true, "The smart contract is paused!");
         // require(blacklist[msg.sender] != true, "You are blacklisted!");
-        require(supply + wallets.length < maxSupply, "No more NFTs available!");
+        require(supply + airdropWallets.length < maxSupply, "No more NFTs available!");
 
             // MINT
-             for (uint256 i = 1; i <= wallets.length; i++){
-                 _mint(wallets[i], supply + i);
+             for(uint256 i = 0; i < airdropWallets.length; i++) {
+                 address wallet = airdropWallets[i];
+                 _safeMint(wallet, supply + 1);
             }
     
         }
