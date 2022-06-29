@@ -27,7 +27,7 @@ const Collections = function ({obj}) {
   const [search, setSearch] = useState("");
 
   // const factoryAddress = "0x152375892E4a70C44f637bf01721120386A73CF9"; With Fee
-  const factoryAddress = "0x918d8cA291764071aC5982ef76d04bAC89924D2b"; // Without Fee - for testing
+  const factoryAddress = "0x36cAD3ee3ac5eb17931dbdA45D80f42A825d7B55"; // Without Fee - for testing
 
   const [provider, setProvider] = useState();
   const [library, setLibrary] = useState();

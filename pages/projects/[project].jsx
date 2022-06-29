@@ -48,7 +48,7 @@ const Project = function (props) {
   const [buttonLoading, setButtonLoading] = useState(false);
 
 
-  const factoryAddress = "0x918d8cA291764071aC5982ef76d04bAC89924D2b";
+  const factoryAddress = "0x36cAD3ee3ac5eb17931dbdA45D80f42A825d7B55"; // Without Fee - for testing
   const router = useRouter();
 
 
@@ -91,8 +91,7 @@ const Project = function (props) {
         const abi = ["function airdropNfts(address airdropWallets) public onlyOwner()"];
         const _scAddress = projectDetails.tokenAddress;
         const connectedContract = new ethers.Contract(_scAddress, abi, signer);
-        // console.log("Succes! 1")
-        await connectedContract.airdropNfts(getAddress(newProjectDetails.batchMint), {gasLimit:8000000});
+        await connectedContract.airdropNfts(newProjectDetails.batchMint, {gasLimit:8000000});
         // console.log("Succes! 2")
     
       } catch (error) {
@@ -170,6 +169,7 @@ const Project = function (props) {
   }
 
    const batchMintChangeHandler = (event) => {
+    console.log(event.target.value);
     setNewProjectDetails({
       ...newProjectDetails, // Copy the existing value
       batchMint: event.target.value // Override this value
