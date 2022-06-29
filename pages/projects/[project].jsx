@@ -8,7 +8,7 @@ TableContainer, Table, Thead, Tr, Th, Tbody, Td,
 NumberInput, NumberInputField, NumberInputStepper,
 VStack, useDisclosure, Modal, ModalOverlay,
 ModalContent, ModalHeader, ModalFooter,
-ModalBody, ModalCloseButton, Input
+ModalBody, ModalCloseButton, Input, Switch
 } from '@chakra-ui/react'
 
 import { useToast } from '@chakra-ui/react'
@@ -48,7 +48,7 @@ const Project = function (props) {
   const [buttonLoading, setButtonLoading] = useState(false);
 
 
-  const factoryAddress = "0x5C6872b1e98089CB0f0b315e82D1508B0BCb10E3";
+  const factoryAddress = "0x918d8cA291764071aC5982ef76d04bAC89924D2b";
   const router = useRouter();
 
 
@@ -68,7 +68,7 @@ const Project = function (props) {
 
 
   const [newProjectDetails, setNewProjectDetails] = useState({
-    isPaused: '',
+    isPaused: false,
     batchMint: "",
     newBaseUri: '',
     newNotRevealedUri: '',
@@ -78,7 +78,7 @@ const Project = function (props) {
     newBannerUrl: ''
    });
 
-   const batchAirdrop = async () => {
+   const pauseSc = async () => {
     if (typeof window !== 'undefined'){
       try {
         const { ethereum } = window;
@@ -88,12 +88,12 @@ const Project = function (props) {
         setProvider(provider);
         setLibrary(library);
 
-        const abi = ["function airdropNfts(address[] memory wallets) public onlyOwner()"];
-        const _scAddress = router.query.address;
+        const abi = ["function pauseTheSmartContract(bool _pause) public onlyOwner"];
+        const _scAddress = projectDetails.tokenAddress;
         const connectedContract = new ethers.Contract(_scAddress, abi, signer);
-        console.log("Succes! 1")
-        await connectedContract.airdropNfts(newProjectDetails.batchMint, {gasLimit:8000000});
-        console.log("Succes! 2")
+        // console.log("Succes! 1")
+        await connectedContract.pauseTheSmartContract(newProjectDetails.isPaused, {gasLimit:8000000});
+        // console.log("Succes! 2")
     
       } catch (error) {
         setError(error);
@@ -153,10 +153,18 @@ const Project = function (props) {
   }
 
    const pauseChangeHandler = (event) => {
-    setNewProjectDetails({
-      ...newProjectDetails, // Copy the existing value
-      isPaused: event.target.value // Override this value
-      })
+    if ( newProjectDetails.isPaused == false ) {
+      setNewProjectDetails({
+        ...newProjectDetails, // Copy the existing value
+        isPaused: true // Override this value
+        })
+    } else {
+      setNewProjectDetails({
+        ...newProjectDetails, // Copy the existing value
+        isPaused: false // Override this value
+        })
+    }
+    
   }
 
 
@@ -623,25 +631,7 @@ useEffect(() => {
           <ModalHeader>Manage Your Collection</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Grid templateColumns='repeat(2, 1fr)' gap={6}>
-
-              <GridItem w='100%'>
-                <Text mt='30px'><b>Pause Mint?</b></Text>
-                <Input placeholder='Yes/No' mt='10px' bg='white' 
-                  onChange={pauseChangeHandler}
-                />
-                <Button
-              onClick={mintNft}
-              variant={'solid'}
-              size='xs'
-              bgGradient='linear(to-l, #7928CA, #FF0080)'
-              color='white'
-              maxW={'100%'}
-              mt={6}
-              fontSize={11}
-              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
-               borderRadius={10} >Do Action</Button>
-              </GridItem>
+            <Grid templateColumns='repeat(2, 1fr)' gap={2}>
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Batch Mint (1 NFT)</b></Text>
@@ -649,7 +639,7 @@ useEffect(() => {
                   onChange={batchMintChangeHandler}
                 />
                 <Button
-              onClick={batchAirdrop}
+              onClick={pauseSc}
               variant={'solid'}
               size='xs'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
@@ -768,7 +758,22 @@ useEffect(() => {
               _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
                borderRadius={10} >Do Action</Button>
               </GridItem>
-
+              
+              <GridItem w='100%' ml={'10'}><VStack align='left'>
+                <Text mt='30px'><b>Pause Mint?</b></Text>
+                <Switch size='lg' onChange={pauseChangeHandler} mb='20'/> 
+                <Button
+              onClick={pauseSc}
+              variant={'solid'}
+              size='xs'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              color='white'
+              maxW={'20'}
+              mt={6}
+              fontSize={11}
+              _hover={{bgGradient: "linear(to-l, #8a32e3, #FF0080)", color: "white"}}
+               borderRadius={10} >Do Action</Button></VStack>
+              </GridItem>
             </Grid>
           </ModalBody>
           <ModalFooter>
