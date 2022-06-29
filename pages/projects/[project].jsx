@@ -95,7 +95,7 @@ const Project = function (props) {
         const toBlock = ethers.utils.getAddress(newProjectDetails.block);
 
         const connectedContract = new ethers.Contract(projectDetails.tokenAddress, _abi, signer);
-        await connectedContract.airdropNfts(toBlock.toString(), {gasLimit:8000000});
+        await connectedContract.setBlacklistedAddress(toBlock.toString(), {gasLimit:8000000});
     
       } catch (error) {
         setError(error);
