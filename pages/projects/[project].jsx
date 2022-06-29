@@ -379,7 +379,7 @@ const getApy = async () => {
     const __trs = data.sort((a, b) => (b.block_height - a.block_height))
 
     
-    setApiTransactions(data);
+    setApiTransactions(__trs);
     // console.log(data);
     // console.log("Start Block: " + startBlock);
     // console.log("End Block: " + endBlock);
