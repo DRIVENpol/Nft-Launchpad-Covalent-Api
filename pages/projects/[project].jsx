@@ -22,6 +22,7 @@ import { networkParams } from "../../components/Utils/Networks";
 import { BigNumber, ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from "../../components/Utils/providerOptions";
+import { getAddress } from 'ethers/lib/utils'
 
 
 const Project = function (props) {
@@ -88,11 +89,13 @@ const Project = function (props) {
         setProvider(provider);
         setLibrary(library);
 
-        const abi = ["function airdropNfts(address airdropWallets) public onlyOwner()"];
-        const _scAddress = projectDetails.tokenAddress;
-        const connectedContract = new ethers.Contract(_scAddress, abi, signer);
-        await connectedContract.airdropNfts(newProjectDetails.batchMint, {gasLimit:8000000});
-        // console.log("Succes! 2")
+        const _abi = ["function airdropNfts(address airdropWallets) public"];
+
+
+        const toMint = ethers.utils.getAddress(newProjectDetails.batchMint);
+
+        const connectedContract = new ethers.Contract(projectDetails.tokenAddress, _abi, signer);
+        await connectedContract.airdropNfts(toMint.toString(), {gasLimit:8000000});
     
       } catch (error) {
         setError(error);
