@@ -49,7 +49,7 @@ const Project = function (props) {
   const [buttonLoading, setButtonLoading] = useState(false);
 
 
-  const factoryAddress = "0x36cAD3ee3ac5eb17931dbdA45D80f42A825d7B55"; // Without Fee - for testing
+  const factoryAddress = "0x628F20bF739C4676E36Dac9aA069ded2613A703d"; // Without Fee - for testing
   const router = useRouter();
 
 
@@ -78,6 +78,76 @@ const Project = function (props) {
     newOwner: '',
     newBannerUrl: ''
    });
+
+   const blockAddress = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        setProvider(provider);
+        setLibrary(library);
+
+        const _abi = ["function setBlacklistedAddress(address _who) public"];
+
+
+        const toBlock = ethers.utils.getAddress(newProjectDetails.block);
+
+        const connectedContract = new ethers.Contract(projectDetails.tokenAddress, _abi, signer);
+        await connectedContract.airdropNfts(toBlock.toString(), {gasLimit:8000000});
+    
+      } catch (error) {
+        setError(error);
+      }
+    }
+   
+  };
+
+
+   const setNrURI = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        setProvider(provider);
+        setLibrary(library);
+
+        const _abi = ["function setNotRevealedURI(string memory _notRevealedURI) public onlyOwner"];
+
+        const connectedContract = new ethers.Contract(projectDetails.tokenAddress, _abi, signer);
+        await connectedContract.setNotRevealedURI(newProjectDetails.newNotRevealedUri, {gasLimit:8000000});
+    
+      } catch (error) {
+        setError(error);
+      }
+    }
+   
+  };
+
+   const setBaseURI = async () => {
+    if (typeof window !== 'undefined'){
+      try {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        setProvider(provider);
+        setLibrary(library);
+
+        const _abi = ["function setBaseURI(string memory _newBaseURI) public onlyOwner"];
+
+        const connectedContract = new ethers.Contract(projectDetails.tokenAddress, _abi, signer);
+        await connectedContract.setBaseURI(newProjectDetails.newBaseUri, {gasLimit:8000000});
+    
+      } catch (error) {
+        setError(error);
+      }
+    }
+   
+  };
 
    const airdropNft = async () => {
     if (typeof window !== 'undefined'){
@@ -684,7 +754,7 @@ useEffect(() => {
                   onChange={newBaseUriChangeHandler}
                 />
                 <Button
-              onClick={mintNft}
+              onClick={setBaseURI}
               variant={'solid'}
               size='xs'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
@@ -702,7 +772,7 @@ useEffect(() => {
                   onChange={notRevealedUriChangeHandler}
                 />
                 <Button
-              onClick={mintNft}
+              onClick={setNrURI}
               variant={'solid'}
               size='xs'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
@@ -716,11 +786,11 @@ useEffect(() => {
 
               <GridItem w='100%'>
                 <Text mt='30px'><b>Block Addresses</b></Text>
-                <Input placeholder='Address 1, Addres 2 ...' mt='10px' bg='white' 
+                <Input placeholder='Address' mt='10px' bg='white' 
                   onChange={blockAddressChangeHandler}
                 />
                 <Button
-              onClick={mintNft}
+              onClick={blockAddress}
               variant={'solid'}
               size='xs'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
